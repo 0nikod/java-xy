@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="14.0" styleClass="hero-panel"
+      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.campus.secondhand.controller.LoginController">
+    <padding>
+        <Insets top="36.0" right="48.0" bottom="36.0" left="48.0"/>
+    </padding>
+
+    <Label text="校园二手教材与物品交易平台" styleClass="title-text"/>
+    <Label text="第一阶段骨架：登录、页面切换、数据库初始化" styleClass="subtitle-text"/>
+
+    <TextField fx:id="usernameField" promptText="用户名" maxWidth="320.0"/>
+    <PasswordField fx:id="passwordField" promptText="密码" maxWidth="320.0"/>
+
+    <Button text="进入系统" onAction="#handleLogin" styleClass="primary-button" maxWidth="320.0"/>
+    <Label fx:id="hintLabel" wrapText="true" maxWidth="320.0" styleClass="subtitle-text"/>
+</VBox>

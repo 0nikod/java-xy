@@ -1,0 +1,6 @@
+/target/
+/data/
+/.idea/
+/.DS_Store
+*.log
+hs_err_pid*.log
