@@ -1,0 +1,128 @@
+package com.campus.secondhand.controller;
+
+import com.campus.secondhand.app.SceneManager;
+import com.campus.secondhand.config.AppConfig;
+import com.campus.secondhand.model.Goods;
+import com.campus.secondhand.model.User;
+import com.campus.secondhand.model.GoodsStatus;
+import com.campus.secondhand.service.BusinessException;
+import com.campus.secondhand.service.GoodsService;
+import com.campus.secondhand.service.OrderService;
+import com.campus.secondhand.util.AlertUtil;
+import com.campus.secondhand.util.Session;
+import com.campus.secondhand.util.ViewState;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+
+public class GoodsDetailController {
+
+    @FXML
+    private Label titleLabel;
+
+    @FXML
+    private Label categoryLabel;
+
+    @FXML
+    private Label priceLabel;
+
+    @FXML
+    private Label conditionLabel;
+
+    @FXML
+    private Label sellerLabel;
+
+    @FXML
+    private Label statusLabel;
+
+    @FXML
+    private Label createdAtLabel;
+
+    @FXML
+    private Label rejectReasonLabel;
+
+    @FXML
+    private TextArea descriptionArea;
+
+    @FXML
+    private Button buyButton;
+
+    private final GoodsService goodsService = new GoodsService();
+    private final OrderService orderService = new OrderService();
+
+    private Goods goods;
+
+    @FXML
+    private void initialize() {
+        goods = ViewState.getSelectedGoods();
+        if (goods == null) {
+            setMessage("未选择商品，正在返回首页。");
+            SceneManager.show("home.fxml", AppConfig.getAppTitle());
+            return;
+        }
+        refreshDetail();
+        User currentUser = Session.getCurrentUser();
+        if (buyButton != null && currentUser != null && goods.getSellerId().equals(currentUser.getId())) {
+            buyButton.setDisable(true);
+            buyButton.setText("不能购买自己的商品");
+        }
+    }
+
+    @FXML
+    private void handleBuy() {
+        try {
+            User currentUser = Session.getCurrentUser();
+            if (currentUser == null) {
+                SceneManager.show("login.fxml", AppConfig.getAppTitle());
+                return;
+            }
+            orderService.purchaseGoods(currentUser, goods.getId());
+            AlertUtil.showInfo("购买成功", "订单已生成，商品已标记为已售出。");
+            SceneManager.show("home.fxml", AppConfig.getAppTitle());
+        } catch (BusinessException ex) {
+            AlertUtil.showWarning("无法购买", ex.getMessage());
+        }
+    }
+
+    @FXML
+    private void handleBack() {
+        SceneManager.show("home.fxml", AppConfig.getAppTitle());
+    }
+
+    private void refreshDetail() {
+        Goods latest = goodsService.getGoodsDetail(goods.getId());
+        goods = latest;
+        if (titleLabel != null) {
+            titleLabel.setText(latest.getTitle());
+        }
+        if (categoryLabel != null) {
+            categoryLabel.setText("分类：" + latest.getCategory());
+        }
+        if (priceLabel != null) {
+            priceLabel.setText(String.format("原价：%.2f  现价：%.2f", latest.getOriginalPrice(), latest.getCurrentPrice()));
+        }
+        if (conditionLabel != null) {
+            conditionLabel.setText("新旧程度：" + latest.getConditionLevel());
+        }
+        if (sellerLabel != null) {
+            sellerLabel.setText("卖家：" + latest.getSellerUsername());
+        }
+        if (statusLabel != null) {
+            statusLabel.setText("状态：" + latest.getStatusText());
+        }
+        if (createdAtLabel != null) {
+            createdAtLabel.setText("发布时间：" + latest.getCreatedAt());
+        }
+        if (rejectReasonLabel != null) {
+            rejectReasonLabel.setText(latest.getStatus() == GoodsStatus.REJECTED && latest.getRejectReason() != null ? "驳回原因：" + latest.getRejectReason() : "");
+        }
+        if (descriptionArea != null) {
+            descriptionArea.setText(latest.getDescription());
+        }
+    }
+
+    private void setMessage(String message) {
+        AlertUtil.showWarning("提示", message);
+    }
+}
