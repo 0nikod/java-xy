@@ -68,7 +68,7 @@ public final class AppConfig {
 	public static String getOpenAiBaseUrl() {
 		String baseUrl = System.getenv("OPENAI_BASE_URL");
 		if (baseUrl == null || baseUrl.trim().isEmpty()) {
-			return "https://api.openai.com/v1";
+			return "https://api.deepseek.com";
 		}
 		return baseUrl.trim();
 	}
@@ -76,7 +76,7 @@ public final class AppConfig {
 	public static String getOpenAiModel() {
 		String model = System.getenv("OPENAI_MODEL");
 		if (model == null || model.trim().isEmpty()) {
-			return "gpt-4.1-mini";
+			return "deepseek-v4-flash";
 		}
 		return model.trim();
 	}
