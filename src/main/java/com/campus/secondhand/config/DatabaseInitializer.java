@@ -6,19 +6,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Base64;
 
 public final class DatabaseInitializer {
 
 	private static final String SCHEMA_RESOURCE = "/db/schema.sql";
 	private static final String SEED_RESOURCE = "/db/seed.sql";
-	private static final String DEMO_IMAGE_BASE64 = "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8Xw8AAoMBgQotM7sAAAAASUVORK5CYII=";
 
 	private DatabaseInitializer() {
 	}
@@ -29,7 +24,6 @@ public final class DatabaseInitializer {
 			DBUtil.ensureDatabaseReady();
 			executeScript(SCHEMA_RESOURCE);
 			executeScript(SEED_RESOURCE);
-			ensureSeedImages();
 		} catch (IOException e) {
 			throw new IllegalStateException("读取数据库脚本失败", e);
 		} catch (SQLException e) {
@@ -68,30 +62,6 @@ public final class DatabaseInitializer {
 					statement.execute(sql);
 				}
 			}
-		}
-	}
-
-	private static void ensureSeedImages() throws IOException, SQLException {
-		// 演示库至少准备一张真实本地图，确保首页、详情和审核页都有可展示的图片样本。
-		Path goodsDir = AppConfig.resolveImageStorageRoot().resolve("goods-1");
-		Files.createDirectories(goodsDir);
-		Path imagePath = goodsDir.resolve("01_seed-book.png");
-		if (!Files.exists(imagePath)) {
-			Files.write(imagePath, Base64.getDecoder().decode(DEMO_IMAGE_BASE64));
-		}
-
-		try (Connection connection = DBUtil.getConnection();
-				PreparedStatement delete = connection.prepareStatement("DELETE FROM goods_images WHERE goods_id = ?");
-				PreparedStatement insert = connection.prepareStatement(
-						"INSERT INTO goods_images (goods_id, image_path, is_primary, display_order) VALUES (?, ?, ?, ?)")) {
-			delete.setLong(1, 1L);
-			delete.executeUpdate();
-
-			insert.setLong(1, 1L);
-			insert.setString(2, imagePath.toAbsolutePath().toString());
-			insert.setInt(3, 1);
-			insert.setInt(4, 0);
-			insert.executeUpdate();
 		}
 	}
 }

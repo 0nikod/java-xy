@@ -9,6 +9,7 @@ import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.service.OrderService;
 import com.campus.secondhand.util.AlertUtil;
+import com.campus.secondhand.util.ImagePreviewLoader;
 import com.campus.secondhand.util.Session;
 import com.campus.secondhand.util.ViewState;
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class GoodsDetailController {
@@ -163,10 +163,9 @@ public class GoodsDetailController {
 			return;
 		}
 		if (index < 0 || index >= images.size()) {
-			imagePreviewView.setImage(null);
+			imagePreviewView.setImage(ImagePreviewLoader.loadHideImage());
 			return;
 		}
-		imagePreviewView.setImage(
-				new Image(java.nio.file.Paths.get(images.get(index).getImagePath()).toUri().toString(), true));
+		imagePreviewView.setImage(ImagePreviewLoader.loadFromPath(images.get(index).getImagePath()));
 	}
 }

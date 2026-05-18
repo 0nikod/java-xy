@@ -7,6 +7,7 @@ import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.util.AlertUtil;
+import com.campus.secondhand.util.ImagePreviewLoader;
 import com.campus.secondhand.util.Session;
 import java.nio.file.Path;
 import java.util.ArrayList;
@@ -18,7 +19,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -76,6 +76,7 @@ public class PublishGoodsController {
 				updatePreview(newValue == null ? -1 : newValue.intValue());
 			});
 		}
+		updatePreview(-1);
 		User currentUser = Session.getCurrentUser();
 		if (currentUserLabel != null) {
 			currentUserLabel.setText(currentUser == null ? "未登录" : "当前用户：" + currentUser.getUsername());
@@ -233,9 +234,9 @@ public class PublishGoodsController {
 			return;
 		}
 		if (selectedIndex < 0 || selectedIndex >= selectedImages.size()) {
-			imagePreviewView.setImage(null);
+			imagePreviewView.setImage(ImagePreviewLoader.loadHideImage());
 			return;
 		}
-		imagePreviewView.setImage(new Image(selectedImages.get(selectedIndex).toUri().toString(), true));
+		imagePreviewView.setImage(ImagePreviewLoader.loadFromPath(selectedImages.get(selectedIndex)));
 	}
 }

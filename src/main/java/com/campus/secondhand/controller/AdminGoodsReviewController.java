@@ -8,6 +8,7 @@ import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.util.AlertUtil;
+import com.campus.secondhand.util.ImagePreviewLoader;
 import com.campus.secondhand.util.Session;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -19,7 +20,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
@@ -163,6 +163,10 @@ public class AdminGoodsReviewController {
 			if (detailLabel != null) {
 				detailLabel.setText("请选择一个待审核商品查看详情。");
 			}
+			if (imageListView != null) {
+				imageListView.setItems(FXCollections.observableArrayList(new java.util.ArrayList<String>()));
+			}
+			updatePreview(new java.util.ArrayList<GoodsImage>(), -1);
 			return;
 		}
 		StringBuilder builder = new StringBuilder();
@@ -218,10 +222,9 @@ public class AdminGoodsReviewController {
 			return;
 		}
 		if (index < 0 || index >= images.size()) {
-			imagePreviewView.setImage(null);
+			imagePreviewView.setImage(ImagePreviewLoader.loadHideImage());
 			return;
 		}
-		imagePreviewView.setImage(
-				new Image(java.nio.file.Paths.get(images.get(index).getImagePath()).toUri().toString(), true));
+		imagePreviewView.setImage(ImagePreviewLoader.loadFromPath(images.get(index).getImagePath()));
 	}
 }

@@ -15,15 +15,12 @@ public class DatabaseInitializerTest {
 	public void initializeShouldCreateDatabaseAndSeedData() throws Exception {
 		Path tempDir = Files.createTempDirectory("java-xy-db-test");
 		Path dbPath = tempDir.resolve("secondhand.db");
-		Path imageDir = tempDir.resolve("images");
 		System.setProperty("SECONDHAND_DB_PATH", dbPath.toString());
-		System.setProperty("SECONDHAND_IMAGE_DIR", imageDir.toString());
 
 		try {
 			DatabaseInitializer.initialize();
 
 			Assert.assertTrue(Files.exists(dbPath));
-			Assert.assertTrue(Files.exists(imageDir.resolve("goods-1").resolve("01_seed-book.png")));
 
 			try (Connection connection = DBUtil.getConnection();
 					Statement statement = connection.createStatement();
@@ -44,14 +41,6 @@ public class DatabaseInitializerTest {
 					ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS total FROM orders")) {
 				Assert.assertTrue(resultSet.next());
 				Assert.assertEquals(1, resultSet.getInt("total"));
-			}
-
-			try (Connection connection = DBUtil.getConnection();
-					Statement statement = connection.createStatement();
-					ResultSet resultSet = statement
-							.executeQuery("SELECT image_path FROM goods_images WHERE goods_id = 1")) {
-				Assert.assertTrue(resultSet.next());
-				Assert.assertTrue(resultSet.getString("image_path").endsWith("01_seed-book.png"));
 			}
 
 			try (Connection connection = DBUtil.getConnection();
@@ -84,7 +73,6 @@ public class DatabaseInitializerTest {
 			}
 		} finally {
 			System.clearProperty("SECONDHAND_DB_PATH");
-			System.clearProperty("SECONDHAND_IMAGE_DIR");
 		}
 	}
 }
