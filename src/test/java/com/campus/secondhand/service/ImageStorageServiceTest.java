@@ -8,10 +8,14 @@ import java.util.Collections;
 import org.junit.Assert;
 import org.junit.Test;
 
+/**
+ * 验证商品图片存储的路径、格式与大小限制。
+ */
 public class ImageStorageServiceTest {
 
 	@Test
 	public void storeGoodsImagesShouldRespectConfiguredDirectory() throws Exception {
+		// 临时目录用于模拟图片存储根目录。
 		Path tempDir = Files.createTempDirectory("java-xy-image-root");
 		Path imagePath = tempDir.resolve("cover.jpg");
 		Files.write(imagePath, "demo-image".getBytes(StandardCharsets.UTF_8));
@@ -29,6 +33,7 @@ public class ImageStorageServiceTest {
 
 	@Test
 	public void storeGoodsImagesShouldRejectUnsupportedFormat() throws Exception {
+		// GIF 不在允许列表中，应被拒绝。
 		Path tempDir = Files.createTempDirectory("java-xy-image-format");
 		Path imagePath = tempDir.resolve("cover.gif");
 		Files.write(imagePath, "gif".getBytes(StandardCharsets.UTF_8));
@@ -43,6 +48,7 @@ public class ImageStorageServiceTest {
 
 	@Test
 	public void storeGoodsImagesShouldRejectOversizedFile() throws Exception {
+		// 超过 2MB 的文件应直接拒绝上传。
 		Path tempDir = Files.createTempDirectory("java-xy-image-size");
 		Path imagePath = tempDir.resolve("large.png");
 		Files.write(imagePath, new byte[2 * 1024 * 1024 + 1]);

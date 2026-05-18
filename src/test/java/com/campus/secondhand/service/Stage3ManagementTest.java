@@ -18,12 +18,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 覆盖第三阶段管理能力：用户中心、封禁解封、统计和图片/违规处理。
+ */
 public class Stage3ManagementTest {
 
 	private Path tempDatabase;
 
 	@Before
 	public void setUp() throws Exception {
+		// 通过临时数据库隔离每个管理类测试场景。
 		tempDatabase = Files.createTempDirectory("java-xy-stage3");
 		System.setProperty("SECONDHAND_DB_PATH", tempDatabase.resolve("secondhand.db").toString());
 		DatabaseInitializer.initialize();
@@ -36,6 +40,7 @@ public class Stage3ManagementTest {
 
 	@Test
 	public void userCenterDataShouldReflectPublishedPurchasedAndSoldOrders() {
+		// 用户中心应同时反映发布与成交后的订单数量变化。
 		UserService userService = new UserService();
 		GoodsService goodsService = new GoodsService();
 		OrderService orderService = new OrderService();
@@ -58,6 +63,7 @@ public class Stage3ManagementTest {
 
 	@Test
 	public void adminBanAndUnbanShouldWriteLogs() {
+		// 封禁和解封都应更新用户状态并写入审计日志。
 		UserService userService = new UserService();
 		AdminLogService adminLogService = new AdminLogService();
 
@@ -81,6 +87,7 @@ public class Stage3ManagementTest {
 
 	@Test
 	public void statisticsShouldExposeSummaryChartsAndUserOverview() {
+		// 统计页需要返回汇总信息、用户概览和图表数据源。
 		UserService userService = new UserService();
 		GoodsService goodsService = new GoodsService();
 		OrderService orderService = new OrderService();
@@ -114,6 +121,7 @@ public class Stage3ManagementTest {
 
 	@Test
 	public void imageStorageAndViolationDeleteShouldWork() throws Exception {
+		// 验证图片保存成功后，违规删除仍能正确记录日志。
 		UserService userService = new UserService();
 		GoodsService goodsService = new GoodsService();
 		AdminLogService adminLogService = new AdminLogService();

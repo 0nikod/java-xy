@@ -22,12 +22,16 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+/**
+ * 覆盖第二阶段核心业务流：注册、登录、发布、审核、购买和违规删除。
+ */
 public class Stage2FlowTest {
 
 	private Path tempDatabase;
 
 	@Before
 	public void setUp() throws Exception {
+		// 每个测试都使用独立数据库，确保流程之间互不影响。
 		tempDatabase = Files.createTempDirectory("java-xy-stage2");
 		System.setProperty("SECONDHAND_DB_PATH", tempDatabase.resolve("secondhand.db").toString());
 		DatabaseInitializer.initialize();
@@ -40,6 +44,7 @@ public class Stage2FlowTest {
 
 	@Test
 	public void registerAndLoginShouldWork() {
+		// 验证注册后用户可立即登录。
 		UserService userService = new UserService();
 		User user = userService.register("alice", "alice123", "13800138000");
 
@@ -53,6 +58,7 @@ public class Stage2FlowTest {
 
 	@Test(expected = BusinessException.class)
 	public void bannedUserShouldNotLogin() throws SQLException {
+		// 被封禁用户应无法通过登录校验。
 		UserService userService = new UserService();
 		userService.register("banned_user", "secret123", "13800138001");
 
@@ -68,6 +74,7 @@ public class Stage2FlowTest {
 
 	@Test
 	public void publishApproveAndPurchaseFlowShouldPersistOrder() {
+		// 完整覆盖发布、审核、上架和下单链路。
 		UserService userService = new UserService();
 		GoodsService goodsService = new GoodsService();
 		OrderService orderService = new OrderService();
@@ -98,6 +105,7 @@ public class Stage2FlowTest {
 
 	@Test
 	public void adminShouldDeleteViolationGoodsWithReason() {
+		// 违规商品删除后应从详情页消失，并留下后台日志。
 		UserService userService = new UserService();
 		GoodsService goodsService = new GoodsService();
 		AdminLogService adminLogService = new AdminLogService();
