@@ -75,14 +75,14 @@ public class Stage2FlowTest {
         User buyer = userService.register("buyer", "buyer123", "13800138002");
         User admin = userService.login("admin", "admin123");
 
-        Goods published = goodsService.publishGoods(seller, "中型棉花娃娃", "棉花娃娃", 209.0, 189.0, 9, "20 cm 棉花娃娃");
+        Goods published = goodsService.publishGoods(seller, "Java 课程教材", "教材", 89.0, 45.0, 9, "课堂配套教材，少量笔记");
         Assert.assertEquals(GoodsStatus.PENDING, goodsService.getGoodsDetail(published.getId()).getStatus());
 
         goodsService.approveGoods(admin, published.getId());
         Goods approved = goodsService.getGoodsDetail(published.getId());
         Assert.assertEquals(GoodsStatus.ON_SALE, approved.getStatus());
 
-        Assert.assertTrue(goodsService.listPublicGoods("中型棉花娃娃", null, GoodsSortOption.LATEST)
+        Assert.assertTrue(goodsService.listPublicGoods("Java 课程教材", null, GoodsSortOption.LATEST)
                 .stream()
                 .anyMatch(goods -> goods.getId().equals(published.getId())));
 
@@ -93,7 +93,7 @@ public class Stage2FlowTest {
         Order reloadedOrder = new OrderDao().findByOrderNo(order.getOrderNo());
         Assert.assertNotNull(reloadedOrder);
         Assert.assertEquals(order.getOrderNo(), reloadedOrder.getOrderNo());
-        Assert.assertEquals("中型棉花娃娃", reloadedOrder.getGoodsTitle());
+        Assert.assertEquals("Java 课程教材", reloadedOrder.getGoodsTitle());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class Stage2FlowTest {
         User seller = userService.login("demo_user", "user123");
         User admin = userService.login("admin", "admin123");
 
-        Goods published = goodsService.publishGoods(seller, "坏掉的中型棉花娃娃", "棉花娃娃", 209.0, 189.0, 9, "这期拉了");
+        Goods published = goodsService.publishGoods(seller, "损坏的平板壳", "数码", 59.0, 19.0, 4, "边缘磨损严重");
         goodsService.rejectGoods(admin, published.getId(), "图片不清晰");
 
         Goods rejected = goodsService.getGoodsDetail(published.getId());

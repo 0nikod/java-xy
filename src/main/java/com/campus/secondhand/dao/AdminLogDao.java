@@ -9,8 +9,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 管理员日志数据访问对象。
+ */
 public class AdminLogDao {
 
+    /**
+     * 在指定事务连接中插入管理员日志。
+     */
     public int insert(Connection connection, AdminLog log) throws SQLException {
         String sql = "INSERT INTO admin_logs (admin_id, action, target_type, target_id, detail, created_at) VALUES (?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -25,11 +31,14 @@ public class AdminLogDao {
         }
     }
 
+    /**
+     * 查询最近的管理员日志，默认按时间和主键倒序排列。
+     */
     public List<AdminLog> listRecent() {
         String sql = "SELECT al.*, u.username AS admin_username FROM admin_logs al JOIN users u ON al.admin_id = u.id ORDER BY al.created_at DESC, al.id DESC";
         try (Connection connection = DBUtil.getConnection();
-             PreparedStatement ps = connection.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
             List<AdminLog> logs = new ArrayList<AdminLog>();
             while (rs.next()) {
                 logs.add(mapLog(rs));
@@ -40,6 +49,9 @@ public class AdminLogDao {
         }
     }
 
+    /**
+     * 为日志写入绑定参数。
+     */
     private void bindLog(PreparedStatement ps, AdminLog log) throws SQLException {
         ps.setLong(1, log.getAdminId());
         ps.setString(2, log.getAction());
@@ -53,6 +65,9 @@ public class AdminLogDao {
         ps.setString(6, log.getCreatedAt());
     }
 
+    /**
+     * 将当前行映射为管理员日志对象。
+     */
     private AdminLog mapLog(ResultSet rs) throws SQLException {
         AdminLog log = new AdminLog();
         log.setId(rs.getLong("id"));

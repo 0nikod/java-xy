@@ -53,6 +53,9 @@ public class UserHomeController {
     private TableColumn<Goods, Integer> conditionColumn;
 
     @FXML
+    private TableColumn<Goods, String> imageColumn;
+
+    @FXML
     private TableColumn<Goods, String> sellerColumn;
 
     @FXML
@@ -93,6 +96,11 @@ public class UserHomeController {
     @FXML
     private void handlePublish() {
         SceneManager.show("publish_goods.fxml", AppConfig.getAppTitle());
+    }
+
+    @FXML
+    private void handleUserCenter() {
+        SceneManager.show("user_center.fxml", AppConfig.getAppTitle());
     }
 
     @FXML
@@ -137,6 +145,9 @@ public class UserHomeController {
         }
         if (conditionColumn != null) {
             conditionColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("conditionLevel"));
+        }
+        if (imageColumn != null) {
+            imageColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("primaryImageName"));
         }
         if (sellerColumn != null) {
             sellerColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("sellerUsername"));

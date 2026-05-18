@@ -36,6 +36,10 @@ public final class AppConfig {
         return "jdbc:sqlite:" + resolveDatabasePath().toString();
     }
 
+    public static Path resolveImageStorageRoot() {
+        return Paths.get(System.getProperty("user.dir")).resolve("data/images").normalize();
+    }
+
     public static String getOpenAiApiKey() {
         String apiKey = System.getenv("OPENAI_API_KEY");
         if (apiKey == null) {
@@ -46,5 +50,21 @@ public final class AppConfig {
 
     public static boolean isOpenAiConfigured() {
         return !getOpenAiApiKey().isEmpty();
+    }
+
+    public static String getOpenAiBaseUrl() {
+        String baseUrl = System.getenv("OPENAI_BASE_URL");
+        if (baseUrl == null || baseUrl.trim().isEmpty()) {
+            return "https://api.openai.com/v1";
+        }
+        return baseUrl.trim();
+    }
+
+    public static String getOpenAiModel() {
+        String model = System.getenv("OPENAI_MODEL");
+        if (model == null || model.trim().isEmpty()) {
+            return "gpt-4.1-mini";
+        }
+        return model.trim();
     }
 }

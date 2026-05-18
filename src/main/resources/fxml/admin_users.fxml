@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.campus.secondhand.controller.AdminUserController">
+    <top>
+        <VBox spacing="10.0" styleClass="hero-panel">
+            <padding>
+                <Insets top="18.0" right="22.0" bottom="18.0" left="22.0"/>
+            </padding>
+            <Label text="用户管理" styleClass="title-text"/>
+            <Label fx:id="currentUserLabel" styleClass="subtitle-text"/>
+            <HBox spacing="10.0">
+                <Label text="用户名"/>
+                <TextField fx:id="keywordField" promptText="按用户名搜索" prefWidth="240.0"/>
+                <Button text="搜索" onAction="#handleSearch" styleClass="primary-button"/>
+                <Button text="重置" onAction="#handleReset" styleClass="secondary-button"/>
+                <Button text="封禁" onAction="#handleBan" styleClass="secondary-button"/>
+                <Button text="解封" onAction="#handleUnban" styleClass="secondary-button"/>
+                <Button text="返回" onAction="#handleBack" styleClass="secondary-button"/>
+            </HBox>
+            <Label fx:id="summaryLabel" styleClass="subtitle-text"/>
+        </VBox>
+    </top>
+    <center>
+        <TableView fx:id="userTable">
+            <columns>
+                <TableColumn fx:id="usernameColumn" text="用户名" prefWidth="160.0"/>
+                <TableColumn fx:id="phoneColumn" text="联系方式" prefWidth="160.0"/>
+                <TableColumn fx:id="roleColumn" text="角色" prefWidth="100.0"/>
+                <TableColumn fx:id="statusColumn" text="状态" prefWidth="100.0"/>
+                <TableColumn fx:id="goodsCountColumn" text="发布商品数" prefWidth="120.0"/>
+                <TableColumn fx:id="soldCountColumn" text="成交数" prefWidth="120.0"/>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>

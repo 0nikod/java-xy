@@ -16,6 +16,7 @@ public class Goods {
     private String rejectReason;
     private String createdAt;
     private String updatedAt;
+    private String primaryImagePath;
 
     public Long getId() {
         return id;
@@ -129,11 +130,27 @@ public class Goods {
         this.updatedAt = updatedAt;
     }
 
+    public String getPrimaryImagePath() {
+        return primaryImagePath;
+    }
+
+    public void setPrimaryImagePath(String primaryImagePath) {
+        this.primaryImagePath = primaryImagePath;
+    }
+
     public String getStatusText() {
         return status == null ? "" : status.name();
     }
 
     public String getConditionText() {
         return conditionLevel == null ? "" : String.valueOf(conditionLevel);
+    }
+
+    public String getPrimaryImageName() {
+        if (primaryImagePath == null || primaryImagePath.trim().isEmpty()) {
+            return "无图片";
+        }
+        int slashIndex = Math.max(primaryImagePath.lastIndexOf('/'), primaryImagePath.lastIndexOf('\\'));
+        return slashIndex >= 0 ? primaryImagePath.substring(slashIndex + 1) : primaryImagePath;
     }
 }

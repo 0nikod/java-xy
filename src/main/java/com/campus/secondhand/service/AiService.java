@@ -4,5 +4,5 @@ public interface AiService {
 
     String optimizeDescription(String rawDescription);
 
-    String buildOperationsSummary();
+    String buildOperationsSummary(String context);
 }

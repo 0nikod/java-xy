@@ -33,7 +33,9 @@ public class GoodsDao {
     }
 
     public Goods findById(Long id) {
-        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status FROM goods g JOIN users u ON g.seller_id = u.id WHERE g.id = ?";
+        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
+                "FROM goods g JOIN users u ON g.seller_id = u.id " +
+                "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 WHERE g.id = ?";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, id);
@@ -46,12 +48,18 @@ public class GoodsDao {
     }
 
     public List<Goods> listPendingGoods() {
-        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status FROM goods g JOIN users u ON g.seller_id = u.id WHERE g.status = 'PENDING' ORDER BY g.created_at DESC, g.id DESC";
+        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
+                "FROM goods g JOIN users u ON g.seller_id = u.id " +
+                "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 " +
+                "WHERE g.status = 'PENDING' ORDER BY g.created_at DESC, g.id DESC";
         return queryGoodsList(sql, null);
     }
 
     public List<Goods> listUserPublishedGoods(Long sellerId) {
-        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status FROM goods g JOIN users u ON g.seller_id = u.id WHERE g.seller_id = ? ORDER BY g.created_at DESC, g.id DESC";
+        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
+                "FROM goods g JOIN users u ON g.seller_id = u.id " +
+                "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 " +
+                "WHERE g.seller_id = ? ORDER BY g.created_at DESC, g.id DESC";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, sellerId);
@@ -66,7 +74,9 @@ public class GoodsDao {
     public List<Goods> listPublicGoods(String keyword, String category, GoodsSortOption sortOption) {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT g.*, u.username AS seller_username, u.status AS seller_status ")
+                .append(", gi.image_path AS primary_image_path ")
                 .append("FROM goods g JOIN users u ON g.seller_id = u.id ")
+                .append("LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 ")
                 .append("WHERE g.status = 'ON_SALE' AND u.status = 'NORMAL'");
 
         List<Object> params = new ArrayList<Object>();
@@ -111,7 +121,9 @@ public class GoodsDao {
     }
 
     public Goods loadById(Connection connection, Long id) throws SQLException {
-        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status FROM goods g JOIN users u ON g.seller_id = u.id WHERE g.id = ?";
+        String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
+                "FROM goods g JOIN users u ON g.seller_id = u.id " +
+                "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 WHERE g.id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
@@ -131,6 +143,13 @@ public class GoodsDao {
                 }
             }
             return affected;
+        }
+    }
+
+    public int deleteById(Connection connection, Long goodsId) throws SQLException {
+        try (PreparedStatement ps = connection.prepareStatement("DELETE FROM goods WHERE id = ?")) {
+            ps.setLong(1, goodsId);
+            return ps.executeUpdate();
         }
     }
 
@@ -206,6 +225,7 @@ public class GoodsDao {
         goods.setRejectReason(rs.getString("reject_reason"));
         goods.setCreatedAt(rs.getString("created_at"));
         goods.setUpdatedAt(rs.getString("updated_at"));
+        goods.setPrimaryImagePath(rs.getString("primary_image_path"));
         return goods;
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.campus.secondhand.controller.UserCenterController">
+    <top>
+        <VBox spacing="10.0" styleClass="hero-panel">
+            <padding>
+                <Insets top="18.0" right="22.0" bottom="18.0" left="22.0"/>
+            </padding>
+            <Label text="个人中心" styleClass="title-text"/>
+            <Label fx:id="currentUserLabel" styleClass="subtitle-text"/>
+            <Label fx:id="summaryLabel" styleClass="subtitle-text" wrapText="true"/>
+            <HBox spacing="10.0">
+                <Button text="刷新" onAction="#handleRefresh" styleClass="primary-button"/>
+                <Button text="下架所选商品" onAction="#handleOffShelf" styleClass="secondary-button"/>
+                <Button text="返回首页" onAction="#handleBack" styleClass="secondary-button"/>
+            </HBox>
+        </VBox>
+    </top>
+    <center>
+        <VBox spacing="14.0">
+            <padding>
+                <Insets top="14.0" right="18.0" bottom="14.0" left="18.0"/>
+            </padding>
+            <Label text="我发布的商品" styleClass="section-label"/>
+            <TableView fx:id="publishedGoodsTable" prefHeight="180.0">
+                <columns>
+                    <TableColumn fx:id="publishedTitleColumn" text="商品名称" prefWidth="220.0"/>
+                    <TableColumn fx:id="publishedCategoryColumn" text="分类" prefWidth="120.0"/>
+                    <TableColumn fx:id="publishedPriceColumn" text="现价" prefWidth="100.0"/>
+                    <TableColumn fx:id="publishedStatusColumn" text="状态" prefWidth="120.0"/>
+                </columns>
+            </TableView>
+            <Label text="我购买的订单" styleClass="section-label"/>
+            <TableView fx:id="purchasedOrdersTable" prefHeight="160.0">
+                <columns>
+                    <TableColumn fx:id="purchasedOrderNoColumn" text="订单号" prefWidth="230.0"/>
+                    <TableColumn fx:id="purchasedGoodsColumn" text="商品名称" prefWidth="200.0"/>
+                    <TableColumn fx:id="purchasedPriceColumn" text="成交价" prefWidth="100.0"/>
+                    <TableColumn fx:id="purchasedSellerColumn" text="卖家" prefWidth="140.0"/>
+                </columns>
+            </TableView>
+            <Label text="我卖出的订单" styleClass="section-label"/>
+            <TableView fx:id="soldOrdersTable" prefHeight="160.0">
+                <columns>
+                    <TableColumn fx:id="soldOrderNoColumn" text="订单号" prefWidth="230.0"/>
+                    <TableColumn fx:id="soldGoodsColumn" text="商品名称" prefWidth="200.0"/>
+                    <TableColumn fx:id="soldPriceColumn" text="成交价" prefWidth="100.0"/>
+                    <TableColumn fx:id="soldBuyerColumn" text="买家" prefWidth="140.0"/>
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>

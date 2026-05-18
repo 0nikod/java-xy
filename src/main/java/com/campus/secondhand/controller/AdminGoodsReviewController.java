@@ -3,6 +3,7 @@ package com.campus.secondhand.controller;
 import com.campus.secondhand.app.SceneManager;
 import com.campus.secondhand.config.AppConfig;
 import com.campus.secondhand.model.Goods;
+import com.campus.secondhand.model.GoodsImage;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.GoodsService;
@@ -14,9 +15,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AdminGoodsReviewController {
@@ -47,6 +51,12 @@ public class AdminGoodsReviewController {
 
     @FXML
     private TextArea rejectReasonArea;
+
+    @FXML
+    private ListView<String> imageListView;
+
+    @FXML
+    private ImageView imagePreviewView;
 
     private final GoodsService goodsService = new GoodsService();
 
@@ -105,6 +115,25 @@ public class AdminGoodsReviewController {
         SceneManager.show("admin_home.fxml", AppConfig.getAppTitle());
     }
 
+    @FXML
+    private void handleDelete() {
+        Goods selected = getSelectedGoods();
+        if (selected == null) {
+            AlertUtil.showWarning("提示", "请先选择一个商品。");
+            return;
+        }
+        try {
+            goodsService.deleteGoods(Session.getCurrentUser(), selected.getId(), getRejectReason());
+            AlertUtil.showInfo("删除成功", "违规商品已删除并写入日志。");
+            if (rejectReasonArea != null) {
+                rejectReasonArea.clear();
+            }
+            refreshPendingGoods();
+        } catch (BusinessException ex) {
+            AlertUtil.showWarning("删除失败", ex.getMessage());
+        }
+    }
+
     private void configureTable() {
         if (titleColumn != null) {
             titleColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("title"));
@@ -149,9 +178,26 @@ public class AdminGoodsReviewController {
         builder.append("卖家：").append(goods.getSellerUsername()).append('\n');
         builder.append("现价：").append(goods.getCurrentPrice()).append('\n');
         builder.append("成色：").append(goods.getConditionLevel()).append('\n');
-        builder.append("描述：").append(goods.getDescription());
+        builder.append("描述：").append(goods.getDescription()).append('\n');
+        builder.append("主图：").append(goods.getPrimaryImagePath() == null ? "无" : goods.getPrimaryImagePath());
         if (detailLabel != null) {
             detailLabel.setText(builder.toString());
+        }
+        List<String> imageItems = new java.util.ArrayList<String>();
+        for (GoodsImage image : goodsService.listGoodsImages(goods.getId())) {
+            imageItems.add((image.isPrimary() ? "[主图] " : "") + image.getImagePath());
+        }
+        if (imageListView != null) {
+            imageListView.setItems(FXCollections.observableArrayList(imageItems));
+            imageListView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                updatePreview(goodsService.listGoodsImages(goods.getId()), newValue == null ? -1 : newValue.intValue());
+            });
+            if (!imageItems.isEmpty()) {
+                imageListView.getSelectionModel().select(0);
+                updatePreview(goodsService.listGoodsImages(goods.getId()), 0);
+            } else {
+                updatePreview(new java.util.ArrayList<GoodsImage>(), -1);
+            }
         }
     }
 
@@ -168,5 +214,16 @@ public class AdminGoodsReviewController {
         if (currentUserLabel != null) {
             currentUserLabel.setText(currentUser == null ? "未登录" : "当前管理员：" + currentUser.getUsername());
         }
+    }
+
+    private void updatePreview(List<GoodsImage> images, int index) {
+        if (imagePreviewView == null) {
+            return;
+        }
+        if (index < 0 || index >= images.size()) {
+            imagePreviewView.setImage(null);
+            return;
+        }
+        imagePreviewView.setImage(new Image(java.nio.file.Paths.get(images.get(index).getImagePath()).toUri().toString(), true));
     }
 }

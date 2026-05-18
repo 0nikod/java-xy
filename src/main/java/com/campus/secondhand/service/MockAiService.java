@@ -11,7 +11,10 @@ public class MockAiService implements AiService {
     }
 
     @Override
-    public String buildOperationsSummary() {
-        return "Mock 运营摘要：当前为第一阶段骨架，后续将接入真实 AI 分析。";
+    public String buildOperationsSummary(String context) {
+        if (context == null || context.trim().isEmpty()) {
+            return "Mock 运营摘要：当前为离线演示模式，系统会展示模拟分析结果。";
+        }
+        return "Mock 运营摘要：" + context;
     }
 }

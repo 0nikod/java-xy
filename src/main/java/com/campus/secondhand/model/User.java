@@ -1,5 +1,8 @@
 package com.campus.secondhand.model;
 
+/**
+ * 用户实体，承载登录、权限、状态和基础资料信息。
+ */
 public class User {
 
     private Long id;
@@ -10,9 +13,15 @@ public class User {
     private UserStatus status;
     private String createdAt;
 
+    /**
+     * 创建空的用户对象。
+     */
     public User() {
     }
 
+    /**
+     * 创建完整用户对象。
+     */
     public User(Long id, String username, String passwordHash, String phone, UserRole role, UserStatus status, String createdAt) {
         this.id = id;
         this.username = username;
@@ -77,5 +86,19 @@ public class User {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    /**
+     * 获取角色的文本表示。
+     */
+    public String getRoleText() {
+        return role == null ? "" : role.name();
+    }
+
+    /**
+     * 获取状态的文本表示。
+     */
+    public String getStatusText() {
+        return status == null ? "" : status.name();
     }
 }

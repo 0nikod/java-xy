@@ -17,6 +17,9 @@
             <Label fx:id="currentUserLabel" styleClass="subtitle-text"/>
             <Label fx:id="summaryLabel" wrapText="true" styleClass="subtitle-text"/>
             <Button text="待审核商品" onAction="#handleReviewGoods" styleClass="primary-button"/>
+            <Button text="用户管理" onAction="#handleManageUsers" styleClass="secondary-button"/>
+            <Button text="平台统计" onAction="#handleViewStats" styleClass="secondary-button"/>
+            <Button text="操作日志" onAction="#handleViewLogs" styleClass="secondary-button"/>
             <Button text="退出登录" onAction="#handleLogout" styleClass="secondary-button"/>
         </VBox>
     </center>

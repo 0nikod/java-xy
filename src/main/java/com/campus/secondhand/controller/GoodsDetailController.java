@@ -3,6 +3,7 @@ package com.campus.secondhand.controller;
 import com.campus.secondhand.app.SceneManager;
 import com.campus.secondhand.config.AppConfig;
 import com.campus.secondhand.model.Goods;
+import com.campus.secondhand.model.GoodsImage;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.model.GoodsStatus;
 import com.campus.secondhand.service.BusinessException;
@@ -11,10 +12,15 @@ import com.campus.secondhand.service.OrderService;
 import com.campus.secondhand.util.AlertUtil;
 import com.campus.secondhand.util.Session;
 import com.campus.secondhand.util.ViewState;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class GoodsDetailController {
 
@@ -47,6 +53,12 @@ public class GoodsDetailController {
 
     @FXML
     private Button buyButton;
+
+    @FXML
+    private ListView<String> imageListView;
+
+    @FXML
+    private ImageView imagePreviewView;
 
     private final GoodsService goodsService = new GoodsService();
     private final OrderService orderService = new OrderService();
@@ -120,9 +132,37 @@ public class GoodsDetailController {
         if (descriptionArea != null) {
             descriptionArea.setText(latest.getDescription());
         }
+        List<String> imageItems = new ArrayList<String>();
+        List<GoodsImage> images = goodsService.listGoodsImages(latest.getId());
+        for (GoodsImage image : images) {
+            imageItems.add((image.isPrimary() ? "[主图] " : "") + image.getImagePath());
+        }
+        if (imageListView != null) {
+            imageListView.setItems(javafx.collections.FXCollections.observableArrayList(imageItems));
+            imageListView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+                updatePreview(images, newValue == null ? -1 : newValue.intValue());
+            });
+            if (!images.isEmpty()) {
+                imageListView.getSelectionModel().select(0);
+                updatePreview(images, 0);
+            } else {
+                updatePreview(images, -1);
+            }
+        }
     }
 
     private void setMessage(String message) {
         AlertUtil.showWarning("提示", message);
+    }
+
+    private void updatePreview(List<GoodsImage> images, int index) {
+        if (imagePreviewView == null) {
+            return;
+        }
+        if (index < 0 || index >= images.size()) {
+            imagePreviewView.setImage(null);
+            return;
+        }
+        imagePreviewView.setImage(new Image(java.nio.file.Paths.get(images.get(index).getImagePath()).toUri().toString(), true));
     }
 }

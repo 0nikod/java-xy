@@ -1,5 +1,8 @@
 package com.campus.secondhand.model;
 
+/**
+ * 管理员操作日志实体。
+ */
 public class AdminLog {
 
     private Long id;

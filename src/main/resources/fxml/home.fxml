@@ -26,6 +26,7 @@
                 <Button text="重置" onAction="#handleReset" styleClass="secondary-button"/>
                 <Button text="发布商品" onAction="#handlePublish" styleClass="primary-button"/>
                 <Button text="我的发布" onAction="#handleMyPublished" styleClass="secondary-button"/>
+                <Button text="个人中心" onAction="#handleUserCenter" styleClass="secondary-button"/>
                 <Button text="查看详情" onAction="#handleDetail" styleClass="secondary-button"/>
                 <Button text="退出登录" onAction="#handleLogout" styleClass="secondary-button"/>
             </HBox>
@@ -39,6 +40,7 @@
                 <TableColumn fx:id="categoryColumn" text="分类" prefWidth="100.0"/>
                 <TableColumn fx:id="priceColumn" text="现价" prefWidth="90.0"/>
                 <TableColumn fx:id="conditionColumn" text="成色" prefWidth="90.0"/>
+                <TableColumn fx:id="imageColumn" text="主图" prefWidth="160.0"/>
                 <TableColumn fx:id="sellerColumn" text="卖家" prefWidth="120.0"/>
                 <TableColumn fx:id="createdAtColumn" text="发布时间" prefWidth="160.0"/>
                 <TableColumn fx:id="statusColumn" text="状态" prefWidth="100.0"/>
