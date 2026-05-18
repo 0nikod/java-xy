@@ -1,5 +1,7 @@
+-- 开启外键约束，保证商品、订单、图片与用户之间的数据一致性。
 PRAGMA foreign_keys = ON;
 
+-- 用户表：保存登录身份、角色和账号状态。
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     username TEXT NOT NULL UNIQUE,
@@ -10,6 +12,7 @@ CREATE TABLE IF NOT EXISTS users (
     created_at TEXT NOT NULL
 );
 
+-- 商品表：保存交易核心信息，审核状态和售卖状态都在这里管理。
 CREATE TABLE IF NOT EXISTS goods (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     seller_id INTEGER NOT NULL,
@@ -25,6 +28,7 @@ CREATE TABLE IF NOT EXISTS goods (
     FOREIGN KEY (seller_id) REFERENCES users(id)
 );
 
+-- 订单表：记录成交结果，成交后对应商品应转为已售。
 CREATE TABLE IF NOT EXISTS orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_no TEXT NOT NULL UNIQUE,
@@ -39,6 +43,7 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (seller_id) REFERENCES users(id)
 );
 
+-- 商品图片表：支持最多多张图片，并可标记主图用于列表展示。
 CREATE TABLE IF NOT EXISTS goods_images (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     goods_id INTEGER NOT NULL,
@@ -48,6 +53,7 @@ CREATE TABLE IF NOT EXISTS goods_images (
     FOREIGN KEY (goods_id) REFERENCES goods(id) ON DELETE CASCADE
 );
 
+-- 管理员日志表：记录审核、删除、封禁等后台操作。
 CREATE TABLE IF NOT EXISTS admin_logs (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     admin_id INTEGER NOT NULL,

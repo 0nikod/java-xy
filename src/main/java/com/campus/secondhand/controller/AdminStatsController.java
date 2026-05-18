@@ -62,6 +62,7 @@ public class AdminStatsController {
 
     @FXML
     private void initialize() {
+        // 初始化时绑定当前管理员、表格列和统计视图。
         User currentUser = Session.getCurrentUser();
         if (currentUserLabel != null) {
             currentUserLabel.setText(currentUser == null ? "未登录" : "当前管理员：" + currentUser.getUsername());
@@ -72,15 +73,18 @@ public class AdminStatsController {
 
     @FXML
     private void handleRefresh() {
+        // 手动刷新统计，便于后台数据变化后重新查看最新结果。
         refreshStats();
     }
 
     @FXML
     private void handleBack() {
+        // 返回后台首页，结束统计查看流程。
         SceneManager.show("admin_home.fxml", AppConfig.getAppTitle());
     }
 
     private void configureTable() {
+        // 表格列与 UserOverview 字段绑定，展示用户概览指标。
         if (detailUserColumn != null) {
             detailUserColumn.setCellValueFactory(new PropertyValueFactory<UserOverview, String>("username"));
         }
@@ -96,6 +100,7 @@ public class AdminStatsController {
     }
 
     private void refreshStats() {
+        // 汇总卡片、AI 文案和三类图表共用同一批统计数据，确保口径一致。
         StatsSummary summary = statisticsService.loadSummary();
         if (statsCardLabel != null) {
             statsCardLabel.setText(String.format(
@@ -118,6 +123,7 @@ public class AdminStatsController {
     }
 
     private void populateCategoryChart() {
+        // 分类饼图反映商品供给结构。
         if (categoryPieChart == null) {
             return;
         }
@@ -129,6 +135,7 @@ public class AdminStatsController {
     }
 
     private void populateStatusChart() {
+        // 状态柱状图用于观察待审核、在售、已售比例。
         if (statusBarChart == null) {
             return;
         }
@@ -137,10 +144,12 @@ public class AdminStatsController {
         for (ChartPoint point : statisticsService.listGoodsStatusStats()) {
             series.getData().add(new XYChart.Data<String, Number>(point.getLabel(), point.getValue()));
         }
-        statusBarChart.getData().setAll(series);
+        statusBarChart.getData().clear();
+        statusBarChart.getData().add(series);
     }
 
     private void populateTrendChart() {
+        // 趋势折线图展示最近成交变化，方便查看交易热度。
         if (trendLineChart == null) {
             return;
         }
@@ -149,6 +158,7 @@ public class AdminStatsController {
         for (ChartPoint point : statisticsService.listRecentOrderTrend()) {
             series.getData().add(new XYChart.Data<String, Number>(point.getLabel(), point.getValue()));
         }
-        trendLineChart.getData().setAll(series);
+        trendLineChart.getData().clear();
+        trendLineChart.getData().add(series);
     }
 }

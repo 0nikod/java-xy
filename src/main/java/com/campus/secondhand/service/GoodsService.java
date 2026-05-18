@@ -33,6 +33,7 @@ public class GoodsService {
 
     public Goods publishGoods(User seller, String title, String category, double originalPrice, double currentPrice,
             int conditionLevel, String description) {
+        // 发布前先做身份、必填项和业务范围校验，避免脏数据进入数据库。
         assertSeller(seller);
         String normalizedTitle = normalizeRequired(title, "商品名称不能为空");
         String normalizedCategory = normalizeRequired(category, "商品分类不能为空");
@@ -86,6 +87,7 @@ public class GoodsService {
     }
 
     public Goods approveGoods(User admin, Long goodsId) {
+        // 审核通过只允许管理员处理待审核商品，审核后切换为在售状态并写入操作日志。
         ensureAdmin(admin);
         Goods goods = getGoodsDetail(goodsId);
         if (goods.getStatus() != GoodsStatus.PENDING) {
@@ -97,6 +99,7 @@ public class GoodsService {
     }
 
     public Goods offShelfGoods(User seller, Long goodsId) {
+        // 下架仅允许商品发布者操作，且已售商品不能再下架。
         assertSeller(seller);
         Goods goods = getGoodsDetail(goodsId);
         if (!goods.getSellerId().equals(seller.getId())) {
@@ -110,11 +113,13 @@ public class GoodsService {
     }
 
     public List<GoodsImage> listGoodsImages(Long goodsId) {
+        // 图片信息依附于商品存在，先校验商品是否存在再查询图片列表。
         getGoodsDetail(goodsId);
         return goodsImageDao.listByGoodsId(goodsId);
     }
 
     public void saveGoodsImages(User seller, Long goodsId, List<Path> sourcePaths, int primaryIndex) {
+        // 保存图片采用“先清空旧图，再落盘新图，再写数据库”的方式，避免图片与记录不一致。
         assertSeller(seller);
         Goods goods = getGoodsDetail(goodsId);
         if (!goods.getSellerId().equals(seller.getId())) {
@@ -159,6 +164,7 @@ public class GoodsService {
     }
 
     public void deleteGoods(User admin, Long goodsId, String reason) {
+        // 删除违规商品时要同步删除图片、商品记录并记录管理员日志，保证可追踪性。
         ensureAdmin(admin);
         Goods goods = getGoodsDetail(goodsId);
         String normalizedReason = normalizeRequired(reason, "删除原因不能为空");
@@ -184,10 +190,12 @@ public class GoodsService {
     }
 
     public String optimizeDescription(String description) {
+        // 商品描述优化由 AI 服务统一处理，控制器无需关心真实调用还是本地兜底。
         return aiService.optimizeDescription(description);
     }
 
     public String buildOperationsSummary() {
+        // 运营摘要用于后台首页展示，实际生成逻辑交给 AI 服务统一封装。
         return aiService.buildOperationsSummary("请生成一段适合管理员首页展示的通用运营摘要。");
     }
 

@@ -19,6 +19,7 @@ public final class DatabaseInitializer {
     }
 
     public static void initialize() {
+        // 启动时先确保数据库文件可用，再依次执行结构脚本和种子脚本。
         try {
             DBUtil.ensureDatabaseReady();
             executeScript(SCHEMA_RESOURCE);
@@ -31,6 +32,7 @@ public final class DatabaseInitializer {
     }
 
     private static void executeScript(String resourcePath) throws IOException, SQLException {
+        // 逐行读取资源脚本，忽略空行和单行注释，便于在 SQL 文件中保留说明文字。
         InputStream inputStream = DatabaseInitializer.class.getResourceAsStream(resourcePath);
         if (inputStream == null) {
             throw new IllegalStateException("找不到数据库脚本: " + resourcePath);
@@ -51,6 +53,7 @@ public final class DatabaseInitializer {
     }
 
     private static void runStatements(String script) throws SQLException {
+        // 采用分号切分的简化执行方式，适配当前项目的 DDL/DML 脚本。
         try (Connection connection = DBUtil.getConnection();
              Statement statement = connection.createStatement()) {
             String[] statements = script.split(";");

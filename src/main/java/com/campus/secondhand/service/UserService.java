@@ -37,6 +37,7 @@ public class UserService {
      * @throws BusinessException 当参数为空、用户名已存在或其他业务规则不满足时抛出
      */
     public User register(String username, String password, String phone) {
+        // 注册逻辑只做最小必需校验与密码哈希，避免把业务规则散落到控制器。
         String normalizedUsername = normalizeRequired(username, "用户名不能为空");
         String normalizedPassword = normalizeRequired(password, "密码不能为空");
         String normalizedPhone = normalizeRequired(phone, "联系方式不能为空");
@@ -65,6 +66,7 @@ public class UserService {
      * @throws BusinessException 当账号不存在、被封禁或密码错误时抛出
      */
     public User login(String username, String password) {
+        // 登录先查用户，再检查封禁状态，最后校验密码，顺序便于统一错误提示。
         String normalizedUsername = normalizeRequired(username, "用户名不能为空");
         String normalizedPassword = normalizeRequired(password, "密码不能为空");
 
@@ -98,6 +100,7 @@ public class UserService {
      * @return 用户列表
      */
     public List<User> listUsers(String keyword) {
+        // 用户管理页支持按用户名搜索，结果用于展示与封禁/解封操作。
         return userDao.listUsers(keyword);
     }
 
@@ -127,6 +130,7 @@ public class UserService {
      * 统一处理用户状态切换及管理员日志记录。
      */
     private User changeUserStatus(User admin, Long userId, UserStatus targetStatus, String action, String actionName) {
+        // 封禁/解封共享同一事务模板：先校验，再更新状态，最后写后台日志。
         ensureAdmin(admin);
         User targetUser = userDao.findById(userId);
         if (targetUser == null) {
@@ -162,6 +166,7 @@ public class UserService {
      * 校验必填文本并返回去除首尾空白后的结果。
      */
     private String normalizeRequired(String value, String message) {
+        // 统一去空格并校验非空，避免控制器重复写同样逻辑。
         if (value == null || value.trim().isEmpty()) {
             throw new BusinessException(message);
         }
@@ -172,6 +177,7 @@ public class UserService {
      * 校验当前操作者是否为管理员。
      */
     private void ensureAdmin(User user) {
+        // 所有后台用户管理操作都必须由管理员发起。
         if (user == null || user.getRole() != UserRole.ADMIN) {
             throw new BusinessException("只有管理员可以执行该操作");
         }

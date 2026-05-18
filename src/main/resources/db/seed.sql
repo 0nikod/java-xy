@@ -1,8 +1,10 @@
+-- 默认管理员与演示用户，便于首次启动后直接体验核心流程。
 INSERT OR IGNORE INTO users (id, username, password_hash, phone, role, status, created_at)
 VALUES
     (1, 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', '13800000000', 'ADMIN', 'NORMAL', '2026-05-17 00:00:00'),
     (2, 'demo_user', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '13900000000', 'USER', 'NORMAL', '2026-05-17 00:00:00');
 
+-- 演示商品：一条在售、一条待审核，覆盖首页与后台审核页面。
 INSERT OR IGNORE INTO goods (id, seller_id, title, category, original_price, current_price, condition_level, description, status, created_at, updated_at)
 VALUES
     (1, 2, '高等数学教材', '教材', 59.80, 29.90, 8, '八成新，适合课程复习使用，支持校园自提。', 'ON_SALE', '2026-05-17 00:00:00', '2026-05-17 00:00:00'),

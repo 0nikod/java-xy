@@ -25,6 +25,7 @@ public class OrderService {
     }
 
     public Order purchaseGoods(User buyer, Long goodsId) {
+        // 购买流程必须在一个事务中完成：检查商品、更新状态、创建订单，任何一步失败都回滚。
         if (buyer == null) {
             throw new BusinessException("请先登录");
         }
@@ -49,6 +50,7 @@ public class OrderService {
 
             goodsDao.markSold(connection, goodsId);
 
+            // 订单号由时间戳+随机片段组成，兼顾可读性和基本唯一性。
             Order order = new Order();
             order.setOrderNo(generateOrderNo());
             order.setGoodsId(goods.getId());
@@ -74,6 +76,7 @@ public class OrderService {
     }
 
     public List<Order> listPurchasedOrders(User buyer) {
+        // 个人中心“我的购买”列表。
         if (buyer == null) {
             throw new BusinessException("请先登录");
         }
@@ -81,6 +84,7 @@ public class OrderService {
     }
 
     public List<Order> listSoldOrders(User seller) {
+        // 个人中心“我的卖出”列表。
         if (seller == null) {
             throw new BusinessException("请先登录");
         }
@@ -88,6 +92,7 @@ public class OrderService {
     }
 
     private String generateOrderNo() {
+        // 订单号格式固定，便于日志、人眼排查和前端展示。
         String timePart = DateUtil.nowText().replace("-", "").replace(":", "").replace(" ", "");
         String randomPart = UUID.randomUUID().toString().replace("-", "").substring(0, 6).toUpperCase();
         return "ORD-" + timePart + "-" + randomPart;

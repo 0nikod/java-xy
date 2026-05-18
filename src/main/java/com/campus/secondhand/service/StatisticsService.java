@@ -26,6 +26,7 @@ public class StatisticsService {
      * 加载平台统计汇总。
      */
     public StatsSummary loadSummary() {
+        // 首页统计卡片和运营摘要共用该汇总数据。
         return statisticsDao.loadSummary();
     }
 
@@ -33,6 +34,7 @@ public class StatisticsService {
      * 查询用户概览列表。
      */
     public List<UserOverview> listUserOverviews(String keyword) {
+        // 用户管理页展示发布数和成交数时使用该列表。
         return statisticsDao.listUserOverviews(keyword);
     }
 
@@ -40,6 +42,7 @@ public class StatisticsService {
      * 查询商品分类统计。
      */
     public List<ChartPoint> listGoodsCategoryStats() {
+        // 分类分布图，反映平台商品结构。
         return statisticsDao.listGoodsCategoryStats();
     }
 
@@ -47,6 +50,7 @@ public class StatisticsService {
      * 查询商品状态统计。
      */
     public List<ChartPoint> listGoodsStatusStats() {
+        // 商品状态图，用于看待审核/在售/已售的整体比例。
         return statisticsDao.listGoodsStatusStats();
     }
 
@@ -54,6 +58,7 @@ public class StatisticsService {
      * 查询最近订单趋势。
      */
     public List<ChartPoint> listRecentOrderTrend() {
+        // 最近订单趋势图，通常用于展示交易活跃度变化。
         return statisticsDao.listRecentOrderTrend();
     }
 
@@ -78,6 +83,7 @@ public class StatisticsService {
     }
 
     private String buildStatsContext() {
+        // 将关键指标拼成一段自然语言，供 AI 或 Mock 摘要使用。
         StatsSummary summary = loadSummary();
         return String.format(
                 "当前共有 %d 位用户，其中正常 %d 位、封禁 %d 位；平台累计 %d 件商品，在售 %d 件、待审核 %d 件、已售 %d 件；累计订单 %d 笔，成交额 %.2f 元。",

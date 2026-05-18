@@ -14,6 +14,7 @@ import java.util.List;
 public class GoodsDao {
 
     public long insert(Goods goods) {
+        // 新增商品基础信息；图片信息由 goods_images 单独维护，避免主表过重。
         String sql = "INSERT INTO goods (seller_id, title, category, original_price, current_price, condition_level, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -33,6 +34,7 @@ public class GoodsDao {
     }
 
     public Goods findById(Long id) {
+        // 详情查询：联表带出卖家名称和主图路径，方便详情页/审核页直接展示。
         String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
                 "FROM goods g JOIN users u ON g.seller_id = u.id " +
                 "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 WHERE g.id = ?";
@@ -48,6 +50,7 @@ public class GoodsDao {
     }
 
     public List<Goods> listPendingGoods() {
+        // 后台审核页只看待审核商品，按发布时间倒序让最新内容优先处理。
         String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
                 "FROM goods g JOIN users u ON g.seller_id = u.id " +
                 "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 " +
@@ -56,6 +59,7 @@ public class GoodsDao {
     }
 
     public List<Goods> listUserPublishedGoods(Long sellerId) {
+        // 个人中心的“我的发布”列表，直接按卖家筛选。
         String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
                 "FROM goods g JOIN users u ON g.seller_id = u.id " +
                 "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 " +
@@ -72,6 +76,7 @@ public class GoodsDao {
     }
 
     public List<Goods> listPublicGoods(String keyword, String category, GoodsSortOption sortOption) {
+        // 首页商品列表只展示可见商品，同时排除被封禁卖家发布的内容。
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT g.*, u.username AS seller_username, u.status AS seller_status ")
                 .append(", gi.image_path AS primary_image_path ")
@@ -98,6 +103,7 @@ public class GoodsDao {
     }
 
     public int updateStatus(Long goodsId, GoodsStatus status) {
+        // 更新商品状态并同步更新时间，供审核、下架等业务复用。
         String sql = "UPDATE goods SET status = ?, updated_at = ? WHERE id = ?";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -111,6 +117,7 @@ public class GoodsDao {
     }
 
     public int markSold(Connection connection, Long goodsId) throws SQLException {
+        // 订单成交后将商品直接标记为已售，要求与订单写入在同一事务里完成。
         String sql = "UPDATE goods SET status = 'SOLD', updated_at = ? WHERE id = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, com.campus.secondhand.util.DateUtil.nowText());
@@ -120,6 +127,7 @@ public class GoodsDao {
     }
 
     public Goods loadById(Connection connection, Long id) throws SQLException {
+        // 事务内读取商品详情，避免购买流程中反复打开新连接。
         String sql = "SELECT g.*, u.username AS seller_username, u.status AS seller_status, gi.image_path AS primary_image_path " +
                 "FROM goods g JOIN users u ON g.seller_id = u.id " +
                 "LEFT JOIN goods_images gi ON gi.goods_id = g.id AND gi.is_primary = 1 WHERE g.id = ?";
@@ -132,6 +140,7 @@ public class GoodsDao {
     }
 
     public int insert(Connection connection, Goods goods) throws SQLException {
+        // 事务内新增商品，用于需要和其它表配合处理的业务场景。
         String sql = "INSERT INTO goods (seller_id, title, category, original_price, current_price, condition_level, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             bindGoodsInsert(ps, goods);
@@ -146,6 +155,7 @@ public class GoodsDao {
     }
 
     public int deleteById(Connection connection, Long goodsId) throws SQLException {
+        // 管理员删除违规商品时使用，配合事务统一清理关联记录。
         try (PreparedStatement ps = connection.prepareStatement("DELETE FROM goods WHERE id = ?")) {
             ps.setLong(1, goodsId);
             return ps.executeUpdate();
@@ -153,6 +163,7 @@ public class GoodsDao {
     }
 
     private void bindGoodsInsert(PreparedStatement ps, Goods goods) throws SQLException {
+        // 商品新增参数绑定，顺序与 insert SQL 保持一致。
         ps.setLong(1, goods.getSellerId());
         ps.setString(2, goods.getTitle());
         ps.setString(3, goods.getCategory());
@@ -166,6 +177,7 @@ public class GoodsDao {
     }
 
     private List<Goods> queryGoodsList(String sql, List<Object> params) {
+        // 统一的商品列表查询封装，支持动态参数绑定与结果映射。
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             if (params != null) {
@@ -193,6 +205,7 @@ public class GoodsDao {
     }
 
     private List<Goods> mapGoodsList(ResultSet rs) throws SQLException {
+        // 将 ResultSet 的多行结果转换为商品列表。
         List<Goods> goods = new ArrayList<Goods>();
         while (rs.next()) {
             goods.add(mapRow(rs));
@@ -201,6 +214,7 @@ public class GoodsDao {
     }
 
     private Goods mapGoods(ResultSet rs) throws SQLException {
+        // 单条查询：没有记录时返回 null，方便上层统一判断“商品不存在”。
         if (!rs.next()) {
             return null;
         }
@@ -208,6 +222,7 @@ public class GoodsDao {
     }
 
     private Goods mapRow(ResultSet rs) throws SQLException {
+        // 字段映射统一集中在这里，避免 SQL 变更时在多个位置散落修改。
         Goods goods = new Goods();
         goods.setId(rs.getLong("id"));
         goods.setSellerId(rs.getLong("seller_id"));

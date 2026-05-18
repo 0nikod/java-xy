@@ -15,6 +15,7 @@
 <BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.campus.secondhand.controller.AdminGoodsReviewController">
     <top>
+        <!-- 页面顶部：显示当前管理员身份与当前待审核商品的概要信息 -->
         <VBox spacing="10.0" styleClass="hero-panel">
             <padding>
                 <Insets top="18.0" right="22.0" bottom="18.0" left="22.0"/>
@@ -25,6 +26,7 @@
         </VBox>
     </top>
     <center>
+        <!-- 中间区域：待审核商品列表，选择一项后会联动下方详情与图片预览 -->
         <TableView fx:id="pendingTable">
             <columns>
                 <TableColumn fx:id="titleColumn" text="商品名称" prefWidth="180.0"/>
@@ -36,13 +38,16 @@
         </TableView>
     </center>
     <bottom>
+        <!-- 底部区域：审核操作、删除原因填写与商品图片查看 -->
         <VBox spacing="10.0" styleClass="hero-panel">
             <padding>
                 <Insets top="16.0" right="22.0" bottom="18.0" left="22.0"/>
             </padding>
             <Label text="删除原因" styleClass="section-label"/>
+            <!-- 删除违规商品时需要填写原因，方便写入管理员日志 -->
             <TextArea fx:id="deleteReasonArea" prefRowCount="3" wrapText="true" promptText="填写删除原因，仅删除违规商品时必填"/>
             <Label text="商品图片" styleClass="section-label"/>
+            <!-- 图片列表与预览图：用于快速核对商品是否存在违规内容 -->
             <ListView fx:id="imageListView" prefHeight="90.0"/>
             <ImageView fx:id="imagePreviewView" fitWidth="220.0" fitHeight="150.0" preserveRatio="true"/>
             <HBox spacing="10.0">

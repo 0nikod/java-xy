@@ -12,6 +12,7 @@ import java.util.List;
 public class ImageStorageService {
 
     public List<String> storeGoodsImages(Long goodsId, List<Path> sourcePaths) {
+        // 图片按商品编号独立存放，便于删除商品时一次性清理目录。
         if (sourcePaths == null || sourcePaths.isEmpty()) {
             return new ArrayList<String>();
         }
@@ -37,6 +38,7 @@ public class ImageStorageService {
     }
 
     public void deleteGoodsImages(Long goodsId) {
+        // 删除商品图片目录时，优先清空文件再删除目录，避免残留。
         Path goodsDir = AppConfig.resolveImageStorageRoot().resolve("goods-" + goodsId);
         if (!Files.exists(goodsDir)) {
             return;
@@ -50,6 +52,7 @@ public class ImageStorageService {
     }
 
     private void clearDirectory(Path directory) throws IOException {
+        // 只清理当前目录内容，不递归处理子目录；当前项目图片目录结构保持扁平。
         try (DirectoryStream<Path> stream = Files.newDirectoryStream(directory)) {
             for (Path path : stream) {
                 Files.deleteIfExists(path);

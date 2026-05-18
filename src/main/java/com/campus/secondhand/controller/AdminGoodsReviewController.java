@@ -23,6 +23,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * 管理员商品审核页控制器。
+ * <p>
+ * 负责把“待审核列表 → 详情展示 → 图片预览 → 审核/删除操作”串成完整交互流程。
+ */
 public class AdminGoodsReviewController {
 
     @FXML
@@ -62,6 +67,7 @@ public class AdminGoodsReviewController {
 
     @FXML
     private void initialize() {
+        // 初始化表格列、加载待审核商品、显示当前登录管理员信息，并绑定列表选择事件。
         configureTable();
         refreshPendingGoods();
         updateUserLabel();
@@ -77,6 +83,7 @@ public class AdminGoodsReviewController {
 
     @FXML
     private void handleApprove() {
+        // 只有选中商品后才能执行审核通过，审核通过后会刷新待审核列表。
         Goods selected = getSelectedGoods();
         if (selected == null) {
             AlertUtil.showWarning("提示", "请先选择一个待审核商品。");
@@ -93,11 +100,13 @@ public class AdminGoodsReviewController {
 
     @FXML
     private void handleBack() {
+        // 返回后台首页，避免停留在审核详情页。
         SceneManager.show("admin_home.fxml", AppConfig.getAppTitle());
     }
 
     @FXML
     private void handleDelete() {
+        // 删除违规商品前先校验是否已选择商品，再把删除原因一并提交给服务层记录日志。
         Goods selected = getSelectedGoods();
         if (selected == null) {
             AlertUtil.showWarning("提示", "请先选择一个商品。");
@@ -116,6 +125,7 @@ public class AdminGoodsReviewController {
     }
 
     private void configureTable() {
+        // 将表格列绑定到 Goods 属性，确保列表展示与实体字段一一对应。
         if (titleColumn != null) {
             titleColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("title"));
         }
@@ -134,6 +144,7 @@ public class AdminGoodsReviewController {
     }
 
     private void refreshPendingGoods() {
+        // 刷新待审核列表，同时在顶部显示当前数量，空列表时清空详情区。
         List<Goods> goods = goodsService.listPendingGoods();
         if (pendingTable != null) {
             pendingTable.setItems(FXCollections.observableArrayList(goods));
@@ -147,6 +158,7 @@ public class AdminGoodsReviewController {
     }
 
     private void showDetail(Goods goods) {
+        // 根据表格选择项展示商品详情，并同步加载图片列表与主图预览。
         if (goods == null) {
             if (detailLabel != null) {
                 detailLabel.setText("请选择一个待审核商品查看详情。");
@@ -183,14 +195,17 @@ public class AdminGoodsReviewController {
     }
 
     private Goods getSelectedGoods() {
+        // 统一从表格当前选择项获取审核目标。
         return pendingTable == null ? null : pendingTable.getSelectionModel().getSelectedItem();
     }
 
     private String getDeleteReason() {
+        // 删除原因允许为空值由服务层校验，这里只负责读取输入内容。
         return deleteReasonArea == null ? null : deleteReasonArea.getText();
     }
 
     private void updateUserLabel() {
+        // 显示当前管理员身份，便于确认操作归属。
         User currentUser = Session.getCurrentUser();
         if (currentUserLabel != null) {
             currentUserLabel.setText(currentUser == null ? "未登录" : "当前管理员：" + currentUser.getUsername());
@@ -198,6 +213,7 @@ public class AdminGoodsReviewController {
     }
 
     private void updatePreview(List<GoodsImage> images, int index) {
+        // 根据图片列表选中项更新预览图；越界或空选择时清空预览。
         if (imagePreviewView == null) {
             return;
         }
