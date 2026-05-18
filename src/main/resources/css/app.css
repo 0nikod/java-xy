@@ -1,6 +1,7 @@
 .root {
-    -fx-font-family: "System";
+    -fx-font-family: "Noto Sans CJK SC";
     -fx-background-color: linear-gradient(to bottom right, #f8f4ef, #e9efe7);
+}
 }
 
 .hero-panel {

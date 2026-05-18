@@ -23,8 +23,8 @@ public class DatabaseInitializerTest {
             Assert.assertTrue(Files.exists(dbPath));
 
             try (Connection connection = DBUtil.getConnection();
-                 Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS total FROM users")) {
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS total FROM users")) {
                 Assert.assertTrue(resultSet.next());
                 Assert.assertEquals(2, resultSet.getInt("total"));
             }

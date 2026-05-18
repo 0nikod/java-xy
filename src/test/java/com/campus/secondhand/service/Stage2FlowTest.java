@@ -56,7 +56,8 @@ public class Stage2FlowTest {
         userService.register("banned_user", "secret123", "13800138001");
 
         try (Connection connection = DBUtil.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE users SET status = 'BANNED' WHERE username = ?")) {
+                PreparedStatement ps = connection
+                        .prepareStatement("UPDATE users SET status = 'BANNED' WHERE username = ?")) {
             ps.setString(1, "banned_user");
             ps.executeUpdate();
         }
@@ -74,14 +75,14 @@ public class Stage2FlowTest {
         User buyer = userService.register("buyer", "buyer123", "13800138002");
         User admin = userService.login("admin", "admin123");
 
-        Goods published = goodsService.publishGoods(seller, "线性代数教材", "教材", 48.0, 24.0, 9, "八成新，带笔记。");
+        Goods published = goodsService.publishGoods(seller, "中型棉花娃娃", "棉花娃娃", 209.0, 189.0, 9, "20 cm 棉花娃娃");
         Assert.assertEquals(GoodsStatus.PENDING, goodsService.getGoodsDetail(published.getId()).getStatus());
 
         goodsService.approveGoods(admin, published.getId());
         Goods approved = goodsService.getGoodsDetail(published.getId());
         Assert.assertEquals(GoodsStatus.ON_SALE, approved.getStatus());
 
-        Assert.assertTrue(goodsService.listPublicGoods("线性代数", null, GoodsSortOption.LATEST)
+        Assert.assertTrue(goodsService.listPublicGoods("中型棉花娃娃", null, GoodsSortOption.LATEST)
                 .stream()
                 .anyMatch(goods -> goods.getId().equals(published.getId())));
 
@@ -92,7 +93,7 @@ public class Stage2FlowTest {
         Order reloadedOrder = new OrderDao().findByOrderNo(order.getOrderNo());
         Assert.assertNotNull(reloadedOrder);
         Assert.assertEquals(order.getOrderNo(), reloadedOrder.getOrderNo());
-        Assert.assertEquals("线性代数教材", reloadedOrder.getGoodsTitle());
+        Assert.assertEquals("中型棉花娃娃", reloadedOrder.getGoodsTitle());
     }
 
     @Test
@@ -103,7 +104,7 @@ public class Stage2FlowTest {
         User seller = userService.login("demo_user", "user123");
         User admin = userService.login("admin", "admin123");
 
-        Goods published = goodsService.publishGoods(seller, "被驳回教材", "教材", 20.0, 12.0, 6, "需要审核。");
+        Goods published = goodsService.publishGoods(seller, "坏掉的中型棉花娃娃", "棉花娃娃", 209.0, 189.0, 9, "这期拉了");
         goodsService.rejectGoods(admin, published.getId(), "图片不清晰");
 
         Goods rejected = goodsService.getGoodsDetail(published.getId());
