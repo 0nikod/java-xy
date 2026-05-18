@@ -7,14 +7,14 @@ import javafx.stage.Stage;
 
 public class MainApp extends Application {
 
-    @Override
-    public void start(Stage primaryStage) {
-        DatabaseInitializer.initialize();
-        SceneManager.initialize(primaryStage);
-        SceneManager.show("login.fxml", AppConfig.getAppTitle());
-    }
+	@Override
+	public void start(Stage primaryStage) {
+		DatabaseInitializer.initialize();
+		SceneManager.initialize(primaryStage);
+		SceneManager.show("login.fxml", AppConfig.getAppTitle());
+	}
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public static void main(String[] args) {
+		launch(args);
+	}
 }

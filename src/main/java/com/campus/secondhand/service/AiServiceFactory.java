@@ -9,15 +9,15 @@ import com.campus.secondhand.config.AppConfig;
  */
 public final class AiServiceFactory {
 
-    private AiServiceFactory() {
-    }
+	private AiServiceFactory() {
+	}
 
-    public static AiService create() {
-        // 未配置 OpenAI 时直接使用 Mock，确保离线环境也能演示。
-        if (!AppConfig.isOpenAiConfigured()) {
-            return new MockAiService();
-        }
-        // 已配置时使用真实服务 + Mock 兜底，兼顾效果与稳定性。
-        return new FallbackAiService(new OpenAiAiService(), new MockAiService());
-    }
+	public static AiService create() {
+		// 未配置 OpenAI 时直接使用 Mock，确保离线环境也能演示。
+		if (!AppConfig.isOpenAiConfigured()) {
+			return new MockAiService();
+		}
+		// 已配置时使用真实服务 + Mock 兜底，兼顾效果与稳定性。
+		return new FallbackAiService(new OpenAiAiService(), new MockAiService());
+	}
 }

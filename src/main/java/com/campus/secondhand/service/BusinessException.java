@@ -5,10 +5,10 @@ package com.campus.secondhand.service;
  */
 public class BusinessException extends RuntimeException {
 
-    /**
-     * 创建业务异常。
-     */
-    public BusinessException(String message) {
-        super(message);
-    }
+	/**
+	 * 创建业务异常。
+	 */
+	public BusinessException(String message) {
+		super(message);
+	}
 }

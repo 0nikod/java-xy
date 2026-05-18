@@ -6,21 +6,28 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.campus.secondhand.controller.AdminHomeController">
-    <center>
-        <VBox spacing="14.0" styleClass="hero-panel">
-            <padding>
-                <Insets top="28.0" right="32.0" bottom="28.0" left="32.0"/>
-            </padding>
-            <Label text="管理员后台" styleClass="title-text"/>
-            <Label fx:id="currentUserLabel" styleClass="subtitle-text"/>
-            <Label fx:id="summaryLabel" wrapText="true" styleClass="subtitle-text"/>
-            <Button text="待审核商品" onAction="#handleReviewGoods" styleClass="primary-button"/>
-            <Button text="用户管理" onAction="#handleManageUsers" styleClass="secondary-button"/>
-            <Button text="平台统计" onAction="#handleViewStats" styleClass="secondary-button"/>
-            <Button text="操作日志" onAction="#handleViewLogs" styleClass="secondary-button"/>
-            <Button text="退出登录" onAction="#handleLogout" styleClass="secondary-button"/>
-        </VBox>
-    </center>
+<BorderPane xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.AdminHomeController">
+	<center>
+		<VBox spacing="14.0" styleClass="hero-panel">
+			<padding>
+				<Insets top="28.0" right="32.0" bottom="28.0" left="32.0" />
+			</padding>
+			<Label text="管理员后台" styleClass="title-text" />
+			<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			<Label fx:id="summaryLabel" wrapText="true"
+				styleClass="subtitle-text" />
+			<Button text="待审核商品" onAction="#handleReviewGoods"
+				styleClass="primary-button" />
+			<Button text="用户管理" onAction="#handleManageUsers"
+				styleClass="secondary-button" />
+			<Button text="平台统计" onAction="#handleViewStats"
+				styleClass="secondary-button" />
+			<Button text="操作日志" onAction="#handleViewLogs"
+				styleClass="secondary-button" />
+			<Button text="退出登录" onAction="#handleLogout"
+				styleClass="secondary-button" />
+		</VBox>
+	</center>
 </BorderPane>

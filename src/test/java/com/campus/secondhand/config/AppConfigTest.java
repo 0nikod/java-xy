@@ -6,14 +6,14 @@ import org.junit.Test;
 
 public class AppConfigTest {
 
-    @Test
-    public void resolveImageStorageRootShouldRespectConfiguredDirectory() {
-        System.setProperty("SECONDHAND_IMAGE_DIR", "build/test-images");
-        try {
-            Path root = AppConfig.resolveImageStorageRoot();
-            Assert.assertTrue(root.toString().endsWith("build/test-images"));
-        } finally {
-            System.clearProperty("SECONDHAND_IMAGE_DIR");
-        }
-    }
+	@Test
+	public void resolveImageStorageRootShouldRespectConfiguredDirectory() {
+		System.setProperty("SECONDHAND_IMAGE_DIR", "build/test-images");
+		try {
+			Path root = AppConfig.resolveImageStorageRoot();
+			Assert.assertTrue(root.toString().endsWith("build/test-images"));
+		} finally {
+			System.clearProperty("SECONDHAND_IMAGE_DIR");
+		}
+	}
 }

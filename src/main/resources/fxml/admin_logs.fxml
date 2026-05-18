@@ -9,31 +9,40 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.campus.secondhand.controller.AdminLogController">
-    <top>
-        <VBox spacing="10.0" styleClass="hero-panel">
-            <padding>
-                <Insets top="18.0" right="22.0" bottom="18.0" left="22.0"/>
-            </padding>
-            <Label text="管理员操作日志" styleClass="title-text"/>
-            <Label fx:id="currentUserLabel" styleClass="subtitle-text"/>
-            <HBox spacing="10.0">
-                <Button text="刷新" onAction="#handleRefresh" styleClass="primary-button"/>
-                <Button text="返回" onAction="#handleBack" styleClass="secondary-button"/>
-            </HBox>
-        </VBox>
-    </top>
-    <center>
-        <TableView fx:id="logTable">
-            <columns>
-                <TableColumn fx:id="adminColumn" text="管理员" prefWidth="140.0"/>
-                <TableColumn fx:id="actionColumn" text="操作类型" prefWidth="150.0"/>
-                <TableColumn fx:id="targetTypeColumn" text="对象类型" prefWidth="120.0"/>
-                <TableColumn fx:id="targetIdColumn" text="对象ID" prefWidth="90.0"/>
-                <TableColumn fx:id="detailColumn" text="操作内容" prefWidth="320.0"/>
-                <TableColumn fx:id="createdAtColumn" text="操作时间" prefWidth="180.0"/>
-            </columns>
-        </TableView>
-    </center>
+<BorderPane xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.AdminLogController">
+	<top>
+		<VBox spacing="10.0" styleClass="hero-panel">
+			<padding>
+				<Insets top="18.0" right="22.0" bottom="18.0" left="22.0" />
+			</padding>
+			<Label text="管理员操作日志" styleClass="title-text" />
+			<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			<HBox spacing="10.0">
+				<Button text="刷新" onAction="#handleRefresh"
+					styleClass="primary-button" />
+				<Button text="返回" onAction="#handleBack"
+					styleClass="secondary-button" />
+			</HBox>
+		</VBox>
+	</top>
+	<center>
+		<TableView fx:id="logTable">
+			<columns>
+				<TableColumn fx:id="adminColumn" text="管理员"
+					prefWidth="140.0" />
+				<TableColumn fx:id="actionColumn" text="操作类型"
+					prefWidth="150.0" />
+				<TableColumn fx:id="targetTypeColumn" text="对象类型"
+					prefWidth="120.0" />
+				<TableColumn fx:id="targetIdColumn" text="对象ID"
+					prefWidth="90.0" />
+				<TableColumn fx:id="detailColumn" text="操作内容"
+					prefWidth="320.0" />
+				<TableColumn fx:id="createdAtColumn" text="操作时间"
+					prefWidth="180.0" />
+			</columns>
+		</TableView>
+	</center>
 </BorderPane>

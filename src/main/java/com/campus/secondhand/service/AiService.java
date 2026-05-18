@@ -2,7 +2,7 @@ package com.campus.secondhand.service;
 
 public interface AiService {
 
-    String optimizeDescription(String rawDescription);
+	String optimizeDescription(String rawDescription);
 
-    String buildOperationsSummary(String context);
+	String buildOperationsSummary(String context);
 }

@@ -5,16 +5,16 @@ import java.util.Date;
 
 public final class DateUtil {
 
-    private static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	private static final String DEFAULT_PATTERN = "yyyy-MM-dd HH:mm:ss";
 
-    private DateUtil() {
-    }
+	private DateUtil() {
+	}
 
-    public static String nowText() {
-        return format(new Date());
-    }
+	public static String nowText() {
+		return format(new Date());
+	}
 
-    public static String format(Date date) {
-        return new SimpleDateFormat(DEFAULT_PATTERN).format(date);
-    }
+	public static String format(Date date) {
+		return new SimpleDateFormat(DEFAULT_PATTERN).format(date);
+	}
 }

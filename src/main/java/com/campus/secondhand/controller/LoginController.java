@@ -14,47 +14,47 @@ import javafx.scene.control.TextField;
 
 public class LoginController {
 
-    @FXML
-    private TextField usernameField;
+	@FXML
+	private TextField usernameField;
 
-    @FXML
-    private PasswordField passwordField;
+	@FXML
+	private PasswordField passwordField;
 
-    @FXML
-    private Label hintLabel;
+	@FXML
+	private Label hintLabel;
 
-    private final UserService userService = new UserService();
+	private final UserService userService = new UserService();
 
-    @FXML
-    private void initialize() {
-        if (hintLabel != null) {
-            hintLabel.setText("使用 admin/admin123 登录管理员后台，使用 demo_user/user123 登录普通用户首页。");
-        }
-    }
+	@FXML
+	private void initialize() {
+		if (hintLabel != null) {
+			hintLabel.setText("使用 admin/admin123 登录管理员后台，使用 demo_user/user123 登录普通用户首页。");
+		}
+	}
 
-    @FXML
-    private void handleLogin() {
-        try {
-            User user = userService.login(text(usernameField), text(passwordField));
-            Session.setCurrentUser(user);
-            if (user.getRole() == UserRole.ADMIN) {
-                SceneManager.show("admin_home.fxml", AppConfig.getAppTitle());
-            } else {
-                SceneManager.show("home.fxml", AppConfig.getAppTitle());
-            }
-        } catch (BusinessException ex) {
-            if (hintLabel != null) {
-                hintLabel.setText(ex.getMessage());
-            }
-        }
-    }
+	@FXML
+	private void handleLogin() {
+		try {
+			User user = userService.login(text(usernameField), text(passwordField));
+			Session.setCurrentUser(user);
+			if (user.getRole() == UserRole.ADMIN) {
+				SceneManager.show("admin_home.fxml", AppConfig.getAppTitle());
+			} else {
+				SceneManager.show("home.fxml", AppConfig.getAppTitle());
+			}
+		} catch (BusinessException ex) {
+			if (hintLabel != null) {
+				hintLabel.setText(ex.getMessage());
+			}
+		}
+	}
 
-    @FXML
-    private void handleRegister() {
-        SceneManager.show("register.fxml", AppConfig.getAppTitle());
-    }
+	@FXML
+	private void handleRegister() {
+		SceneManager.show("register.fxml", AppConfig.getAppTitle());
+	}
 
-    private String text(TextField field) {
-        return field == null ? null : field.getText();
-    }
+	private String text(TextField field) {
+		return field == null ? null : field.getText();
+	}
 }

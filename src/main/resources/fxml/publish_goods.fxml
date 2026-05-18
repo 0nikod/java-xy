@@ -11,32 +11,43 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.campus.secondhand.controller.PublishGoodsController">
-    <center>
-        <VBox spacing="10.0" styleClass="hero-panel">
-            <padding>
-                <Insets top="24.0" right="28.0" bottom="24.0" left="28.0"/>
-            </padding>
-            <Label text="发布商品" styleClass="title-text"/>
-            <Label fx:id="currentUserLabel" styleClass="subtitle-text"/>
-            <TextField fx:id="titleField" promptText="商品名称"/>
-            <ChoiceBox fx:id="categoryBox"/>
-            <TextField fx:id="originalPriceField" promptText="原价"/>
-            <TextField fx:id="currentPriceField" promptText="现价"/>
-            <TextField fx:id="conditionField" promptText="新旧程度 1-10"/>
-            <TextArea fx:id="descriptionArea" prefRowCount="6" wrapText="true" promptText="商品描述"/>
-            <Button text="AI 优化描述" onAction="#handleOptimize" styleClass="secondary-button"/>
-            <TextArea fx:id="aiSuggestionArea" prefRowCount="4" wrapText="true" editable="false" promptText="AI 建议会显示在这里"/>
-            <Label text="商品图片（0-3 张）" styleClass="section-label"/>
-            <Label fx:id="imageSummaryLabel" text="已选择 0 张图片。" styleClass="subtitle-text"/>
-            <ListView fx:id="imageListView" prefHeight="100.0"/>
-            <ImageView fx:id="imagePreviewView" fitWidth="220.0" fitHeight="160.0" preserveRatio="true"/>
-            <Button text="添加图片" onAction="#handleAddImages" styleClass="secondary-button"/>
-            <Button text="删除所选图片" onAction="#handleRemoveImage" styleClass="secondary-button"/>
-            <Button text="设为主图" onAction="#handleSetPrimaryImage" styleClass="secondary-button"/>
-            <Button text="提交审核" onAction="#handleSubmit" styleClass="primary-button"/>
-            <Button text="返回首页" onAction="#handleBack" styleClass="secondary-button"/>
-        </VBox>
-    </center>
+<BorderPane xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.PublishGoodsController">
+	<center>
+		<VBox spacing="10.0" styleClass="hero-panel">
+			<padding>
+				<Insets top="24.0" right="28.0" bottom="24.0" left="28.0" />
+			</padding>
+			<Label text="发布商品" styleClass="title-text" />
+			<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			<TextField fx:id="titleField" promptText="商品名称" />
+			<ChoiceBox fx:id="categoryBox" />
+			<TextField fx:id="originalPriceField" promptText="原价" />
+			<TextField fx:id="currentPriceField" promptText="现价" />
+			<TextField fx:id="conditionField" promptText="新旧程度 1-10" />
+			<TextArea fx:id="descriptionArea" prefRowCount="6"
+				wrapText="true" promptText="商品描述" />
+			<Button text="AI 优化描述" onAction="#handleOptimize"
+				styleClass="secondary-button" />
+			<TextArea fx:id="aiSuggestionArea" prefRowCount="4"
+				wrapText="true" editable="false" promptText="AI 建议会显示在这里" />
+			<Label text="商品图片（0-3 张）" styleClass="section-label" />
+			<Label fx:id="imageSummaryLabel" text="已选择 0 张图片。"
+				styleClass="subtitle-text" />
+			<ListView fx:id="imageListView" prefHeight="100.0" />
+			<ImageView fx:id="imagePreviewView" fitWidth="220.0"
+				fitHeight="160.0" preserveRatio="true" />
+			<Button text="添加图片" onAction="#handleAddImages"
+				styleClass="secondary-button" />
+			<Button text="删除所选图片" onAction="#handleRemoveImage"
+				styleClass="secondary-button" />
+			<Button text="设为主图" onAction="#handleSetPrimaryImage"
+				styleClass="secondary-button" />
+			<Button text="提交审核" onAction="#handleSubmit"
+				styleClass="primary-button" />
+			<Button text="返回首页" onAction="#handleBack"
+				styleClass="secondary-button" />
+		</VBox>
+	</center>
 </BorderPane>

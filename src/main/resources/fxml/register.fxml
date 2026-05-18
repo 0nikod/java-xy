@@ -8,20 +8,26 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox alignment="CENTER" spacing="14.0" styleClass="hero-panel"
-      xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.campus.secondhand.controller.RegisterController">
-    <padding>
-        <Insets top="36.0" right="48.0" bottom="36.0" left="48.0"/>
-    </padding>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.RegisterController">
+	<padding>
+		<Insets top="36.0" right="48.0" bottom="36.0" left="48.0" />
+	</padding>
 
-    <Label text="用户注册" styleClass="title-text"/>
-    <Label text="填写用户名、密码和联系方式后即可注册。 " styleClass="subtitle-text"/>
+	<Label text="用户注册" styleClass="title-text" />
+	<Label text="填写用户名、密码和联系方式后即可注册。 " styleClass="subtitle-text" />
 
-    <TextField fx:id="usernameField" promptText="用户名" maxWidth="320.0"/>
-    <PasswordField fx:id="passwordField" promptText="密码" maxWidth="320.0"/>
-    <TextField fx:id="phoneField" promptText="联系方式" maxWidth="320.0"/>
+	<TextField fx:id="usernameField" promptText="用户名"
+		maxWidth="320.0" />
+	<PasswordField fx:id="passwordField" promptText="密码"
+		maxWidth="320.0" />
+	<TextField fx:id="phoneField" promptText="联系方式"
+		maxWidth="320.0" />
 
-    <Button text="提交注册" onAction="#handleRegister" styleClass="primary-button" maxWidth="320.0"/>
-    <Button text="返回登录" onAction="#handleBackToLogin" styleClass="secondary-button" maxWidth="320.0"/>
-    <Label fx:id="hintLabel" wrapText="true" maxWidth="320.0" styleClass="subtitle-text"/>
+	<Button text="提交注册" onAction="#handleRegister"
+		styleClass="primary-button" maxWidth="320.0" />
+	<Button text="返回登录" onAction="#handleBackToLogin"
+		styleClass="secondary-button" maxWidth="320.0" />
+	<Label fx:id="hintLabel" wrapText="true" maxWidth="320.0"
+		styleClass="subtitle-text" />
 </VBox>

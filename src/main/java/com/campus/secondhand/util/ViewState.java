@@ -4,20 +4,20 @@ import com.campus.secondhand.model.Goods;
 
 public final class ViewState {
 
-    private static volatile Goods selectedGoods;
+	private static volatile Goods selectedGoods;
 
-    private ViewState() {
-    }
+	private ViewState() {
+	}
 
-    public static Goods getSelectedGoods() {
-        return selectedGoods;
-    }
+	public static Goods getSelectedGoods() {
+		return selectedGoods;
+	}
 
-    public static void setSelectedGoods(Goods goods) {
-        selectedGoods = goods;
-    }
+	public static void setSelectedGoods(Goods goods) {
+		selectedGoods = goods;
+	}
 
-    public static void clearSelectedGoods() {
-        selectedGoods = null;
-    }
+	public static void clearSelectedGoods() {
+		selectedGoods = null;
+	}
 }
