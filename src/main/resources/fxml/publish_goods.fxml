@@ -9,45 +9,81 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane styleClass="page-shell"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.PublishGoodsController">
-	<center>
-		<VBox spacing="10.0" styleClass="hero-panel">
-			<padding>
-				<Insets top="24.0" right="28.0" bottom="24.0" left="28.0" />
-			</padding>
-			<Label text="发布商品" styleClass="title-text" />
+	<top>
+		<VBox spacing="4.0" styleClass="toolbar-panel">
+			<Label text="发布商品" styleClass="page-title" />
 			<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
-			<TextField fx:id="titleField" promptText="商品名称" />
-			<ChoiceBox fx:id="categoryBox" />
-			<TextField fx:id="originalPriceField" promptText="原价" />
-			<TextField fx:id="currentPriceField" promptText="现价" />
-			<TextField fx:id="conditionField" promptText="新旧程度 1-10" />
-			<TextArea fx:id="descriptionArea" prefRowCount="6"
-				wrapText="true" promptText="商品描述" />
-			<Button text="AI 优化描述" onAction="#handleOptimize"
-				styleClass="secondary-button" />
-			<TextArea fx:id="aiSuggestionArea" prefRowCount="4"
-				wrapText="true" editable="false" promptText="AI 建议会显示在这里" />
-			<Label text="商品图片（0-3 张）" styleClass="section-label" />
-			<Label fx:id="imageSummaryLabel" text="已选择 0 张图片。"
-				styleClass="subtitle-text" />
-			<ListView fx:id="imageListView" prefHeight="100.0" />
-			<ImageView fx:id="imagePreviewView" fitWidth="220.0"
-				fitHeight="160.0" preserveRatio="true" />
-			<Button text="添加图片" onAction="#handleAddImages"
-				styleClass="secondary-button" />
-			<Button text="删除所选图片" onAction="#handleRemoveImage"
-				styleClass="secondary-button" />
-			<Button text="设为主图" onAction="#handleSetPrimaryImage"
-				styleClass="secondary-button" />
-			<Button text="提交审核" onAction="#handleSubmit"
-				styleClass="primary-button" />
-			<Button text="返回首页" onAction="#handleBack"
-				styleClass="secondary-button" />
 		</VBox>
+	</top>
+	<center>
+		<HBox spacing="16.0">
+			<padding>
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
+			</padding>
+			<VBox spacing="14.0" styleClass="plain-panel"
+				HBox.hgrow="ALWAYS">
+				<Label text="基本信息" styleClass="section-label" />
+				<GridPane hgap="12.0" vgap="10.0">
+					<Label text="商品名称" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="0" />
+					<TextField fx:id="titleField" promptText="清晰填写商品名"
+						GridPane.columnIndex="1" GridPane.rowIndex="0" />
+					<Label text="分类" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="1" />
+					<ChoiceBox fx:id="categoryBox" prefWidth="220.0"
+						GridPane.columnIndex="1" GridPane.rowIndex="1" />
+					<Label text="原价" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="2" />
+					<TextField fx:id="originalPriceField" promptText="数字"
+						GridPane.columnIndex="1" GridPane.rowIndex="2" />
+					<Label text="现价" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="3" />
+					<TextField fx:id="currentPriceField" promptText="数字"
+						GridPane.columnIndex="1" GridPane.rowIndex="3" />
+					<Label text="新旧程度" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="4" />
+					<TextField fx:id="conditionField" promptText="1-10"
+						GridPane.columnIndex="1" GridPane.rowIndex="4" />
+				</GridPane>
+				<Label text="商品描述" styleClass="section-label" />
+				<TextArea fx:id="descriptionArea" prefRowCount="7"
+					wrapText="true" promptText="写明版本、使用情况、交易方式和瑕疵" />
+				<HBox spacing="10.0">
+					<Button text="AI 优化描述" onAction="#handleOptimize"
+						styleClass="secondary-button" />
+					<Button text="提交审核" onAction="#handleSubmit"
+						styleClass="primary-button" />
+					<Button text="返回首页" onAction="#handleBack"
+						styleClass="secondary-button" />
+				</HBox>
+				<TextArea fx:id="aiSuggestionArea" prefRowCount="4"
+					wrapText="true" editable="false" promptText="AI 建议会显示在这里" />
+			</VBox>
+			<VBox spacing="12.0" prefWidth="300.0" styleClass="plain-panel">
+				<Label text="商品图片" styleClass="section-label" />
+				<Label text="最多 3 张，设为主图后会在列表中优先展示。"
+					styleClass="subtitle-text" wrapText="true" />
+				<Label fx:id="imageSummaryLabel" text="已选择 0 张图片。"
+					styleClass="status-text" />
+				<ListView fx:id="imageListView" prefHeight="140.0"
+					VBox.vgrow="ALWAYS" />
+				<ImageView fx:id="imagePreviewView" fitWidth="260.0"
+					fitHeight="180.0" preserveRatio="true" styleClass="image-preview" />
+				<Button text="添加图片" onAction="#handleAddImages"
+					styleClass="secondary-button" maxWidth="260.0" />
+				<Button text="删除所选图片" onAction="#handleRemoveImage"
+					styleClass="danger-button" maxWidth="260.0" />
+				<Button text="设为主图" onAction="#handleSetPrimaryImage"
+					styleClass="secondary-button" maxWidth="260.0" />
+			</VBox>
+		</HBox>
 	</center>
 </BorderPane>

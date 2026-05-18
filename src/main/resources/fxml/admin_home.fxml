@@ -4,30 +4,44 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane styleClass="page-shell"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.AdminHomeController">
 	<center>
-		<VBox spacing="14.0" styleClass="hero-panel">
+		<VBox spacing="18.0" styleClass="hero-panel">
 			<padding>
-				<Insets top="28.0" right="32.0" bottom="28.0" left="32.0" />
+				<Insets top="34.0" right="42.0" bottom="34.0" left="42.0" />
 			</padding>
-			<Label text="管理员后台" styleClass="title-text" />
-			<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			<VBox spacing="6.0">
+				<Label text="管理员后台" styleClass="title-text" />
+				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			</VBox>
 			<Label fx:id="summaryLabel" wrapText="true"
-				styleClass="subtitle-text" />
-			<Button text="待审核商品" onAction="#handleReviewGoods"
-				styleClass="primary-button" />
-			<Button text="用户管理" onAction="#handleManageUsers"
-				styleClass="secondary-button" />
-			<Button text="平台统计" onAction="#handleViewStats"
-				styleClass="secondary-button" />
-			<Button text="操作日志" onAction="#handleViewLogs"
-				styleClass="secondary-button" />
-			<Button text="退出登录" onAction="#handleLogout"
-				styleClass="secondary-button" />
+				styleClass="status-text" />
+			<HBox spacing="14.0">
+				<VBox spacing="10.0" styleClass="plain-panel">
+					<Label text="审核与治理" styleClass="section-label" />
+					<Button text="待审核商品" onAction="#handleReviewGoods"
+						styleClass="primary-button" maxWidth="220.0" />
+					<Button text="用户管理" onAction="#handleManageUsers"
+						styleClass="secondary-button" maxWidth="220.0" />
+				</VBox>
+				<VBox spacing="10.0" styleClass="plain-panel">
+					<Label text="运营观察" styleClass="section-label" />
+					<Button text="平台统计" onAction="#handleViewStats"
+						styleClass="secondary-button" maxWidth="220.0" />
+					<Button text="操作日志" onAction="#handleViewLogs"
+						styleClass="secondary-button" maxWidth="220.0" />
+				</VBox>
+				<VBox spacing="10.0" styleClass="plain-panel">
+					<Label text="账号" styleClass="section-label" />
+					<Button text="退出登录" onAction="#handleLogout"
+						styleClass="danger-button" maxWidth="220.0" />
+				</VBox>
+			</HBox>
 		</VBox>
 	</center>
 </BorderPane>

@@ -5,29 +5,45 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="14.0" styleClass="hero-panel"
+<BorderPane styleClass="auth-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.RegisterController">
-	<padding>
-		<Insets top="36.0" right="48.0" bottom="36.0" left="48.0" />
-	</padding>
-
-	<Label text="用户注册" styleClass="title-text" />
-	<Label text="填写用户名、密码和联系方式后即可注册。 " styleClass="subtitle-text" />
-
-	<TextField fx:id="usernameField" promptText="用户名"
-		maxWidth="320.0" />
-	<PasswordField fx:id="passwordField" promptText="密码"
-		maxWidth="320.0" />
-	<TextField fx:id="phoneField" promptText="联系方式"
-		maxWidth="320.0" />
-
-	<Button text="提交注册" onAction="#handleRegister"
-		styleClass="primary-button" maxWidth="320.0" />
-	<Button text="返回登录" onAction="#handleBackToLogin"
-		styleClass="secondary-button" maxWidth="320.0" />
-	<Label fx:id="hintLabel" wrapText="true" maxWidth="320.0"
-		styleClass="subtitle-text" />
-</VBox>
+	<center>
+		<VBox alignment="CENTER_LEFT" maxWidth="560.0" spacing="18.0"
+			styleClass="hero-panel">
+			<padding>
+				<Insets top="42.0" right="52.0" bottom="42.0" left="52.0" />
+			</padding>
+			<Label text="创建普通用户账号" styleClass="title-text" />
+			<Label text="填写登录信息和联系方式。注册成功后可直接返回登录页进入系统。"
+				styleClass="subtitle-text" wrapText="true" />
+			<VBox spacing="8.0">
+				<Label text="用户名" styleClass="field-label" />
+				<TextField fx:id="usernameField" promptText="例如：zhangsan"
+					maxWidth="440.0" />
+			</VBox>
+			<VBox spacing="8.0">
+				<Label text="密码" styleClass="field-label" />
+				<PasswordField fx:id="passwordField"
+					promptText="请输入密码" maxWidth="440.0" />
+			</VBox>
+			<VBox spacing="8.0">
+				<Label text="联系方式" styleClass="field-label" />
+				<TextField fx:id="phoneField" promptText="手机号或校内联系方式"
+					maxWidth="440.0" />
+			</VBox>
+			<HBox spacing="12.0">
+				<Button text="提交注册" onAction="#handleRegister"
+					styleClass="primary-button" />
+				<Button text="返回登录" onAction="#handleBackToLogin"
+					styleClass="secondary-button" />
+			</HBox>
+			<Label fx:id="hintLabel" wrapText="true" maxWidth="440.0"
+				styleClass="status-text" />
+		</VBox>
+	</center>
+</BorderPane>

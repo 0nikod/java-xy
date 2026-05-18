@@ -14,68 +14,78 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane styleClass="page-shell"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.AdminStatsController">
 	<top>
-		<VBox spacing="10.0" styleClass="hero-panel">
-			<padding>
-				<Insets top="18.0" right="22.0" bottom="18.0" left="22.0" />
-			</padding>
-			<Label text="平台统计与图表" styleClass="title-text" />
-			<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+		<VBox spacing="12.0" styleClass="toolbar-panel">
+			<VBox spacing="4.0">
+				<Label text="平台统计" styleClass="page-title" />
+				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			</VBox>
 			<Label fx:id="statsCardLabel" wrapText="true"
-				styleClass="subtitle-text" />
+				styleClass="status-text" />
 			<Label fx:id="aiSummaryLabel" wrapText="true"
 				styleClass="subtitle-text" />
 			<HBox spacing="10.0">
 				<Button text="刷新统计" onAction="#handleRefresh"
 					styleClass="primary-button" />
-				<Button text="返回" onAction="#handleBack"
+				<Button text="返回后台" onAction="#handleBack"
 					styleClass="secondary-button" />
 			</HBox>
 		</VBox>
 	</top>
 	<center>
-		<VBox spacing="14.0">
+		<VBox spacing="16.0">
 			<padding>
-				<Insets top="14.0" right="18.0" bottom="14.0" left="18.0" />
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
 			</padding>
 			<HBox spacing="14.0">
-				<PieChart fx:id="categoryPieChart" prefWidth="300.0"
-					prefHeight="240.0" />
-				<BarChart fx:id="statusBarChart" prefWidth="300.0"
-					prefHeight="240.0">
-					<xAxis>
-						<CategoryAxis label="商品状态" />
-					</xAxis>
-					<yAxis>
-						<NumberAxis label="数量" />
-					</yAxis>
-				</BarChart>
-				<LineChart fx:id="trendLineChart" prefWidth="300.0"
-					prefHeight="240.0">
-					<xAxis>
-						<CategoryAxis label="日期" />
-					</xAxis>
-					<yAxis>
-						<NumberAxis label="订单数" />
-					</yAxis>
-				</LineChart>
+				<VBox spacing="6.0" styleClass="plain-panel">
+					<Label text="商品分类" styleClass="section-label" />
+					<PieChart fx:id="categoryPieChart" prefWidth="280.0"
+						prefHeight="230.0" />
+				</VBox>
+				<VBox spacing="6.0" styleClass="plain-panel">
+					<Label text="商品状态" styleClass="section-label" />
+					<BarChart fx:id="statusBarChart" prefWidth="280.0"
+						prefHeight="230.0">
+						<xAxis>
+							<CategoryAxis label="状态" />
+						</xAxis>
+						<yAxis>
+							<NumberAxis label="数量" />
+						</yAxis>
+					</BarChart>
+				</VBox>
+				<VBox spacing="6.0" styleClass="plain-panel">
+					<Label text="最近成交" styleClass="section-label" />
+					<LineChart fx:id="trendLineChart" prefWidth="280.0"
+						prefHeight="230.0">
+						<xAxis>
+							<CategoryAxis label="日期" />
+						</xAxis>
+						<yAxis>
+							<NumberAxis label="订单数" />
+						</yAxis>
+					</LineChart>
+				</VBox>
 			</HBox>
-			<Label text="详细统计表" styleClass="section-label" />
-			<TableView fx:id="detailTable" prefHeight="220.0">
-				<columns>
-					<TableColumn fx:id="detailUserColumn" text="用户名"
-						prefWidth="180.0" />
-					<TableColumn fx:id="detailStatusColumn" text="状态"
-						prefWidth="120.0" />
-					<TableColumn fx:id="detailGoodsCountColumn"
-						text="发布商品数" prefWidth="140.0" />
-					<TableColumn fx:id="detailSoldCountColumn" text="成交数"
-						prefWidth="120.0" />
-				</columns>
-			</TableView>
+			<VBox spacing="10.0">
+				<Label text="用户交易概览" styleClass="section-label" />
+				<TableView fx:id="detailTable" prefHeight="220.0">
+					<columns>
+						<TableColumn fx:id="detailUserColumn" text="用户名"
+							prefWidth="200.0" />
+						<TableColumn fx:id="detailStatusColumn" text="状态"
+							prefWidth="120.0" />
+						<TableColumn fx:id="detailGoodsCountColumn"
+							text="发布商品数" prefWidth="150.0" />
+						<TableColumn fx:id="detailSoldCountColumn" text="成交数"
+							prefWidth="120.0" />
+					</columns>
+				</TableView>
+			</VBox>
 		</VBox>
 	</center>
 </BorderPane>

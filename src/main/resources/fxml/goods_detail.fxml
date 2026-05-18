@@ -7,40 +7,46 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane styleClass="page-shell"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.GoodsDetailController">
 	<center>
-		<VBox spacing="12.0" styleClass="hero-panel">
-			<padding>
-				<Insets top="28.0" right="32.0" bottom="28.0" left="32.0" />
-			</padding>
-			<Label fx:id="titleLabel" styleClass="title-text" />
-			<Label fx:id="categoryLabel" styleClass="subtitle-text" />
-			<Label fx:id="priceLabel" styleClass="subtitle-text" />
-			<Label fx:id="conditionLabel" styleClass="subtitle-text" />
-			<Label fx:id="sellerLabel" styleClass="subtitle-text" />
-			<Label fx:id="statusLabel" styleClass="subtitle-text" />
-			<Label fx:id="createdAtLabel" styleClass="subtitle-text" />
-			<Label text="商品描述" styleClass="section-label" />
-			<TextArea fx:id="descriptionArea" prefRowCount="8"
-				wrapText="true" editable="false" />
-			<Label text="商品图片" styleClass="section-label" />
-			<ListView fx:id="imageListView" prefHeight="120.0" />
-			<ImageView fx:id="imagePreviewView" fitWidth="240.0"
-				fitHeight="180.0" preserveRatio="true" />
-			<VBox spacing="10.0">
-				<Button fx:id="buyButton" text="立即购买" onAction="#handleBuy"
-					styleClass="primary-button" />
-				<Button text="加入购物车（未开放）" onAction="#handleCartPlaceholder"
-					styleClass="secondary-button" />
-				<Button text="查看评价（未开放）" onAction="#handleReviewPlaceholder"
-					styleClass="secondary-button" />
-				<Button text="返回列表" onAction="#handleBack"
-					styleClass="secondary-button" />
+		<HBox spacing="18.0">
+			<VBox spacing="14.0" styleClass="plain-panel"
+				HBox.hgrow="ALWAYS">
+				<Label fx:id="titleLabel" styleClass="title-text"
+					wrapText="true" />
+				<VBox spacing="6.0">
+					<Label fx:id="categoryLabel" styleClass="subtitle-text" />
+					<Label fx:id="priceLabel" styleClass="status-text" />
+					<Label fx:id="conditionLabel" styleClass="subtitle-text" />
+					<Label fx:id="sellerLabel" styleClass="subtitle-text" />
+					<Label fx:id="statusLabel" styleClass="subtitle-text" />
+					<Label fx:id="createdAtLabel" styleClass="subtitle-text" />
+				</VBox>
+				<Label text="商品描述" styleClass="section-label" />
+				<TextArea fx:id="descriptionArea" prefRowCount="10"
+					wrapText="true" editable="false" />
+				<HBox spacing="10.0">
+					<Button fx:id="buyButton" text="立即购买" onAction="#handleBuy"
+						styleClass="primary-button" />
+					<Button text="加入购物车（未开放）" onAction="#handleCartPlaceholder"
+						styleClass="secondary-button" />
+					<Button text="查看评价（未开放）" onAction="#handleReviewPlaceholder"
+						styleClass="secondary-button" />
+					<Button text="返回列表" onAction="#handleBack"
+						styleClass="secondary-button" />
+				</HBox>
 			</VBox>
-		</VBox>
+			<VBox spacing="12.0" prefWidth="320.0" styleClass="plain-panel">
+				<Label text="商品图片" styleClass="section-label" />
+				<ImageView fx:id="imagePreviewView" fitWidth="280.0"
+					fitHeight="240.0" preserveRatio="true" styleClass="image-preview" />
+				<ListView fx:id="imageListView" prefHeight="180.0" />
+			</VBox>
+		</HBox>
 	</center>
 </BorderPane>

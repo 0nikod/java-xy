@@ -1,45 +1,151 @@
 .root {
-    -fx-font-family: "Noto Sans CJK SC";
-    -fx-background-color: linear-gradient(to bottom right, #f8f4ef, #e9efe7);
+    -fx-font-family: "Noto Sans CJK SC", "Microsoft YaHei", "SimSun";
+    -fx-background-color: linear-gradient(to bottom right, #eef2ec, #dfe8e2);
+    -fx-text-fill: #1f2a2e;
 }
+
+.page-shell {
+    -fx-padding: 22;
+}
+
+.auth-shell {
+    -fx-padding: 56 72 56 72;
 }
 
 .hero-panel {
-    -fx-background-color: rgba(255, 255, 255, 0.82);
-    -fx-background-radius: 18;
-    -fx-border-radius: 18;
+    -fx-background-color: rgba(255, 255, 255, 0.92);
+    -fx-background-radius: 22;
+    -fx-border-color: rgba(43, 76, 69, 0.16);
+    -fx-border-radius: 22;
     -fx-padding: 28;
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.12), 24, 0.18, 0, 8);
+    -fx-effect: dropshadow(gaussian, rgba(20, 39, 34, 0.16), 26, 0.18, 0, 10);
+}
+
+.plain-panel {
+    -fx-background-color: rgba(255, 255, 255, 0.78);
+    -fx-background-radius: 18;
+    -fx-border-color: rgba(43, 76, 69, 0.12);
+    -fx-border-radius: 18;
+    -fx-padding: 18;
+}
+
+.toolbar-panel {
+    -fx-background-color: rgba(255, 255, 255, 0.88);
+    -fx-background-radius: 18;
+    -fx-border-color: rgba(43, 76, 69, 0.14);
+    -fx-border-radius: 18;
+    -fx-padding: 16 18 16 18;
 }
 
 .title-text {
     -fx-font-size: 30px;
     -fx-font-weight: bold;
-    -fx-text-fill: #22303a;
+    -fx-text-fill: #1f2a2e;
 }
 
-.subtitle-text {
-    -fx-font-size: 14px;
-    -fx-text-fill: #51606b;
+.page-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1f2a2e;
 }
 
 .section-label {
-    -fx-font-size: 18px;
+    -fx-font-size: 17px;
     -fx-font-weight: bold;
-    -fx-text-fill: #22303a;
+    -fx-text-fill: #243331;
+}
+
+.subtitle-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #5c6a68;
+}
+
+.muted-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: #71817e;
+}
+
+.status-text {
+    -fx-font-size: 13px;
+    -fx-text-fill: #2f665b;
+    -fx-background-color: rgba(47, 102, 91, 0.1);
+    -fx-background-radius: 10;
+    -fx-padding: 7 10 7 10;
+}
+
+.field-label {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #40504d;
+}
+
+.text-field,
+.password-field,
+.text-area,
+.choice-box,
+.list-view {
+    -fx-background-color: #fbfcfa;
+    -fx-background-radius: 10;
+    -fx-border-color: #cfd9d4;
+    -fx-border-radius: 10;
+    -fx-padding: 8;
+}
+
+.text-area {
+    -fx-padding: 0;
+}
+
+.table-view {
+    -fx-background-color: rgba(255, 255, 255, 0.92);
+    -fx-background-radius: 16;
+    -fx-border-color: rgba(43, 76, 69, 0.14);
+    -fx-border-radius: 16;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #e2ebe6;
+    -fx-background-radius: 16 16 0 0;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #cfe4dc;
 }
 
 .primary-button {
-    -fx-background-color: #2b6f62;
+    -fx-background-color: #245f54;
     -fx-text-fill: white;
-    -fx-background-radius: 8;
+    -fx-background-radius: 10;
     -fx-padding: 10 18 10 18;
+    -fx-font-weight: bold;
 }
 
 .secondary-button {
-    -fx-background-color: transparent;
-    -fx-border-color: #2b6f62;
-    -fx-border-radius: 8;
-    -fx-text-fill: #2b6f62;
+    -fx-background-color: rgba(36, 95, 84, 0.08);
+    -fx-border-color: rgba(36, 95, 84, 0.42);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #245f54;
     -fx-padding: 10 18 10 18;
+}
+
+.danger-button {
+    -fx-background-color: rgba(144, 61, 52, 0.1);
+    -fx-border-color: rgba(144, 61, 52, 0.52);
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #903d34;
+    -fx-padding: 10 18 10 18;
+    -fx-font-weight: bold;
+}
+
+.image-preview {
+    -fx-background-color: #eef3ef;
+    -fx-background-radius: 14;
+    -fx-border-color: #ccd8d1;
+    -fx-border-radius: 14;
 }
