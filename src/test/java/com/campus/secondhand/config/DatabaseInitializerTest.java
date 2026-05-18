@@ -28,6 +28,18 @@ public class DatabaseInitializerTest {
                 Assert.assertTrue(resultSet.next());
                 Assert.assertEquals(2, resultSet.getInt("total"));
             }
+
+            try (Connection connection = DBUtil.getConnection();
+                    Statement statement = connection.createStatement();
+                    ResultSet resultSet = statement.executeQuery("PRAGMA table_info(goods)")) {
+                boolean hasRejectReason = false;
+                while (resultSet.next()) {
+                    if ("reject_reason".equals(resultSet.getString("name"))) {
+                        hasRejectReason = true;
+                    }
+                }
+                Assert.assertFalse("goods 表不应再包含 reject_reason 列", hasRejectReason);
+            }
         } finally {
             System.clearProperty("SECONDHAND_DB_PATH");
         }

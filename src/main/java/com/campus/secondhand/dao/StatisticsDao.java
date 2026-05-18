@@ -29,7 +29,6 @@ public class StatisticsDao {
         summary.setOnSaleGoods(queryInt("SELECT COUNT(*) FROM goods WHERE status = 'ON_SALE'"));
         summary.setSoldGoods(queryInt("SELECT COUNT(*) FROM goods WHERE status = 'SOLD'"));
         summary.setOffShelfGoods(queryInt("SELECT COUNT(*) FROM goods WHERE status = 'OFF_SHELF'"));
-        summary.setRejectedGoods(queryInt("SELECT COUNT(*) FROM goods WHERE status = 'REJECTED'"));
         summary.setTotalOrders(queryInt("SELECT COUNT(*) FROM orders"));
         summary.setTotalRevenue(queryDouble("SELECT COALESCE(SUM(deal_price), 0) FROM orders"));
         return summary;

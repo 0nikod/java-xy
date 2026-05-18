@@ -40,14 +40,13 @@
             <padding>
                 <Insets top="16.0" right="22.0" bottom="18.0" left="22.0"/>
             </padding>
-            <Label text="驳回原因" styleClass="section-label"/>
-            <TextArea fx:id="rejectReasonArea" prefRowCount="3" wrapText="true" promptText="填写驳回原因"/>
+            <Label text="删除原因" styleClass="section-label"/>
+            <TextArea fx:id="deleteReasonArea" prefRowCount="3" wrapText="true" promptText="填写删除原因，仅删除违规商品时必填"/>
             <Label text="商品图片" styleClass="section-label"/>
             <ListView fx:id="imageListView" prefHeight="90.0"/>
             <ImageView fx:id="imagePreviewView" fitWidth="220.0" fitHeight="150.0" preserveRatio="true"/>
             <HBox spacing="10.0">
                 <Button text="审核通过" onAction="#handleApprove" styleClass="primary-button"/>
-                <Button text="驳回商品" onAction="#handleReject" styleClass="secondary-button"/>
                 <Button text="删除违规商品" onAction="#handleDelete" styleClass="secondary-button"/>
                 <Button text="返回后台" onAction="#handleBack" styleClass="secondary-button"/>
             </HBox>

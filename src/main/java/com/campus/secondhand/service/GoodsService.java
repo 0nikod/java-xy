@@ -91,20 +91,8 @@ public class GoodsService {
         if (goods.getStatus() != GoodsStatus.PENDING) {
             throw new BusinessException("只有待审核商品才能审核通过");
         }
-        goodsDao.updateStatus(goodsId, GoodsStatus.ON_SALE, null);
+        goodsDao.updateStatus(goodsId, GoodsStatus.ON_SALE);
         recordAdminLog(admin, "APPROVE_GOODS", "GOODS", goodsId, "审核通过商品：" + goods.getTitle());
-        return getGoodsDetail(goodsId);
-    }
-
-    public Goods rejectGoods(User admin, Long goodsId, String rejectReason) {
-        ensureAdmin(admin);
-        Goods goods = getGoodsDetail(goodsId);
-        if (goods.getStatus() != GoodsStatus.PENDING) {
-            throw new BusinessException("只有待审核商品才能驳回");
-        }
-        String reason = normalizeRequired(rejectReason, "驳回原因不能为空");
-        goodsDao.updateStatus(goodsId, GoodsStatus.REJECTED, reason);
-        recordAdminLog(admin, "REJECT_GOODS", "GOODS", goodsId, "驳回商品：" + goods.getTitle() + "，原因：" + reason);
         return getGoodsDetail(goodsId);
     }
 
@@ -117,7 +105,7 @@ public class GoodsService {
         if (goods.getStatus() == GoodsStatus.SOLD) {
             throw new BusinessException("已售出商品不能下架");
         }
-        goodsDao.updateStatus(goodsId, GoodsStatus.OFF_SHELF, null);
+        goodsDao.updateStatus(goodsId, GoodsStatus.OFF_SHELF);
         return getGoodsDetail(goodsId);
     }
 

@@ -20,7 +20,6 @@ CREATE TABLE IF NOT EXISTS goods (
     condition_level INTEGER NOT NULL,
     description TEXT NOT NULL,
     status TEXT NOT NULL DEFAULT 'PENDING',
-    reject_reason TEXT,
     created_at TEXT NOT NULL,
     updated_at TEXT NOT NULL,
     FOREIGN KEY (seller_id) REFERENCES users(id)

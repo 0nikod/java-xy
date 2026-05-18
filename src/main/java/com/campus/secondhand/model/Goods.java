@@ -13,7 +13,6 @@ public class Goods {
     private Integer conditionLevel;
     private String description;
     private GoodsStatus status;
-    private String rejectReason;
     private String createdAt;
     private String updatedAt;
     private String primaryImagePath;
@@ -104,14 +103,6 @@ public class Goods {
 
     public void setStatus(GoodsStatus status) {
         this.status = status;
-    }
-
-    public String getRejectReason() {
-        return rejectReason;
-    }
-
-    public void setRejectReason(String rejectReason) {
-        this.rejectReason = rejectReason;
     }
 
     public String getCreatedAt() {

@@ -23,7 +23,6 @@
             <Label fx:id="sellerLabel" styleClass="subtitle-text"/>
             <Label fx:id="statusLabel" styleClass="subtitle-text"/>
             <Label fx:id="createdAtLabel" styleClass="subtitle-text"/>
-            <Label fx:id="rejectReasonLabel" styleClass="subtitle-text"/>
             <Label text="商品描述" styleClass="section-label"/>
             <TextArea fx:id="descriptionArea" prefRowCount="8" wrapText="true" editable="false"/>
             <Label text="商品图片" styleClass="section-label"/>

@@ -4,6 +4,5 @@ public enum GoodsStatus {
     PENDING,
     ON_SALE,
     SOLD,
-    OFF_SHELF,
-    REJECTED
+    OFF_SHELF
 }

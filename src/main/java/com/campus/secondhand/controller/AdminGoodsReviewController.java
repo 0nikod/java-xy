@@ -50,7 +50,7 @@ public class AdminGoodsReviewController {
     private TableColumn<Goods, String> statusColumn;
 
     @FXML
-    private TextArea rejectReasonArea;
+    private TextArea deleteReasonArea;
 
     @FXML
     private ListView<String> imageListView;
@@ -92,25 +92,6 @@ public class AdminGoodsReviewController {
     }
 
     @FXML
-    private void handleReject() {
-        Goods selected = getSelectedGoods();
-        if (selected == null) {
-            AlertUtil.showWarning("提示", "请先选择一个待审核商品。");
-            return;
-        }
-        try {
-            goodsService.rejectGoods(Session.getCurrentUser(), selected.getId(), getRejectReason());
-            AlertUtil.showInfo("已驳回", "商品已驳回并写入原因。");
-            if (rejectReasonArea != null) {
-                rejectReasonArea.clear();
-            }
-            refreshPendingGoods();
-        } catch (BusinessException ex) {
-            AlertUtil.showWarning("驳回失败", ex.getMessage());
-        }
-    }
-
-    @FXML
     private void handleBack() {
         SceneManager.show("admin_home.fxml", AppConfig.getAppTitle());
     }
@@ -123,10 +104,10 @@ public class AdminGoodsReviewController {
             return;
         }
         try {
-            goodsService.deleteGoods(Session.getCurrentUser(), selected.getId(), getRejectReason());
+            goodsService.deleteGoods(Session.getCurrentUser(), selected.getId(), getDeleteReason());
             AlertUtil.showInfo("删除成功", "违规商品已删除并写入日志。");
-            if (rejectReasonArea != null) {
-                rejectReasonArea.clear();
+            if (deleteReasonArea != null) {
+                deleteReasonArea.clear();
             }
             refreshPendingGoods();
         } catch (BusinessException ex) {
@@ -205,8 +186,8 @@ public class AdminGoodsReviewController {
         return pendingTable == null ? null : pendingTable.getSelectionModel().getSelectedItem();
     }
 
-    private String getRejectReason() {
-        return rejectReasonArea == null ? null : rejectReasonArea.getText();
+    private String getDeleteReason() {
+        return deleteReasonArea == null ? null : deleteReasonArea.getText();
     }
 
     private void updateUserLabel() {

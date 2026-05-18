@@ -14,7 +14,7 @@ import java.util.List;
 public class GoodsDao {
 
     public long insert(Goods goods) {
-        String sql = "INSERT INTO goods (seller_id, title, category, original_price, current_price, condition_level, description, status, reject_reason, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO goods (seller_id, title, category, original_price, current_price, condition_level, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             bindGoodsInsert(ps, goods);
@@ -97,14 +97,13 @@ public class GoodsDao {
         return queryGoodsList(sql.toString(), params);
     }
 
-    public int updateStatus(Long goodsId, GoodsStatus status, String rejectReason) {
-        String sql = "UPDATE goods SET status = ?, reject_reason = ?, updated_at = ? WHERE id = ?";
+    public int updateStatus(Long goodsId, GoodsStatus status) {
+        String sql = "UPDATE goods SET status = ?, updated_at = ? WHERE id = ?";
         try (Connection connection = DBUtil.getConnection();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, status.name());
-            ps.setString(2, rejectReason);
-            ps.setString(3, com.campus.secondhand.util.DateUtil.nowText());
-            ps.setLong(4, goodsId);
+            ps.setString(2, com.campus.secondhand.util.DateUtil.nowText());
+            ps.setLong(3, goodsId);
             return ps.executeUpdate();
         } catch (SQLException e) {
             throw new IllegalStateException("更新商品状态失败", e);
@@ -133,7 +132,7 @@ public class GoodsDao {
     }
 
     public int insert(Connection connection, Goods goods) throws SQLException {
-        String sql = "INSERT INTO goods (seller_id, title, category, original_price, current_price, condition_level, description, status, reject_reason, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO goods (seller_id, title, category, original_price, current_price, condition_level, description, status, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
             bindGoodsInsert(ps, goods);
             int affected = ps.executeUpdate();
@@ -162,9 +161,8 @@ public class GoodsDao {
         ps.setInt(6, goods.getConditionLevel());
         ps.setString(7, goods.getDescription());
         ps.setString(8, goods.getStatus().name());
-        ps.setString(9, goods.getRejectReason());
-        ps.setString(10, goods.getCreatedAt());
-        ps.setString(11, goods.getUpdatedAt());
+        ps.setString(9, goods.getCreatedAt());
+        ps.setString(10, goods.getUpdatedAt());
     }
 
     private List<Goods> queryGoodsList(String sql, List<Object> params) {
@@ -222,7 +220,6 @@ public class GoodsDao {
         goods.setConditionLevel(rs.getInt("condition_level"));
         goods.setDescription(rs.getString("description"));
         goods.setStatus(GoodsStatus.valueOf(rs.getString("status")));
-        goods.setRejectReason(rs.getString("reject_reason"));
         goods.setCreatedAt(rs.getString("created_at"));
         goods.setUpdatedAt(rs.getString("updated_at"));
         goods.setPrimaryImagePath(rs.getString("primary_image_path"));

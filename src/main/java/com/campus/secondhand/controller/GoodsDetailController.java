@@ -5,7 +5,6 @@ import com.campus.secondhand.config.AppConfig;
 import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.GoodsImage;
 import com.campus.secondhand.model.User;
-import com.campus.secondhand.model.GoodsStatus;
 import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.service.OrderService;
@@ -44,9 +43,6 @@ public class GoodsDetailController {
 
     @FXML
     private Label createdAtLabel;
-
-    @FXML
-    private Label rejectReasonLabel;
 
     @FXML
     private TextArea descriptionArea;
@@ -125,9 +121,6 @@ public class GoodsDetailController {
         }
         if (createdAtLabel != null) {
             createdAtLabel.setText("发布时间：" + latest.getCreatedAt());
-        }
-        if (rejectReasonLabel != null) {
-            rejectReasonLabel.setText(latest.getStatus() == GoodsStatus.REJECTED && latest.getRejectReason() != null ? "驳回原因：" + latest.getRejectReason() : "");
         }
         if (descriptionArea != null) {
             descriptionArea.setText(latest.getDescription());

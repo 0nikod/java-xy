@@ -1,7 +1,7 @@
 package com.campus.secondhand.service;
 
 import com.campus.secondhand.config.DatabaseInitializer;
-import com.campus.secondhand.dao.GoodsDao;
+import com.campus.secondhand.model.AdminLog;
 import com.campus.secondhand.dao.OrderDao;
 import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.GoodsSortOption;
@@ -16,6 +16,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -97,18 +98,26 @@ public class Stage2FlowTest {
     }
 
     @Test
-    public void rejectedGoodsShouldKeepReason() {
+    public void adminShouldDeleteViolationGoodsWithReason() {
         UserService userService = new UserService();
         GoodsService goodsService = new GoodsService();
+        AdminLogService adminLogService = new AdminLogService();
 
         User seller = userService.login("demo_user", "user123");
         User admin = userService.login("admin", "admin123");
 
         Goods published = goodsService.publishGoods(seller, "损坏的平板壳", "数码", 59.0, 19.0, 4, "边缘磨损严重");
-        goodsService.rejectGoods(admin, published.getId(), "图片不清晰");
+        goodsService.deleteGoods(admin, published.getId(), "图片不清晰");
 
-        Goods rejected = goodsService.getGoodsDetail(published.getId());
-        Assert.assertEquals(GoodsStatus.REJECTED, rejected.getStatus());
-        Assert.assertEquals("图片不清晰", rejected.getRejectReason());
+        try {
+            goodsService.getGoodsDetail(published.getId());
+            Assert.fail("删除后的违规商品不应继续存在");
+        } catch (BusinessException expected) {
+            Assert.assertEquals("商品不存在", expected.getMessage());
+        }
+
+        List<AdminLog> logs = adminLogService.listRecent();
+        Assert.assertTrue(logs.stream()
+                .anyMatch(log -> "DELETE_GOODS".equals(log.getAction()) && log.getDetail().contains("图片不清晰")));
     }
 }

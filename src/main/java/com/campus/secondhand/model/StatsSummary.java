@@ -13,7 +13,6 @@ public class StatsSummary {
     private int onSaleGoods;
     private int soldGoods;
     private int offShelfGoods;
-    private int rejectedGoods;
     private int totalOrders;
     private double totalRevenue;
 
@@ -79,14 +78,6 @@ public class StatsSummary {
 
     public void setOffShelfGoods(int offShelfGoods) {
         this.offShelfGoods = offShelfGoods;
-    }
-
-    public int getRejectedGoods() {
-        return rejectedGoods;
-    }
-
-    public void setRejectedGoods(int rejectedGoods) {
-        this.rejectedGoods = rejectedGoods;
     }
 
     public int getTotalOrders() {
