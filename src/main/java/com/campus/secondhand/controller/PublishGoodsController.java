@@ -125,7 +125,7 @@ public class PublishGoodsController {
         }
         FileChooser chooser = new FileChooser();
         chooser.setTitle("选择商品图片");
-        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("图片文件", "*.png", "*.jpg", "*.jpeg", "*.gif"));
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("图片文件", "*.png", "*.jpg", "*.jpeg"));
         Stage stage = SceneManager.getPrimaryStage();
         List<java.io.File> files = chooser.showOpenMultipleDialog(stage);
         if (files == null || files.isEmpty()) {

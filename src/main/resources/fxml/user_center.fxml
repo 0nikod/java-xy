@@ -22,6 +22,7 @@
             <HBox spacing="10.0">
                 <Button text="刷新" onAction="#handleRefresh" styleClass="primary-button"/>
                 <Button text="下架所选商品" onAction="#handleOffShelf" styleClass="secondary-button"/>
+                <Button text="我的评价（未开放）" onAction="#handleReviewPlaceholder" styleClass="secondary-button"/>
                 <Button text="返回首页" onAction="#handleBack" styleClass="secondary-button"/>
             </HBox>
         </VBox>

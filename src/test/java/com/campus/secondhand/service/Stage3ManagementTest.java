@@ -43,14 +43,18 @@ public class Stage3ManagementTest {
         User admin = userService.login("admin", "admin123");
         User seller = userService.login("demo_user", "user123");
         User buyer = userService.register("stage3_buyer", "buyer123", "13800138003");
+        int soldBefore = orderService.listSoldOrders(seller).size();
+        int purchasedBefore = orderService.listPurchasedOrders(buyer).size();
 
         Goods goods = goodsService.publishGoods(seller, "离散数学教材", "教材", 68.0, 36.0, 8, "适合期末复习");
         goodsService.approveGoods(admin, goods.getId());
         Order order = orderService.purchaseGoods(buyer, goods.getId());
 
-        Assert.assertEquals(1, orderService.listPurchasedOrders(buyer).size());
-        Assert.assertEquals(1, orderService.listSoldOrders(seller).size());
-        Assert.assertEquals(order.getOrderNo(), orderService.listSoldOrders(seller).get(0).getOrderNo());
+        Assert.assertEquals(purchasedBefore + 1, orderService.listPurchasedOrders(buyer).size());
+        Assert.assertEquals(soldBefore + 1, orderService.listSoldOrders(seller).size());
+        Assert.assertTrue(orderService.listSoldOrders(seller)
+                .stream()
+                .anyMatch(item -> order.getOrderNo().equals(item.getOrderNo())));
     }
 
     @Test

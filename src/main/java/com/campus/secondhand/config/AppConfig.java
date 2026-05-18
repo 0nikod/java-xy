@@ -37,7 +37,20 @@ public final class AppConfig {
     }
 
     public static Path resolveImageStorageRoot() {
-        return Paths.get(System.getProperty("user.dir")).resolve("data/images").normalize();
+        String configuredPath = System.getProperty("SECONDHAND_IMAGE_DIR");
+        if (configuredPath == null || configuredPath.trim().isEmpty()) {
+            configuredPath = System.getenv("SECONDHAND_IMAGE_DIR");
+        }
+        Path path;
+        if (configuredPath == null || configuredPath.trim().isEmpty()) {
+            path = Paths.get("data/images");
+        } else {
+            path = Paths.get(configuredPath.trim());
+        }
+        if (path.isAbsolute()) {
+            return path.normalize();
+        }
+        return Paths.get(System.getProperty("user.dir")).resolve(path).normalize();
     }
 
     public static String getOpenAiApiKey() {

@@ -2,10 +2,18 @@
 INSERT OR IGNORE INTO users (id, username, password_hash, phone, role, status, created_at)
 VALUES
     (1, 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', '13800000000', 'ADMIN', 'NORMAL', '2026-05-17 00:00:00'),
-    (2, 'demo_user', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '13900000000', 'USER', 'NORMAL', '2026-05-17 00:00:00');
+    (2, 'demo_user', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '13900000000', 'USER', 'NORMAL', '2026-05-17 00:00:00'),
+    (3, 'demo_buyer', 'e547bd13228250dfb4c7df1d1ebb78cfd9f2ada56ebb0c425d35829dd3ac4ae8', '13700000000', 'USER', 'NORMAL', '2026-05-17 00:00:00');
 
--- 演示商品：一条在售、一条待审核，覆盖首页与后台审核页面。
+-- 演示商品：覆盖在售、待审核、已售和有图/无图两种场景。
 INSERT OR IGNORE INTO goods (id, seller_id, title, category, original_price, current_price, condition_level, description, status, created_at, updated_at)
 VALUES
     (1, 2, '高等数学教材', '教材', 59.80, 29.90, 8, '八成新，适合课程复习使用，支持校园自提。', 'ON_SALE', '2026-05-17 00:00:00', '2026-05-17 00:00:00'),
-    (2, 2, '二手平板电脑', '数码', 1999.00, 1099.00, 7, '正常使用，无暗病，附充电器。', 'PENDING', '2026-05-17 00:00:00', '2026-05-17 00:00:00');
+    (2, 2, '二手平板电脑', '数码', 1999.00, 1099.00, 7, '正常使用，无暗病，附充电器。', 'PENDING', '2026-05-17 00:00:00', '2026-05-17 00:00:00'),
+    (3, 2, '英语听力耳机', '数码', 129.00, 69.00, 9, '适合晚自习使用，接口正常。', 'ON_SALE', '2026-05-17 00:00:00', '2026-05-17 00:00:00'),
+    (4, 2, '数据结构笔记', '教材', 35.00, 18.00, 8, '重点章节整理完整，适合期末冲刺。', 'SOLD', '2026-05-17 00:00:00', '2026-05-17 00:00:00');
+
+-- 演示订单：确保个人中心、统计页和答辩流程有现成成交数据。
+INSERT OR IGNORE INTO orders (id, order_no, goods_id, buyer_id, seller_id, deal_price, status, created_at)
+VALUES
+    (1, 'ORD-20260517000000-DEMO01', 4, 3, 2, 18.00, 'FINISHED', '2026-05-17 00:00:00');

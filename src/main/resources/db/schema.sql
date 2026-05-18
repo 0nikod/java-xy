@@ -43,6 +43,22 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (seller_id) REFERENCES users(id)
 );
 
+-- 评价表：首版仅做结构预留，后续扩展时基于订单补充评价流程。
+CREATE TABLE IF NOT EXISTS reviews (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id INTEGER NOT NULL UNIQUE,
+    goods_id INTEGER NOT NULL,
+    reviewer_id INTEGER NOT NULL,
+    seller_id INTEGER NOT NULL,
+    rating INTEGER NOT NULL,
+    content TEXT NOT NULL,
+    created_at TEXT NOT NULL,
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (goods_id) REFERENCES goods(id),
+    FOREIGN KEY (reviewer_id) REFERENCES users(id),
+    FOREIGN KEY (seller_id) REFERENCES users(id)
+);
+
 -- 商品图片表：支持最多多张图片，并可标记主图用于列表展示。
 CREATE TABLE IF NOT EXISTS goods_images (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

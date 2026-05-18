@@ -98,6 +98,16 @@ public class GoodsDetailController {
         SceneManager.show("home.fxml", AppConfig.getAppTitle());
     }
 
+    @FXML
+    private void handleCartPlaceholder() {
+        AlertUtil.showInfo("后续开放", "购物车功能已预留入口，将在后续扩展中实现。");
+    }
+
+    @FXML
+    private void handleReviewPlaceholder() {
+        AlertUtil.showInfo("后续开放", "评价功能已预留入口，将在后续扩展中实现。");
+    }
+
     private void refreshDetail() {
         Goods latest = goodsService.getGoodsDetail(goods.getId());
         goods = latest;

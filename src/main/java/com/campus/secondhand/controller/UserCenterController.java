@@ -106,6 +106,11 @@ public class UserCenterController {
         SceneManager.show("home.fxml", AppConfig.getAppTitle());
     }
 
+    @FXML
+    private void handleReviewPlaceholder() {
+        AlertUtil.showInfo("后续开放", "我的评价与收到的评价将在后续扩展中开放。");
+    }
+
     private void configureTables() {
         if (publishedTitleColumn != null) {
             publishedTitleColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("title"));
