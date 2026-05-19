@@ -13,7 +13,15 @@ VALUES
     (3, 2, '墨绿色棉花娃娃', '其他', 69.00, 39.00, 9, '看起来很酷。', 'ON_SALE', '2026-05-17 00:00:00', '2026-05-17 00:00:00'),
     (4, 2, '数据结构笔记', '教材', 35.00, 18.00, 8, '重点章节整理完整，适合期末冲刺。', 'SOLD', '2026-05-17 00:00:00', '2026-05-17 00:00:00');
 
+-- 演示商品图片：每个商品一张主图，路径指向运行时图片目录。
+INSERT OR REPLACE INTO goods_images (id, goods_id, image_path, is_primary, display_order)
+VALUES
+    (1, 1, 'data/images/good-1/image_1.png', 1, 0),
+    (2, 2, 'data/images/good-2/image_1.png', 1, 0),
+    (3, 3, 'data/images/good-3/image_1.png', 1, 0);
+
 -- 演示订单：确保个人中心、统计页和答辩流程有现成成交数据。
 INSERT OR IGNORE INTO orders (id, order_no, goods_id, buyer_id, seller_id, deal_price, status, created_at)
 VALUES
     (1, 'ORD-20260517000000-DEMO01', 4, 3, 2, 18.00, 'FINISHED', '2026-05-17 00:00:00');
+
