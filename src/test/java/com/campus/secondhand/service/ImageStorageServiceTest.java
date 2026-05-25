@@ -14,20 +14,23 @@ import org.junit.Test;
 public class ImageStorageServiceTest {
 
 	@Test
-	public void storeGoodsImagesShouldRespectConfiguredDirectory() throws Exception {
-		// 临时目录用于模拟图片存储根目录。
+	public void storeGoodsImagesShouldReturnRuntimeRelativePathWhenUnderWorkingDirectory() throws Exception {
+		// 默认图片目录应落在运行目录下，并返回可迁移的相对路径。
+		String originalUserDir = System.getProperty("user.dir");
 		Path tempDir = Files.createTempDirectory("java-xy-image-root");
 		Path imagePath = tempDir.resolve("cover.jpg");
 		Files.write(imagePath, "demo-image".getBytes(StandardCharsets.UTF_8));
-		System.setProperty("SECONDHAND_IMAGE_DIR", tempDir.resolve("storage").toString());
+		System.clearProperty("SECONDHAND_IMAGE_DIR");
+		System.setProperty("user.dir", tempDir.toString());
 
 		try {
 			ImageStorageService service = new ImageStorageService();
 			String storedPath = service.storeGoodsImages(42L, Collections.singletonList(imagePath)).get(0);
-			Assert.assertTrue(storedPath.contains("goods-42"));
-			Assert.assertTrue(Files.exists(Paths.get(storedPath)));
+			String expectedRelativePath = Paths.get("data", "images", "goods-42", "01_cover.jpg").toString();
+			Assert.assertEquals(expectedRelativePath, storedPath);
+			Assert.assertTrue(Files.exists(tempDir.resolve(storedPath)));
 		} finally {
-			System.clearProperty("SECONDHAND_IMAGE_DIR");
+			System.setProperty("user.dir", originalUserDir);
 		}
 	}
 

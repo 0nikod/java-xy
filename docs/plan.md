@@ -656,7 +656,7 @@ export PATH="$JAVA_HOME/bin:$PATH"
 
 ```bash
 export OPENAI_API_KEY=""
-export SECONDHAND_DB_PATH="./secondhand.db"
+export SECONDHAND_DB_PATH="./data/secondhand.db"
 export SECONDHAND_IMAGE_DIR="./data/images"
 ```
 

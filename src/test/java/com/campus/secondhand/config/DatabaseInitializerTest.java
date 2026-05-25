@@ -15,11 +15,13 @@ import org.junit.Test;
 public class DatabaseInitializerTest {
 
 	@Test
-	public void initializeShouldCreateDatabaseAndSeedData() throws Exception {
-		// 使用临时数据库，避免影响本地开发环境。
+	public void initializeShouldCreateDatabaseUnderRelativeDefaultPath() throws Exception {
+		// 默认数据库路径应落在运行目录下的 data 目录中。
+		String originalUserDir = System.getProperty("user.dir");
 		Path tempDir = Files.createTempDirectory("java-xy-db-test");
-		Path dbPath = tempDir.resolve("secondhand.db");
-		System.setProperty("SECONDHAND_DB_PATH", dbPath.toString());
+		Path dbPath = tempDir.resolve("data/secondhand.db");
+		System.clearProperty("SECONDHAND_DB_PATH");
+		System.setProperty("user.dir", tempDir.toString());
 
 		try {
 			DatabaseInitializer.initialize();
@@ -82,7 +84,7 @@ public class DatabaseInitializerTest {
 				Assert.assertTrue("reviews 表应预留 content 字段", hasContent);
 			}
 		} finally {
-			System.clearProperty("SECONDHAND_DB_PATH");
+			System.setProperty("user.dir", originalUserDir);
 		}
 	}
 }

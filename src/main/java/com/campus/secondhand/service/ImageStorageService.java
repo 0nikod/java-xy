@@ -37,7 +37,7 @@ public class ImageStorageService {
 				String fileName = sourcePath.getFileName().toString();
 				Path targetPath = goodsDir.resolve(String.format("%02d_%s", i + 1, fileName));
 				Files.copy(sourcePath, targetPath, StandardCopyOption.REPLACE_EXISTING);
-				storedPaths.add(targetPath.toAbsolutePath().toString());
+				storedPaths.add(toStorablePath(targetPath));
 			}
 			return storedPaths;
 		} catch (IOException e) {
@@ -82,5 +82,14 @@ public class ImageStorageService {
 				Files.deleteIfExists(path);
 			}
 		}
+	}
+
+	private String toStorablePath(Path targetPath) {
+		Path normalizedTarget = targetPath.toAbsolutePath().normalize();
+		Path workingDirectory = java.nio.file.Paths.get(System.getProperty("user.dir")).toAbsolutePath().normalize();
+		if (normalizedTarget.startsWith(workingDirectory)) {
+			return workingDirectory.relativize(normalizedTarget).toString();
+		}
+		return normalizedTarget.toString();
 	}
 }

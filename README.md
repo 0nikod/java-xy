@@ -20,6 +20,16 @@ export OPENAI_BASE_URL="https://api.openai.com/v1"
 export OPENAI_MODEL="gpt-4.1-mini"
 ```
 
+## 发布打包
+
+执行 `mvn package` 后，会在项目根目录生成 `dist/` 发布目录，包含：
+
+- `CampusSecondhand.exe`
+- Fat JAR
+- `data/` 运行数据目录
+
+启动时会以运行目录为基准解析 `data/secondhand.db` 与 `data/images/`，便于绿色版目录直接携带与读写。
+
 ## 当前交付范围
 
 - 普通用户：注册、登录、搜索/筛选/排序、发布商品、上传 `0-3` 张图片、查看详情、单商品购买、个人中心、下架未售商品
