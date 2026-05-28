@@ -35,12 +35,6 @@ public interface AiService {
 		return emit(buildOperationsSummary(context), onDelta);
 	}
 
-	String analyzeViolationRisk(String goodsContext);
-
-	default String analyzeViolationRiskStreaming(String goodsContext, Consumer<String> onDelta) {
-		return emit(analyzeViolationRisk(goodsContext), onDelta);
-	}
-
 	String interpretStatistics(String statsContext);
 
 	default String interpretStatisticsStreaming(String statsContext, Consumer<String> onDelta) {

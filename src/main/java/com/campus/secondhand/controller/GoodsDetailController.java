@@ -17,6 +17,8 @@ import com.campus.secondhand.util.Session;
 import com.campus.secondhand.util.ViewState;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -52,6 +54,9 @@ public class GoodsDetailController {
 
 	@FXML
 	private Button buyButton;
+
+	@FXML
+	private Button purchaseAdviceButton;
 
 	@FXML
 	private ListView<String> imageListView;
@@ -106,16 +111,40 @@ public class GoodsDetailController {
 
 	@FXML
 	private void handlePurchaseAdvice() {
-		try {
-			String advice = goodsService.buildPurchaseAdvice(goods.getId());
-			if (aiAdviceArea != null) {
-				aiAdviceArea.setText(advice);
-			} else {
-				AlertUtil.showInfo("AI 购买建议", advice);
-			}
-		} catch (BusinessException ex) {
-			AlertUtil.showWarning("购买建议失败", ex.getMessage());
+		if (goods == null) {
+			return;
 		}
+		if (aiAdviceArea != null) {
+			aiAdviceArea.clear();
+		}
+		if (purchaseAdviceButton != null) {
+			purchaseAdviceButton.setDisable(true);
+		}
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() {
+				return goodsService.buildPurchaseAdviceStreaming(goods.getId(), delta -> Platform.runLater(() -> {
+					if (aiAdviceArea != null) {
+						aiAdviceArea.appendText(delta);
+					}
+				}));
+			}
+		};
+		task.setOnSucceeded(event -> {
+			if (purchaseAdviceButton != null) {
+				purchaseAdviceButton.setDisable(false);
+			}
+			if (aiAdviceArea == null) {
+				AlertUtil.showInfo("AI 购买建议", task.getValue());
+			}
+		});
+		task.setOnFailed(event -> {
+			if (purchaseAdviceButton != null) {
+				purchaseAdviceButton.setDisable(false);
+			}
+			showAiError("购买建议失败", task.getException());
+		});
+		startBackground(task);
 	}
 
 	@FXML
@@ -207,6 +236,21 @@ public class GoodsDetailController {
 
 	private void setMessage(String message) {
 		AlertUtil.showWarning("提示", message);
+	}
+
+	private void startBackground(Task<?> task) {
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
+	}
+
+	private void showAiError(String title, Throwable throwable) {
+		Throwable cause = throwable == null ? null : throwable;
+		while (cause != null && cause.getCause() != null) {
+			cause = cause.getCause();
+		}
+		String message = cause == null || cause.getMessage() == null ? "AI 调用失败" : cause.getMessage();
+		AlertUtil.showWarning(title, message);
 	}
 
 	private void updatePreview(List<GoodsImage> images, int index) {

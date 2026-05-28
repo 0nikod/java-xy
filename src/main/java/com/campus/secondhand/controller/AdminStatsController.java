@@ -9,12 +9,16 @@ import com.campus.secondhand.model.UserOverview;
 import com.campus.secondhand.service.StatisticsService;
 import com.campus.secondhand.util.Session;
 import java.util.List;
+import java.util.function.Consumer;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.chart.XYChart;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -33,6 +37,9 @@ public class AdminStatsController {
 
 	@FXML
 	private Label chartInterpretationLabel;
+
+	@FXML
+	private Button refreshButton;
 
 	@FXML
 	private PieChart categoryPieChart;
@@ -59,6 +66,7 @@ public class AdminStatsController {
 	private TableColumn<UserOverview, Integer> detailSoldCountColumn;
 
 	private final StatisticsService statisticsService = new StatisticsService();
+	private int refreshVersion;
 
 	@FXML
 	private void initialize() {
@@ -112,10 +120,10 @@ public class AdminStatsController {
 							summary.getTotalOrders(), summary.getTotalRevenue()));
 		}
 		if (aiSummaryLabel != null) {
-			aiSummaryLabel.setText(statisticsService.buildSummaryText());
+			aiSummaryLabel.setText("");
 		}
 		if (chartInterpretationLabel != null) {
-			chartInterpretationLabel.setText(statisticsService.buildInterpretationText());
+			chartInterpretationLabel.setText("");
 		}
 		populateCategoryChart();
 		populateStatusChart();
@@ -123,6 +131,58 @@ public class AdminStatsController {
 		if (detailTable != null) {
 			detailTable.setItems(FXCollections.observableArrayList(statisticsService.listUserOverviews(null)));
 		}
+		startAiTextRefresh();
+	}
+
+	private void startAiTextRefresh() {
+		final int version = ++refreshVersion;
+		if (refreshButton != null) {
+			refreshButton.setDisable(true);
+		}
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() {
+				statisticsService.buildSummaryTextStreaming(labelAppender(aiSummaryLabel, version));
+				statisticsService.buildInterpretationTextStreaming(labelAppender(chartInterpretationLabel, version));
+				return null;
+			}
+		};
+		task.setOnSucceeded(event -> {
+			if (version == refreshVersion && refreshButton != null) {
+				refreshButton.setDisable(false);
+			}
+		});
+		task.setOnFailed(event -> {
+			if (version == refreshVersion && refreshButton != null) {
+				refreshButton.setDisable(false);
+			}
+			String message = aiErrorMessage(task.getException());
+			if (version == refreshVersion && chartInterpretationLabel != null) {
+				chartInterpretationLabel.setText("AI 分析失败：" + message);
+			}
+		});
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
+	}
+
+	private Consumer<String> labelAppender(Label label, int version) {
+		StringBuilder builder = new StringBuilder();
+		return delta -> Platform.runLater(() -> {
+			if (version != refreshVersion || label == null) {
+				return;
+			}
+			builder.append(delta);
+			label.setText(builder.toString());
+		});
+	}
+
+	private String aiErrorMessage(Throwable throwable) {
+		Throwable cause = throwable == null ? null : throwable;
+		while (cause != null && cause.getCause() != null) {
+			cause = cause.getCause();
+		}
+		return cause == null || cause.getMessage() == null ? "AI 调用失败" : cause.getMessage();
 	}
 
 	private void populateCategoryChart() {

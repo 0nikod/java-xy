@@ -31,7 +31,6 @@ public class FallbackAiServiceTest {
 		Assert.assertTrue(service.suggestPrice("教材", "教材", 100.0, 8, "很新").startsWith("Mock 定价建议"));
 		Assert.assertTrue(service.buildPurchaseAdvice("商品上下文").startsWith("Mock 购买建议"));
 		Assert.assertTrue(service.assistSearch("便宜教材").startsWith("Mock 搜索辅助"));
-		Assert.assertTrue(service.analyzeViolationRisk("商品上下文").startsWith("Mock 违规风险分析"));
 		Assert.assertTrue(service.interpretStatistics("统计上下文").startsWith("Mock 图表解读"));
 	}
 
@@ -60,11 +59,6 @@ public class FallbackAiServiceTest {
 
 			@Override
 			public String buildOperationsSummary(String context) {
-				throw new IllegalStateException("boom");
-			}
-
-			@Override
-			public String analyzeViolationRisk(String goodsContext) {
 				throw new IllegalStateException("boom");
 			}
 

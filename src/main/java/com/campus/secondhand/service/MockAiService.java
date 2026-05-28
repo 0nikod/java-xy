@@ -49,11 +49,6 @@ public class MockAiService implements AiService {
 	}
 
 	@Override
-	public String analyzeViolationRisk(String goodsContext) {
-		return "Mock 违规风险分析：未发现明显违禁词，但管理员仍需核对图片、描述真实性和价格异常情况。" + normalizeContext(goodsContext);
-	}
-
-	@Override
 	public String interpretStatistics(String statsContext) {
 		return "Mock 图表解读：当前统计图可用于观察分类供给、商品状态和近期成交变化；建议优先处理待审核商品并关注成交低迷分类。" + normalizeContext(statsContext);
 	}

@@ -1,5 +1,7 @@
 package com.campus.secondhand.service;
 
+import java.util.function.Consumer;
+
 /**
  * AI 调用兜底实现。
  * <p>
@@ -63,15 +65,6 @@ public class FallbackAiService implements AiService {
 	}
 
 	@Override
-	public String analyzeViolationRisk(String goodsContext) {
-		try {
-			return primary.analyzeViolationRisk(goodsContext);
-		} catch (Exception ignored) {
-			return fallback.analyzeViolationRisk(goodsContext);
-		}
-	}
-
-	@Override
 	public String interpretStatistics(String statsContext) {
 		try {
 			return primary.interpretStatistics(statsContext);
@@ -79,4 +72,59 @@ public class FallbackAiService implements AiService {
 			return fallback.interpretStatistics(statsContext);
 		}
 	}
+	@Override
+	public String optimizeDescriptionStreaming(String rawDescription, Consumer<String> onDelta) {
+		try {
+			return primary.optimizeDescriptionStreaming(rawDescription, onDelta);
+		} catch (Exception ex) {
+			return fallback.optimizeDescriptionStreaming(rawDescription, onDelta);
+		}
+	}
+
+	@Override
+	public String suggestPriceStreaming(String title, String category, double originalPrice, int conditionLevel,
+			String description, Consumer<String> onDelta) {
+		try {
+			return primary.suggestPriceStreaming(title, category, originalPrice, conditionLevel, description, onDelta);
+		} catch (Exception ex) {
+			return fallback.suggestPriceStreaming(title, category, originalPrice, conditionLevel, description, onDelta);
+		}
+	}
+
+	@Override
+	public String buildPurchaseAdviceStreaming(String goodsContext, Consumer<String> onDelta) {
+		try {
+			return primary.buildPurchaseAdviceStreaming(goodsContext, onDelta);
+		} catch (Exception ex) {
+			return fallback.buildPurchaseAdviceStreaming(goodsContext, onDelta);
+		}
+	}
+
+	@Override
+	public String assistSearchStreaming(String userInput, Consumer<String> onDelta) {
+		try {
+			return primary.assistSearchStreaming(userInput, onDelta);
+		} catch (Exception ex) {
+			return fallback.assistSearchStreaming(userInput, onDelta);
+		}
+	}
+
+	@Override
+	public String buildOperationsSummaryStreaming(String context, Consumer<String> onDelta) {
+		try {
+			return primary.buildOperationsSummaryStreaming(context, onDelta);
+		} catch (Exception ex) {
+			return fallback.buildOperationsSummaryStreaming(context, onDelta);
+		}
+	}
+
+	@Override
+	public String interpretStatisticsStreaming(String statsContext, Consumer<String> onDelta) {
+		try {
+			return primary.interpretStatisticsStreaming(statsContext, onDelta);
+		} catch (Exception ex) {
+			return fallback.interpretStatisticsStreaming(statsContext, onDelta);
+		}
+	}
+
 }

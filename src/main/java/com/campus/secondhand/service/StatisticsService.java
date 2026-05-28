@@ -5,6 +5,7 @@ import com.campus.secondhand.model.ChartPoint;
 import com.campus.secondhand.model.StatsSummary;
 import com.campus.secondhand.model.UserOverview;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * 统计业务服务，提供后台运营看板所需的数据和摘要文案。
@@ -69,11 +70,19 @@ public class StatisticsService {
 		return aiService.buildOperationsSummary(buildStatsContext());
 	}
 
+	public String buildSummaryTextStreaming(Consumer<String> onDelta) {
+		return aiService.buildOperationsSummaryStreaming(buildStatsContext(), onDelta);
+	}
+
 	/**
 	 * 生成可直接展示在页面上的图表解读文本。
 	 */
 	public String buildInterpretationText() {
 		return aiService.interpretStatistics(buildStatsContext());
+	}
+
+	public String buildInterpretationTextStreaming(Consumer<String> onDelta) {
+		return aiService.interpretStatisticsStreaming(buildStatsContext(), onDelta);
 	}
 
 	private String buildStatsContext() {

@@ -12,8 +12,11 @@ import com.campus.secondhand.util.Session;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -48,6 +51,12 @@ public class PublishGoodsController {
 
 	@FXML
 	private TextArea aiSuggestionArea;
+
+	@FXML
+	private Button optimizeButton;
+
+	@FXML
+	private Button suggestPriceButton;
 
 	@FXML
 	private Label imageSummaryLabel;
@@ -86,12 +95,13 @@ public class PublishGoodsController {
 	@FXML
 	private void handleSuggestPrice() {
 		try {
-			String suggestion = goodsService.suggestPrice(getText(titleField), getText(categoryBox),
-					parseDouble(getText(originalPriceField), "原价不能为空"),
-					parseInt(getText(conditionField), "新旧程度不能为空"), getText(descriptionArea));
-			if (aiSuggestionArea != null) {
-				aiSuggestionArea.setText(suggestion);
-			}
+			String title = getText(titleField);
+			String category = getText(categoryBox);
+			double originalPrice = parseDouble(getText(originalPriceField), "原价不能为空");
+			int conditionLevel = parseInt(getText(conditionField), "新旧程度不能为空");
+			String description = getText(descriptionArea);
+			startAiSuggestion("定价建议失败", suggestPriceButton, () -> goodsService.suggestPriceStreaming(title, category,
+					originalPrice, conditionLevel, description, delta -> Platform.runLater(() -> appendSuggestion(delta))));
 		} catch (BusinessException ex) {
 			AlertUtil.showWarning("定价建议失败", ex.getMessage());
 		}
@@ -102,10 +112,9 @@ public class PublishGoodsController {
 		if (descriptionArea == null) {
 			return;
 		}
-		String suggestion = goodsService.optimizeDescription(descriptionArea.getText());
-		if (aiSuggestionArea != null) {
-			aiSuggestionArea.setText(suggestion);
-		}
+		String description = descriptionArea.getText();
+		startAiSuggestion("描述优化失败", optimizeButton,
+				() -> goodsService.optimizeDescriptionStreaming(description, delta -> Platform.runLater(() -> appendSuggestion(delta))));
 	}
 
 	@FXML
@@ -241,6 +250,54 @@ public class PublishGoodsController {
 			imageSummaryLabel.setText("已选择 " + selectedImages.size() + " 张图片。");
 		}
 		updatePreview(imageListView == null ? -1 : imageListView.getSelectionModel().getSelectedIndex());
+	}
+
+	private void startAiSuggestion(String errorTitle, Button button, AiCall call) {
+		if (aiSuggestionArea != null) {
+			aiSuggestionArea.clear();
+		}
+		if (button != null) {
+			button.setDisable(true);
+		}
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() {
+				return call.execute();
+			}
+		};
+		task.setOnSucceeded(event -> {
+			if (button != null) {
+				button.setDisable(false);
+			}
+		});
+		task.setOnFailed(event -> {
+			if (button != null) {
+				button.setDisable(false);
+			}
+			showAiError(errorTitle, task.getException());
+		});
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
+	}
+
+	private void appendSuggestion(String delta) {
+		if (aiSuggestionArea != null) {
+			aiSuggestionArea.appendText(delta);
+		}
+	}
+
+	private void showAiError(String title, Throwable throwable) {
+		Throwable cause = throwable == null ? null : throwable;
+		while (cause != null && cause.getCause() != null) {
+			cause = cause.getCause();
+		}
+		String message = cause == null || cause.getMessage() == null ? "AI 调用失败" : cause.getMessage();
+		AlertUtil.showWarning(title, message);
+	}
+
+	private interface AiCall {
+		String execute();
 	}
 
 	private void updatePreview(int selectedIndex) {

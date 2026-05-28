@@ -30,7 +30,7 @@
 			<Label fx:id="chartInterpretationLabel" wrapText="true"
 				styleClass="subtitle-text" />
 			<HBox spacing="10.0">
-				<Button text="刷新统计" onAction="#handleRefresh"
+				<Button fx:id="refreshButton" text="刷新统计" onAction="#handleRefresh"
 					styleClass="primary-button" />
 				<Button text="返回后台" onAction="#handleBack"
 					styleClass="secondary-button" />

@@ -11,8 +11,11 @@ import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.util.Session;
 import com.campus.secondhand.util.ViewState;
 import java.util.List;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -36,6 +39,9 @@ public class UserHomeController {
 
 	@FXML
 	private ChoiceBox<GoodsSortOption> sortBox;
+
+	@FXML
+	private Button aiSearchAssistButton;
 
 	@FXML
 	private TableView<Goods> goodsTable;
@@ -82,8 +88,34 @@ public class UserHomeController {
 	@FXML
 	private void handleAiSearchAssist() {
 		String input = keywordField == null ? null : keywordField.getText();
-		String suggestion = goodsService.assistSearch(input);
-		setMessage(suggestion);
+		setMessage("");
+		if (aiSearchAssistButton != null) {
+			aiSearchAssistButton.setDisable(true);
+		}
+		StringBuilder builder = new StringBuilder();
+		Task<String> task = new Task<String>() {
+			@Override
+			protected String call() {
+				return goodsService.assistSearchStreaming(input, delta -> Platform.runLater(() -> {
+					builder.append(delta);
+					setMessage(builder.toString());
+				}));
+			}
+		};
+		task.setOnSucceeded(event -> {
+			if (aiSearchAssistButton != null) {
+				aiSearchAssistButton.setDisable(false);
+			}
+		});
+		task.setOnFailed(event -> {
+			if (aiSearchAssistButton != null) {
+				aiSearchAssistButton.setDisable(false);
+			}
+			setMessage("AI 搜索辅助失败：" + aiErrorMessage(task.getException()));
+		});
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 	@FXML
@@ -213,6 +245,14 @@ public class UserHomeController {
 		if (currentUserLabel != null) {
 			currentUserLabel.setText(currentUser == null ? "未登录" : "当前用户：" + currentUser.getUsername());
 		}
+	}
+
+	private String aiErrorMessage(Throwable throwable) {
+		Throwable cause = throwable == null ? null : throwable;
+		while (cause != null && cause.getCause() != null) {
+			cause = cause.getCause();
+		}
+		return cause == null || cause.getMessage() == null ? "AI 调用失败" : cause.getMessage();
 	}
 
 	private void setMessage(String text) {

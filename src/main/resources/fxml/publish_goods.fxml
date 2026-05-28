@@ -57,9 +57,9 @@
 				<TextArea fx:id="descriptionArea" prefRowCount="7"
 					wrapText="true" promptText="写明版本、使用情况、交易方式和瑕疵" />
 				<HBox spacing="10.0">
-					<Button text="AI 优化描述" onAction="#handleOptimize"
+					<Button fx:id="optimizeButton" text="AI 优化描述" onAction="#handleOptimize"
 						styleClass="secondary-button" />
-					<Button text="AI 定价建议" onAction="#handleSuggestPrice"
+					<Button fx:id="suggestPriceButton" text="AI 定价建议" onAction="#handleSuggestPrice"
 						styleClass="secondary-button" />
 					<Button text="提交审核" onAction="#handleSubmit"
 						styleClass="primary-button" />

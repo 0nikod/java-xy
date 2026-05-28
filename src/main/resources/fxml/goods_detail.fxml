@@ -37,7 +37,7 @@
 						styleClass="secondary-button" />
 					<Button text="查看评价" onAction="#handleRefreshReviews"
 						styleClass="secondary-button" />
-					<Button text="AI 购买建议" onAction="#handlePurchaseAdvice"
+					<Button fx:id="purchaseAdviceButton" text="AI 购买建议" onAction="#handlePurchaseAdvice"
 						styleClass="secondary-button" />
 					<Button text="返回列表" onAction="#handleBack"
 						styleClass="secondary-button" />

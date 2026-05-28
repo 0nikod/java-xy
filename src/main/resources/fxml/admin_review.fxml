@@ -58,8 +58,6 @@
 				<ListView fx:id="imageListView" prefHeight="110.0" />
 				<Button text="审核通过" onAction="#handleApprove"
 					styleClass="primary-button" maxWidth="290.0" />
-				<Button text="AI 违规风险分析" onAction="#handleAnalyzeRisk"
-					styleClass="secondary-button" maxWidth="290.0" />
 				<Button text="删除违规商品" onAction="#handleDelete"
 					styleClass="danger-button" maxWidth="290.0" />
 				<Button text="返回后台" onAction="#handleBack"
