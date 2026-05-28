@@ -4,11 +4,13 @@ import com.campus.secondhand.app.SceneManager;
 import com.campus.secondhand.config.AppConfig;
 import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.GoodsImage;
+import com.campus.secondhand.model.Review;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.CartService;
 import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.service.OrderService;
+import com.campus.secondhand.service.ReviewService;
 import com.campus.secondhand.util.AlertUtil;
 import com.campus.secondhand.util.ImagePreviewLoader;
 import com.campus.secondhand.util.Session;
@@ -55,11 +57,15 @@ public class GoodsDetailController {
 	private ListView<String> imageListView;
 
 	@FXML
+	private ListView<String> reviewListView;
+
+	@FXML
 	private ImageView imagePreviewView;
 
 	private final GoodsService goodsService = new GoodsService();
 	private final OrderService orderService = new OrderService();
 	private final CartService cartService = new CartService();
+	private final ReviewService reviewService = new ReviewService();
 
 	private Goods goods;
 
@@ -116,8 +122,8 @@ public class GoodsDetailController {
 	}
 
 	@FXML
-	private void handleReviewPlaceholder() {
-		AlertUtil.showInfo("后续开放", "评价功能已预留入口，将在后续扩展中实现。");
+	private void handleRefreshReviews() {
+		refreshReviews();
 	}
 
 	private void refreshDetail() {
@@ -164,6 +170,22 @@ public class GoodsDetailController {
 				updatePreview(images, -1);
 			}
 		}
+		refreshReviews();
+	}
+
+	private void refreshReviews() {
+		if (reviewListView == null || goods == null) {
+			return;
+		}
+		List<String> items = new ArrayList<String>();
+		for (Review review : reviewService.listGoodsReviews(goods.getId())) {
+			items.add(String.format("%s：%d 星 - %s（%s）", review.getReviewerUsername(), review.getRating(),
+					review.getContent(), review.getCreatedAt()));
+		}
+		if (items.isEmpty()) {
+			items.add("暂无评价");
+		}
+		reviewListView.setItems(javafx.collections.FXCollections.observableArrayList(items));
 	}
 
 	private void setMessage(String message) {

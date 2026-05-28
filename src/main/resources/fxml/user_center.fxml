@@ -25,7 +25,7 @@
 					styleClass="primary-button" />
 				<Button text="下架所选商品" onAction="#handleOffShelf"
 					styleClass="danger-button" />
-				<Button text="我的评价（未开放）" onAction="#handleReviewPlaceholder"
+				<Button text="评价所选订单" onAction="#handleCreateReview"
 					styleClass="secondary-button" />
 				<Button text="返回首页" onAction="#handleBack"
 					styleClass="secondary-button" />
@@ -81,6 +81,34 @@
 								prefWidth="100.0" />
 							<TableColumn fx:id="soldBuyerColumn" text="买家"
 								prefWidth="120.0" />
+						</columns>
+					</TableView>
+				</VBox>
+			</HBox>
+			<HBox spacing="16.0">
+				<VBox spacing="8.0" HBox.hgrow="ALWAYS">
+					<Label text="我发布的评价" styleClass="section-label" />
+					<TableView fx:id="publishedReviewsTable" prefHeight="170.0">
+						<columns>
+							<TableColumn fx:id="publishedReviewGoodsColumn" text="商品"
+								prefWidth="180.0" />
+							<TableColumn fx:id="publishedReviewRatingColumn" text="评分"
+								prefWidth="80.0" />
+							<TableColumn fx:id="publishedReviewContentColumn" text="内容"
+								prefWidth="260.0" />
+						</columns>
+					</TableView>
+				</VBox>
+				<VBox spacing="8.0" HBox.hgrow="ALWAYS">
+					<Label text="我收到的评价" styleClass="section-label" />
+					<TableView fx:id="receivedReviewsTable" prefHeight="170.0">
+						<columns>
+							<TableColumn fx:id="receivedReviewGoodsColumn" text="商品"
+								prefWidth="180.0" />
+							<TableColumn fx:id="receivedReviewRatingColumn" text="评分"
+								prefWidth="80.0" />
+							<TableColumn fx:id="receivedReviewContentColumn" text="内容"
+								prefWidth="260.0" />
 						</columns>
 					</TableView>
 				</VBox>

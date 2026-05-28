@@ -35,7 +35,7 @@
 						styleClass="primary-button" />
 					<Button text="加入购物车" onAction="#handleAddToCart"
 						styleClass="secondary-button" />
-					<Button text="查看评价（未开放）" onAction="#handleReviewPlaceholder"
+					<Button text="查看评价" onAction="#handleRefreshReviews"
 						styleClass="secondary-button" />
 					<Button text="返回列表" onAction="#handleBack"
 						styleClass="secondary-button" />
@@ -44,8 +44,14 @@
 			<VBox spacing="12.0" prefWidth="320.0" styleClass="plain-panel">
 				<Label text="商品图片" styleClass="section-label" />
 				<ImageView fx:id="imagePreviewView" fitWidth="280.0"
-					fitHeight="240.0" preserveRatio="true" styleClass="image-preview" />
-				<ListView fx:id="imageListView" prefHeight="180.0" />
+					fitHeight="220.0" preserveRatio="true" styleClass="image-preview" />
+				<ListView fx:id="imageListView" prefHeight="130.0" />
+				<HBox spacing="8.0">
+					<Label text="商品评价" styleClass="section-label" />
+					<Button text="刷新评价" onAction="#handleRefreshReviews"
+						styleClass="secondary-button" />
+				</HBox>
+				<ListView fx:id="reviewListView" prefHeight="170.0" />
 			</VBox>
 		</HBox>
 	</center>

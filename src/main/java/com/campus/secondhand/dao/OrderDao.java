@@ -42,6 +42,23 @@ public class OrderDao {
 		return queryOrders(sql, sellerId);
 	}
 
+	public Order findById(Long id) {
+		String sql = "SELECT o.*, g.title AS goods_title, bu.username AS buyer_username, su.username AS seller_username "
+				+ "FROM orders o " + "JOIN goods g ON o.goods_id = g.id " + "JOIN users bu ON o.buyer_id = bu.id "
+				+ "JOIN users su ON o.seller_id = su.id " + "WHERE o.id = ?";
+		try (Connection connection = DBUtil.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
+			ps.setLong(1, id);
+			try (ResultSet rs = ps.executeQuery()) {
+				if (!rs.next()) {
+					return null;
+				}
+				return mapOrder(rs);
+			}
+		} catch (SQLException e) {
+			throw new IllegalStateException("查询订单失败", e);
+		}
+	}
+
 	public Order findByOrderNo(String orderNo) {
 		String sql = "SELECT o.*, g.title AS goods_title, bu.username AS buyer_username, su.username AS seller_username "
 				+ "FROM orders o " + "JOIN goods g ON o.goods_id = g.id " + "JOIN users bu ON o.buyer_id = bu.id "

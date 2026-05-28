@@ -4,19 +4,29 @@ import com.campus.secondhand.app.SceneManager;
 import com.campus.secondhand.config.AppConfig;
 import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.Order;
+import com.campus.secondhand.model.Review;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.service.OrderService;
+import com.campus.secondhand.service.ReviewService;
 import com.campus.secondhand.util.AlertUtil;
 import com.campus.secondhand.util.Session;
+import com.campus.secondhand.util.ViewState;
+import java.io.IOException;
+import java.net.URL;
 import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class UserCenterController {
 
@@ -71,8 +81,33 @@ public class UserCenterController {
 	@FXML
 	private TableColumn<Order, String> soldBuyerColumn;
 
+	@FXML
+	private TableView<Review> publishedReviewsTable;
+
+	@FXML
+	private TableColumn<Review, String> publishedReviewGoodsColumn;
+
+	@FXML
+	private TableColumn<Review, String> publishedReviewRatingColumn;
+
+	@FXML
+	private TableColumn<Review, String> publishedReviewContentColumn;
+
+	@FXML
+	private TableView<Review> receivedReviewsTable;
+
+	@FXML
+	private TableColumn<Review, String> receivedReviewGoodsColumn;
+
+	@FXML
+	private TableColumn<Review, String> receivedReviewRatingColumn;
+
+	@FXML
+	private TableColumn<Review, String> receivedReviewContentColumn;
+
 	private final GoodsService goodsService = new GoodsService();
 	private final OrderService orderService = new OrderService();
+	private final ReviewService reviewService = new ReviewService();
 
 	@FXML
 	private void initialize() {
@@ -109,8 +144,18 @@ public class UserCenterController {
 	}
 
 	@FXML
-	private void handleReviewPlaceholder() {
-		AlertUtil.showInfo("后续开放", "我的评价与收到的评价将在后续扩展中开放。");
+	private void handleCreateReview() {
+		Order selectedOrder = purchasedOrdersTable == null
+				? null
+				: purchasedOrdersTable.getSelectionModel().getSelectedItem();
+		if (selectedOrder == null) {
+			AlertUtil.showWarning("提示", "请先选择要评价的购买订单。");
+			return;
+		}
+		ViewState.setSelectedOrder(selectedOrder);
+		showReviewDialog();
+		ViewState.clearSelectedOrder();
+		refreshAll();
 	}
 
 	private void configureTables() {
@@ -150,6 +195,24 @@ public class UserCenterController {
 		if (soldBuyerColumn != null) {
 			soldBuyerColumn.setCellValueFactory(new PropertyValueFactory<Order, String>("buyerUsername"));
 		}
+		if (publishedReviewGoodsColumn != null) {
+			publishedReviewGoodsColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("goodsTitle"));
+		}
+		if (publishedReviewRatingColumn != null) {
+			publishedReviewRatingColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("ratingText"));
+		}
+		if (publishedReviewContentColumn != null) {
+			publishedReviewContentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("content"));
+		}
+		if (receivedReviewGoodsColumn != null) {
+			receivedReviewGoodsColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("goodsTitle"));
+		}
+		if (receivedReviewRatingColumn != null) {
+			receivedReviewRatingColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("ratingText"));
+		}
+		if (receivedReviewContentColumn != null) {
+			receivedReviewContentColumn.setCellValueFactory(new PropertyValueFactory<Review, String>("content"));
+		}
 	}
 
 	private void refreshAll() {
@@ -161,6 +224,8 @@ public class UserCenterController {
 		List<Goods> publishedGoods = goodsService.listUserPublishedGoods(currentUser);
 		List<Order> purchasedOrders = orderService.listPurchasedOrders(currentUser);
 		List<Order> soldOrders = orderService.listSoldOrders(currentUser);
+		List<Review> publishedReviews = reviewService.listPublishedReviews(currentUser);
+		List<Review> receivedReviews = reviewService.listReceivedReviews(currentUser);
 
 		if (publishedGoodsTable != null) {
 			publishedGoodsTable.setItems(FXCollections.observableArrayList(publishedGoods));
@@ -171,9 +236,33 @@ public class UserCenterController {
 		if (soldOrdersTable != null) {
 			soldOrdersTable.setItems(FXCollections.observableArrayList(soldOrders));
 		}
+		if (publishedReviewsTable != null) {
+			publishedReviewsTable.setItems(FXCollections.observableArrayList(publishedReviews));
+		}
+		if (receivedReviewsTable != null) {
+			receivedReviewsTable.setItems(FXCollections.observableArrayList(receivedReviews));
+		}
 		if (summaryLabel != null) {
 			summaryLabel.setText(String.format("我发布 %d 件商品，买入 %d 笔订单，卖出 %d 笔订单。", publishedGoods.size(),
 					purchasedOrders.size(), soldOrders.size()));
+		}
+	}
+
+	private void showReviewDialog() {
+		try {
+			URL resource = getClass().getResource("/fxml/review_dialog.fxml");
+			if (resource == null) {
+				throw new IllegalStateException("找不到评价窗口资源");
+			}
+			Parent root = FXMLLoader.load(resource);
+			Stage dialog = new Stage();
+			dialog.setTitle("发布评价");
+			dialog.initOwner(SceneManager.getPrimaryStage());
+			dialog.initModality(Modality.WINDOW_MODAL);
+			dialog.setScene(new Scene(root));
+			dialog.showAndWait();
+		} catch (IOException e) {
+			throw new IllegalStateException("无法打开评价窗口", e);
 		}
 	}
 

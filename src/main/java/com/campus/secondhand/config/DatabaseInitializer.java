@@ -29,6 +29,7 @@ public final class DatabaseInitializer {
 		} catch (SQLException e) {
 			throw new IllegalStateException("初始化数据库失败", e);
 		}
+
 	}
 
 	private static void executeScript(String resourcePath) throws IOException, SQLException {
