@@ -114,9 +114,12 @@ public class Stage3ManagementTest {
 		Assert.assertTrue(overviews.get(0).getPublishedGoodsCount() >= 1);
 		Assert.assertTrue(overviews.get(0).getSoldOrderCount() >= 1);
 
+		Assert.assertTrue(summary.getTodayOrders() >= 1);
 		Assert.assertFalse(statisticsService.listGoodsCategoryStats().isEmpty());
 		Assert.assertFalse(statisticsService.listGoodsStatusStats().isEmpty());
 		Assert.assertFalse(statisticsService.listRecentOrderTrend().isEmpty());
+		Assert.assertFalse(statisticsService.listCategorySoldCountStats().isEmpty());
+		Assert.assertFalse(statisticsService.listCategoryRevenueStats().isEmpty());
 	}
 
 	@Test

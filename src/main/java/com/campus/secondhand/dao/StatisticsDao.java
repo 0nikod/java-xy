@@ -30,6 +30,7 @@ public class StatisticsDao {
 		summary.setSoldGoods(queryInt("SELECT COUNT(*) FROM goods WHERE status = 'SOLD'"));
 		summary.setOffShelfGoods(queryInt("SELECT COUNT(*) FROM goods WHERE status = 'OFF_SHELF'"));
 		summary.setTotalOrders(queryInt("SELECT COUNT(*) FROM orders"));
+		summary.setTodayOrders(queryInt("SELECT COUNT(*) FROM orders WHERE substr(created_at, 1, 10) = date('now', 'localtime')"));
 		summary.setTotalRevenue(queryDouble("SELECT COALESCE(SUM(deal_price), 0) FROM orders"));
 		return summary;
 	}
@@ -82,6 +83,20 @@ public class StatisticsDao {
 	public List<ChartPoint> listGoodsCategoryStats() {
 		return queryChartPoints(
 				"SELECT category AS label, COUNT(*) AS value FROM goods GROUP BY category ORDER BY COUNT(*) DESC, category ASC");
+	}
+
+	/**
+	 * 统计分类成交数量。
+	 */
+	public List<ChartPoint> listCategorySoldCountStats() {
+		return queryChartPoints("SELECT g.category AS label, COUNT(*) AS value FROM orders o JOIN goods g ON o.goods_id = g.id GROUP BY g.category ORDER BY COUNT(*) DESC, g.category ASC");
+	}
+
+	/**
+	 * 统计分类成交金额。
+	 */
+	public List<ChartPoint> listCategoryRevenueStats() {
+		return queryChartPoints("SELECT g.category AS label, COALESCE(SUM(o.deal_price), 0) AS value FROM orders o JOIN goods g ON o.goods_id = g.id GROUP BY g.category ORDER BY SUM(o.deal_price) DESC, g.category ASC");
 	}
 
 	/**

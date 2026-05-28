@@ -48,6 +48,12 @@ public class AdminStatsController {
 	private BarChart<String, Number> statusBarChart;
 
 	@FXML
+	private BarChart<String, Number> categorySoldCountBarChart;
+
+	@FXML
+	private BarChart<String, Number> categoryRevenueBarChart;
+
+	@FXML
 	private LineChart<String, Number> trendLineChart;
 
 	@FXML
@@ -114,10 +120,10 @@ public class AdminStatsController {
 		StatsSummary summary = statisticsService.loadSummary();
 		if (statsCardLabel != null) {
 			statsCardLabel
-					.setText(String.format("用户总数：%d | 正常：%d | 封禁：%d | 商品总数：%d | 在售：%d | 待审核：%d | 已成交订单：%d | 成交额：%.2f 元",
+					.setText(String.format("用户总数：%d | 正常：%d | 封禁：%d | 商品总数：%d | 在售：%d | 待审核：%d | 已成交订单：%d | 今日成交量：%d | 成交额：%.2f 元",
 							summary.getTotalUsers(), summary.getNormalUsers(), summary.getBannedUsers(),
 							summary.getTotalGoods(), summary.getOnSaleGoods(), summary.getPendingGoods(),
-							summary.getTotalOrders(), summary.getTotalRevenue()));
+							summary.getTotalOrders(), summary.getTodayOrders(), summary.getTotalRevenue()));
 		}
 		if (aiSummaryLabel != null) {
 			aiSummaryLabel.setText("");
@@ -127,6 +133,8 @@ public class AdminStatsController {
 		}
 		populateCategoryChart();
 		populateStatusChart();
+		populateCategorySoldCountChart();
+		populateCategoryRevenueChart();
 		populateTrendChart();
 		if (detailTable != null) {
 			detailTable.setItems(FXCollections.observableArrayList(statisticsService.listUserOverviews(null)));
@@ -209,6 +217,32 @@ public class AdminStatsController {
 		}
 		statusBarChart.getData().clear();
 		statusBarChart.getData().add(series);
+	}
+
+	private void populateCategorySoldCountChart() {
+		if (categorySoldCountBarChart == null) {
+			return;
+		}
+		XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
+		series.setName("分类成交数量");
+		for (ChartPoint point : statisticsService.listCategorySoldCountStats()) {
+			series.getData().add(new XYChart.Data<String, Number>(point.getLabel(), point.getValue()));
+		}
+		categorySoldCountBarChart.getData().clear();
+		categorySoldCountBarChart.getData().add(series);
+	}
+
+	private void populateCategoryRevenueChart() {
+		if (categoryRevenueBarChart == null) {
+			return;
+		}
+		XYChart.Series<String, Number> series = new XYChart.Series<String, Number>();
+		series.setName("分类成交金额");
+		for (ChartPoint point : statisticsService.listCategoryRevenueStats()) {
+			series.getData().add(new XYChart.Data<String, Number>(point.getLabel(), point.getValue()));
+		}
+		categoryRevenueBarChart.getData().clear();
+		categoryRevenueBarChart.getData().add(series);
 	}
 
 	private void populateTrendChart() {

@@ -14,6 +14,7 @@ public class StatsSummary {
 	private int soldGoods;
 	private int offShelfGoods;
 	private int totalOrders;
+	private int todayOrders;
 	private double totalRevenue;
 
 	public int getTotalUsers() {
@@ -86,6 +87,14 @@ public class StatsSummary {
 
 	public void setTotalOrders(int totalOrders) {
 		this.totalOrders = totalOrders;
+	}
+
+	public int getTodayOrders() {
+		return todayOrders;
+	}
+
+	public void setTodayOrders(int todayOrders) {
+		this.todayOrders = todayOrders;
 	}
 
 	public double getTotalRevenue() {

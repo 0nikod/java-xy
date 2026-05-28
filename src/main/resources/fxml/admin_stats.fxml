@@ -73,6 +73,32 @@
 					</LineChart>
 				</VBox>
 			</HBox>
+			<HBox spacing="14.0">
+				<VBox spacing="6.0" styleClass="plain-panel">
+					<Label text="分类成交数量" styleClass="section-label" />
+					<BarChart fx:id="categorySoldCountBarChart" prefWidth="430.0"
+						prefHeight="220.0">
+						<xAxis>
+							<CategoryAxis label="分类" />
+						</xAxis>
+						<yAxis>
+							<NumberAxis label="成交量" />
+						</yAxis>
+					</BarChart>
+				</VBox>
+				<VBox spacing="6.0" styleClass="plain-panel">
+					<Label text="分类成交金额" styleClass="section-label" />
+					<BarChart fx:id="categoryRevenueBarChart" prefWidth="430.0"
+						prefHeight="220.0">
+						<xAxis>
+							<CategoryAxis label="分类" />
+						</xAxis>
+						<yAxis>
+							<NumberAxis label="金额" />
+						</yAxis>
+					</BarChart>
+				</VBox>
+			</HBox>
 			<VBox spacing="10.0">
 				<Label text="用户交易概览" styleClass="section-label" />
 				<TableView fx:id="detailTable" prefHeight="220.0">
