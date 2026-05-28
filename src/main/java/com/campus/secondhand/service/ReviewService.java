@@ -8,6 +8,7 @@ import com.campus.secondhand.model.Order;
 import com.campus.secondhand.model.OrderStatus;
 import com.campus.secondhand.model.Review;
 import com.campus.secondhand.model.User;
+import com.campus.secondhand.model.UserRole;
 import com.campus.secondhand.util.DateUtil;
 import java.util.List;
 
@@ -72,9 +73,20 @@ public class ReviewService {
 		return reviewDao.listBySellerId(seller.getId());
 	}
 
+	public List<Review> listAllReviews(User admin) {
+		ensureAdmin(admin);
+		return reviewDao.listAll();
+	}
+
 	private void ensureUser(User user) {
 		if (user == null) {
 			throw new BusinessException("请先登录");
+		}
+	}
+
+	private void ensureAdmin(User user) {
+		if (user == null || user.getRole() != UserRole.ADMIN) {
+			throw new BusinessException("只有管理员可以执行该操作");
 		}
 	}
 

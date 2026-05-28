@@ -26,6 +26,13 @@ public class AdminHomeController {
 		if (currentUserLabel != null) {
 			currentUserLabel.setText(currentUser == null ? "未登录" : "当前管理员：" + currentUser.getUsername());
 		}
+		if (summaryLabel != null) {
+			summaryLabel.setText("点击“AI 管理分析”生成运营分析摘要。");
+		}
+	}
+
+	@FXML
+	private void handleAiManagementAnalysis() {
 		loadSummaryStreaming();
 	}
 
@@ -69,6 +76,11 @@ public class AdminHomeController {
 	@FXML
 	private void handleViewLogs() {
 		SceneManager.show("admin_logs.fxml", AppConfig.getAppTitle());
+	}
+
+	@FXML
+	private void handleViewReviews() {
+		SceneManager.show("admin_reviews.fxml", AppConfig.getAppTitle());
 	}
 
 	@FXML

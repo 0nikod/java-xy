@@ -58,6 +58,10 @@ public class ReviewDao {
 		return queryReviews(baseSelectSql() + " WHERE r.seller_id = ? ORDER BY r.created_at DESC, r.id DESC", sellerId);
 	}
 
+	public List<Review> listAll() {
+		return queryReviews(baseSelectSql() + " ORDER BY r.created_at DESC, r.id DESC");
+	}
+
 	private List<Review> queryReviews(String sql, Long id) {
 		try (Connection connection = DBUtil.getConnection(); PreparedStatement ps = connection.prepareStatement(sql)) {
 			ps.setLong(1, id);
@@ -68,6 +72,20 @@ public class ReviewDao {
 				}
 				return reviews;
 			}
+		} catch (SQLException e) {
+			throw new IllegalStateException("查询评价失败", e);
+		}
+	}
+
+	private List<Review> queryReviews(String sql) {
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql);
+				ResultSet rs = ps.executeQuery()) {
+			List<Review> reviews = new ArrayList<Review>();
+			while (rs.next()) {
+				reviews.add(mapReview(rs));
+			}
+			return reviews;
 		} catch (SQLException e) {
 			throw new IllegalStateException("查询评价失败", e);
 		}

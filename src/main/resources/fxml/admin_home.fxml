@@ -21,6 +21,8 @@
 			</VBox>
 			<Label fx:id="summaryLabel" wrapText="true"
 				styleClass="status-text" />
+			<Button text="AI 管理分析" onAction="#handleAiManagementAnalysis"
+				styleClass="primary-button" maxWidth="220.0" />
 			<HBox spacing="14.0">
 				<VBox spacing="10.0" styleClass="plain-panel">
 					<Label text="审核与治理" styleClass="section-label" />
@@ -34,6 +36,8 @@
 					<Button text="平台统计" onAction="#handleViewStats"
 						styleClass="secondary-button" maxWidth="220.0" />
 					<Button text="操作日志" onAction="#handleViewLogs"
+						styleClass="secondary-button" maxWidth="220.0" />
+					<Button text="全部评价" onAction="#handleViewReviews"
 						styleClass="secondary-button" maxWidth="220.0" />
 				</VBox>
 				<VBox spacing="10.0" styleClass="plain-panel">

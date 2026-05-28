@@ -87,4 +87,13 @@ public class ReviewServiceTest {
 
 		reviewService.createReview(buyer, 1L, 5, " ");
 	}
+
+	@Test(expected = BusinessException.class)
+	public void nonAdminCannotListAllReviews() {
+		UserService userService = new UserService();
+		ReviewService reviewService = new ReviewService();
+		User buyer = userService.login("demo_buyer", "buyer123");
+
+		reviewService.listAllReviews(buyer);
+	}
 }
