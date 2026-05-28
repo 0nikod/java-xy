@@ -3,16 +3,17 @@ package com.campus.secondhand.service;
 import com.campus.secondhand.dao.CartDao;
 import com.campus.secondhand.dao.GoodsDao;
 import com.campus.secondhand.dao.GoodsImageDao;
-import com.campus.secondhand.model.GoodsImage;
+import com.campus.secondhand.model.AiSearchAssistResult;
 import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.GoodsCategory;
+import com.campus.secondhand.model.GoodsImage;
 import com.campus.secondhand.model.GoodsSortOption;
 import com.campus.secondhand.model.GoodsStatus;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.util.DateUtil;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
@@ -205,6 +206,95 @@ public class GoodsService {
 
 	public String assistSearchStreaming(String userInput, Consumer<String> onDelta) {
 		return aiService.assistSearchStreaming(userInput, onDelta);
+	}
+
+	public AiSearchAssistResult assistSearchToCriteria(String userInput) {
+		String normalizedInput = normalizeRequired(userInput, "请输入搜索需求");
+		String aiText = aiService.assistSearchStreaming(normalizedInput, null);
+		return buildSearchAssistResult(normalizedInput, aiText);
+	}
+
+	private AiSearchAssistResult buildSearchAssistResult(String userInput, String aiText) {
+		AiSearchAssistResult result = new AiSearchAssistResult();
+		String combinedText = ((userInput == null ? "" : userInput) + " " + (aiText == null ? "" : aiText)).trim();
+		result.setKeyword(limitKeyword(extractKeyword(userInput)));
+		result.setCategory(extractCategory(combinedText));
+		result.setSortOption(extractSortOption(combinedText));
+		result.setExplanation(buildSearchExplanation(result, aiText));
+		return result;
+	}
+
+	private String extractKeyword(String userInput) {
+		String keyword = userInput == null ? "" : userInput.trim();
+		String[] removeWords = {"我想买", "想买", "我要买", "求购", "一个", "一本", "一件", "最好", "希望", "便宜点", "便宜", "新一点", "新点", "的",
+				"，", ",", "。", "！", "!"};
+		for (String word : removeWords) {
+			keyword = keyword.replace(word, " ");
+		}
+		for (GoodsCategory category : GoodsCategory.values()) {
+			keyword = keyword.replace(category.getDisplayName(), " ");
+		}
+		return keyword.trim().replaceAll("\\s+", " ");
+	}
+
+	private String limitKeyword(String keyword) {
+		if (keyword == null || keyword.trim().isEmpty()) {
+			return null;
+		}
+		String normalized = keyword.trim();
+		return normalized.length() > 40 ? normalized.substring(0, 40) : normalized;
+	}
+
+	private String extractCategory(String text) {
+		if (text == null) {
+			return null;
+		}
+		for (GoodsCategory category : GoodsCategory.values()) {
+			if (text.contains(category.getDisplayName())) {
+				return category.getDisplayName();
+			}
+		}
+		return null;
+	}
+
+	private GoodsSortOption extractSortOption(String text) {
+		if (text == null || text.trim().isEmpty()) {
+			return GoodsSortOption.LATEST;
+		}
+		if (containsAny(text, "便宜", "低价", "价格低", "价格升序", "从低到高")) {
+			return GoodsSortOption.PRICE_ASC;
+		}
+		if (containsAny(text, "贵", "高价", "价格高", "价格降序", "从高到低")) {
+			return GoodsSortOption.PRICE_DESC;
+		}
+		if (containsAny(text, "新", "成色", "九成", "八成", "品相")) {
+			return GoodsSortOption.CONDITION_DESC;
+		}
+		return GoodsSortOption.LATEST;
+	}
+
+	private boolean containsAny(String text, String... words) {
+		for (String word : words) {
+			if (text.contains(word)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private String buildSearchExplanation(AiSearchAssistResult result, String aiText) {
+		StringBuilder builder = new StringBuilder("已根据你的需求生成搜索条件");
+		if (result.getKeyword() != null) {
+			builder.append("，关键词：").append(result.getKeyword());
+		}
+		if (result.getCategory() != null) {
+			builder.append("，分类：").append(result.getCategory());
+		}
+		builder.append("，排序：").append(result.getSortOption() == null ? GoodsSortOption.LATEST : result.getSortOption());
+		if (aiText != null && !aiText.trim().isEmpty()) {
+			builder.append("。AI 建议：").append(aiText.trim());
+		}
+		return builder.toString();
 	}
 
 	private String buildGoodsContext(Goods goods) {

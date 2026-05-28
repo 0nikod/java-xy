@@ -3,6 +3,7 @@ package com.campus.secondhand.service;
 import com.campus.secondhand.config.DatabaseInitializer;
 import com.campus.secondhand.model.AdminLog;
 import com.campus.secondhand.dao.OrderDao;
+import com.campus.secondhand.model.AiSearchAssistResult;
 import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.GoodsSortOption;
 import com.campus.secondhand.model.GoodsStatus;
@@ -101,6 +102,18 @@ public class Stage2FlowTest {
 		Assert.assertNotNull(reloadedOrder);
 		Assert.assertEquals(order.getOrderNo(), reloadedOrder.getOrderNo());
 		Assert.assertEquals("Java 课程教材", reloadedOrder.getGoodsTitle());
+	}
+
+	@Test
+	public void aiSearchAssistShouldProduceSafeSearchCriteria() {
+		GoodsService goodsService = new GoodsService();
+
+		AiSearchAssistResult result = goodsService.assistSearchToCriteria("我想买一本便宜点的 Java 教材，最好新一点");
+
+		Assert.assertTrue(result.getKeyword().contains("Java"));
+		Assert.assertEquals("教材", result.getCategory());
+		Assert.assertEquals(GoodsSortOption.PRICE_ASC, result.getSortOption());
+		Assert.assertTrue(result.getExplanation().contains("关键词"));
 	}
 
 	@Test

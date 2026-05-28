@@ -2,6 +2,7 @@ package com.campus.secondhand.controller;
 
 import com.campus.secondhand.app.SceneManager;
 import com.campus.secondhand.config.AppConfig;
+import com.campus.secondhand.model.AiSearchAssistResult;
 import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.GoodsCategory;
 import com.campus.secondhand.model.GoodsSortOption;
@@ -11,7 +12,6 @@ import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.util.Session;
 import com.campus.secondhand.util.ViewState;
 import java.util.List;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -88,24 +88,21 @@ public class UserHomeController {
 	@FXML
 	private void handleAiSearchAssist() {
 		String input = keywordField == null ? null : keywordField.getText();
-		setMessage("");
+		setMessage("AI 正在分析搜索需求...");
 		if (aiSearchAssistButton != null) {
 			aiSearchAssistButton.setDisable(true);
 		}
-		StringBuilder builder = new StringBuilder();
-		Task<String> task = new Task<String>() {
+		Task<AiSearchAssistResult> task = new Task<AiSearchAssistResult>() {
 			@Override
-			protected String call() {
-				return goodsService.assistSearchStreaming(input, delta -> Platform.runLater(() -> {
-					builder.append(delta);
-					setMessage(builder.toString());
-				}));
+			protected AiSearchAssistResult call() {
+				return goodsService.assistSearchToCriteria(input);
 			}
 		};
 		task.setOnSucceeded(event -> {
 			if (aiSearchAssistButton != null) {
 				aiSearchAssistButton.setDisable(false);
 			}
+			applyAiSearchResult(task.getValue());
 		});
 		task.setOnFailed(event -> {
 			if (aiSearchAssistButton != null) {
@@ -209,6 +206,39 @@ public class UserHomeController {
 		}
 	}
 
+	private void applyAiSearchResult(AiSearchAssistResult result) {
+		if (result == null) {
+			setMessage("AI 未生成有效搜索条件。请尝试手动搜索。");
+			return;
+		}
+		if (keywordField != null) {
+			keywordField.setText(result.getKeyword() == null ? "" : result.getKeyword());
+		}
+		selectCategory(result.getCategory());
+		if (sortBox != null) {
+			sortBox.getSelectionModel()
+					.select(result.getSortOption() == null ? GoodsSortOption.LATEST : result.getSortOption());
+		}
+		refreshGoods(result.getExplanation());
+	}
+
+	private void selectCategory(String category) {
+		if (categoryBox == null) {
+			return;
+		}
+		if (category == null || category.trim().isEmpty()) {
+			categoryBox.getSelectionModel().selectFirst();
+			return;
+		}
+		for (int i = 0; i < categoryBox.getItems().size(); i++) {
+			if (category.equals(categoryBox.getItems().get(i))) {
+				categoryBox.getSelectionModel().select(i);
+				return;
+			}
+		}
+		categoryBox.getSelectionModel().selectFirst();
+	}
+
 	private void configureFilters() {
 		if (categoryBox != null) {
 			categoryBox.setItems(FXCollections.observableArrayList("全部", GoodsCategory.TEXTBOOK.getDisplayName(),
@@ -223,6 +253,10 @@ public class UserHomeController {
 	}
 
 	private void refreshGoods() {
+		refreshGoods("已加载可见商品。");
+	}
+
+	private void refreshGoods(String successMessage) {
 		try {
 			String keyword = keywordField == null ? null : keywordField.getText();
 			String category = null;
@@ -234,7 +268,7 @@ public class UserHomeController {
 					: sortBox.getSelectionModel().getSelectedItem();
 			goodsTable.setItems(
 					FXCollections.observableArrayList(goodsService.listPublicGoods(keyword, category, sortOption)));
-			setMessage("已加载可见商品。");
+			setMessage(successMessage == null || successMessage.trim().isEmpty() ? "已加载可见商品。" : successMessage);
 		} catch (BusinessException ex) {
 			setMessage(ex.getMessage());
 		}
