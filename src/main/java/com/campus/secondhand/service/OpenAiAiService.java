@@ -59,6 +59,11 @@ public class OpenAiAiService implements AiService {
 	}
 
 	@Override
+	public String analyzeViolationRisk(String goodsContext) {
+		return requestText("你是校园二手平台审核助手。请分析商品是否存在违规、虚假、风险交易迹象，仅给管理员参考，不做最终决定。", goodsContext == null ? "" : goodsContext);
+	}
+
+	@Override
 	public String interpretStatistics(String statsContext) {
 		return requestText("你是校园二手平台数据分析助手。请解读统计图表，指出运营现状、风险和改进建议，控制在 4 句以内。", statsContext == null ? "" : statsContext);
 	}
@@ -93,6 +98,12 @@ public class OpenAiAiService implements AiService {
 	public String buildOperationsSummaryStreaming(String context, Consumer<String> onDelta) {
 		return requestTextStreaming("你是校园二手平台运营助理。请根据输入内容输出 3 句以内的中文运营摘要，不要使用 Markdown。",
 				context == null ? "" : context, onDelta);
+	}
+
+	@Override
+	public String analyzeViolationRiskStreaming(String goodsContext, Consumer<String> onDelta) {
+		return requestTextStreaming("你是校园二手平台审核助手。请分析商品是否存在违规、虚假、风险交易迹象，仅给管理员参考，不做最终决定。",
+				goodsContext == null ? "" : goodsContext, onDelta);
 	}
 
 	@Override

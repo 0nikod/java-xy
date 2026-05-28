@@ -230,6 +230,16 @@ public class GoodsService {
 		return aiService.assistSearchStreaming(userInput, onDelta);
 	}
 
+	public String analyzeViolationRisk(Long goodsId) {
+		Goods goods = getGoodsDetail(goodsId);
+		return aiService.analyzeViolationRisk(buildGoodsContext(goods));
+	}
+
+	public String analyzeViolationRiskStreaming(Long goodsId, Consumer<String> onDelta) {
+		Goods goods = getGoodsDetail(goodsId);
+		return aiService.analyzeViolationRiskStreaming(buildGoodsContext(goods), onDelta);
+	}
+
 	public String buildOperationsSummary() {
 		// 运营摘要用于后台首页展示，实际生成逻辑交给 AI 服务统一封装。
 		return aiService.buildOperationsSummary("请生成一段适合管理员首页展示的通用运营摘要。");
