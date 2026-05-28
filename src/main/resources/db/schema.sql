@@ -43,7 +43,18 @@ CREATE TABLE IF NOT EXISTS orders (
     FOREIGN KEY (seller_id) REFERENCES users(id)
 );
 
--- 评价表：首版仅做结构预留，后续扩展时基于订单补充评价流程。
+-- 购物车表：记录用户待结算商品，单个用户同一商品只能加入一次。
+CREATE TABLE IF NOT EXISTS cart_items (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    goods_id INTEGER NOT NULL,
+    created_at TEXT NOT NULL,
+    UNIQUE(user_id, goods_id),
+    FOREIGN KEY (user_id) REFERENCES users(id),
+    FOREIGN KEY (goods_id) REFERENCES goods(id) ON DELETE CASCADE
+);
+
+-- 评价表：基于已完成订单记录买家对商品和卖家的评价。
 CREATE TABLE IF NOT EXISTS reviews (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_id INTEGER NOT NULL UNIQUE,

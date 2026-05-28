@@ -33,7 +33,7 @@
 				<HBox spacing="10.0">
 					<Button fx:id="buyButton" text="立即购买" onAction="#handleBuy"
 						styleClass="primary-button" />
-					<Button text="加入购物车（未开放）" onAction="#handleCartPlaceholder"
+					<Button text="加入购物车" onAction="#handleAddToCart"
 						styleClass="secondary-button" />
 					<Button text="查看评价（未开放）" onAction="#handleReviewPlaceholder"
 						styleClass="secondary-button" />

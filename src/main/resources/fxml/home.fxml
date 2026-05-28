@@ -49,6 +49,8 @@
 					styleClass="secondary-button" />
 				<Button text="个人中心" onAction="#handleUserCenter"
 					styleClass="secondary-button" />
+				<Button text="购物车" onAction="#handleCart"
+					styleClass="secondary-button" />
 				<Button text="退出登录" onAction="#handleLogout"
 					styleClass="secondary-button" />
 			</HBox>

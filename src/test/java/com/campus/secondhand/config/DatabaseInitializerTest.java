@@ -37,12 +37,18 @@ public class DatabaseInitializerTest {
 				Assert.assertEquals(3, resultSet.getInt("total"));
 			}
 
-			// goods 表应包含预期数量的初始商品。
+			// goods 表应包含预期数量的初始商品，并覆盖待审核演示数据。
 			try (Connection connection = DBUtil.getConnection();
 					Statement statement = connection.createStatement();
 					ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS total FROM goods")) {
 				Assert.assertTrue(resultSet.next());
-				Assert.assertEquals(4, resultSet.getInt("total"));
+				Assert.assertEquals(5, resultSet.getInt("total"));
+			}
+			try (Connection connection = DBUtil.getConnection();
+					Statement statement = connection.createStatement();
+					ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS total FROM goods WHERE status = 'PENDING'")) {
+				Assert.assertTrue(resultSet.next());
+				Assert.assertTrue(resultSet.getInt("total") >= 1);
 			}
 
 			// orders 表也应有初始化数据，确保流程测试可直接运行。
@@ -64,6 +70,24 @@ public class DatabaseInitializerTest {
 					}
 				}
 				Assert.assertFalse("goods 表不应再包含 reject_reason 列", hasRejectReason);
+			}
+
+			// cart_items 表应支持购物车完整流程。
+			try (Connection connection = DBUtil.getConnection();
+					Statement statement = connection.createStatement();
+					ResultSet resultSet = statement.executeQuery("PRAGMA table_info(cart_items)")) {
+				boolean hasUserId = false;
+				boolean hasGoodsId = false;
+				while (resultSet.next()) {
+					if ("user_id".equals(resultSet.getString("name"))) {
+						hasUserId = true;
+					}
+					if ("goods_id".equals(resultSet.getString("name"))) {
+						hasGoodsId = true;
+					}
+				}
+				Assert.assertTrue("cart_items 表应包含 user_id 字段", hasUserId);
+				Assert.assertTrue("cart_items 表应包含 goods_id 字段", hasGoodsId);
 			}
 
 			// reviews 表应保留用于后续功能扩展的字段。

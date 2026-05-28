@@ -6,6 +6,7 @@ import com.campus.secondhand.model.Goods;
 import com.campus.secondhand.model.GoodsImage;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.BusinessException;
+import com.campus.secondhand.service.CartService;
 import com.campus.secondhand.service.GoodsService;
 import com.campus.secondhand.service.OrderService;
 import com.campus.secondhand.util.AlertUtil;
@@ -58,6 +59,7 @@ public class GoodsDetailController {
 
 	private final GoodsService goodsService = new GoodsService();
 	private final OrderService orderService = new OrderService();
+	private final CartService cartService = new CartService();
 
 	private Goods goods;
 
@@ -99,8 +101,18 @@ public class GoodsDetailController {
 	}
 
 	@FXML
-	private void handleCartPlaceholder() {
-		AlertUtil.showInfo("后续开放", "购物车功能已预留入口，将在后续扩展中实现。");
+	private void handleAddToCart() {
+		try {
+			User currentUser = Session.getCurrentUser();
+			if (currentUser == null) {
+				SceneManager.show("login.fxml", AppConfig.getAppTitle());
+				return;
+			}
+			cartService.addToCart(currentUser, goods.getId());
+			AlertUtil.showInfo("加入成功", "商品已加入购物车。");
+		} catch (BusinessException ex) {
+			AlertUtil.showWarning("无法加入购物车", ex.getMessage());
+		}
 	}
 
 	@FXML

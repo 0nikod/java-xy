@@ -1,5 +1,6 @@
 package com.campus.secondhand.service;
 
+import com.campus.secondhand.dao.CartDao;
 import com.campus.secondhand.dao.GoodsDao;
 import com.campus.secondhand.dao.GoodsImageDao;
 import com.campus.secondhand.model.GoodsImage;
@@ -18,6 +19,7 @@ import java.util.List;
 public class GoodsService {
 
 	private final GoodsDao goodsDao;
+	private final CartDao cartDao;
 	private final AdminLogService adminLogService;
 	private final AiService aiService;
 	private final GoodsImageDao goodsImageDao;
@@ -25,6 +27,7 @@ public class GoodsService {
 
 	public GoodsService() {
 		this.goodsDao = new GoodsDao();
+		this.cartDao = new CartDao();
 		this.adminLogService = new AdminLogService();
 		this.aiService = AiServiceFactory.create();
 		this.goodsImageDao = new GoodsImageDao();
@@ -172,6 +175,7 @@ public class GoodsService {
 		try {
 			connection = com.campus.secondhand.util.DBUtil.getConnection();
 			connection.setAutoCommit(false);
+			cartDao.deleteByGoodsId(connection, goodsId);
 			goodsImageDao.deleteByGoodsId(connection, goodsId);
 			goodsDao.deleteById(connection, goodsId);
 			adminLogService.record(connection, admin, "DELETE_GOODS", "GOODS", goodsId,

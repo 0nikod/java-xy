@@ -104,6 +104,16 @@ public class UserHomeController {
 	}
 
 	@FXML
+	private void handleCart() {
+		User currentUser = Session.getCurrentUser();
+		if (currentUser == null) {
+			SceneManager.show("login.fxml", AppConfig.getAppTitle());
+			return;
+		}
+		SceneManager.show("cart.fxml", AppConfig.getAppTitle());
+	}
+
+	@FXML
 	private void handleDetail() {
 		Goods selected = goodsTable == null ? null : goodsTable.getSelectionModel().getSelectedItem();
 		if (selected == null) {
