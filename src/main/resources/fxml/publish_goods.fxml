@@ -59,8 +59,6 @@
 				<HBox spacing="10.0">
 					<Button fx:id="optimizeButton" text="AI 优化描述" onAction="#handleOptimize"
 						styleClass="secondary-button" />
-					<Button fx:id="suggestPriceButton" text="AI 定价建议" onAction="#handleSuggestPrice"
-						styleClass="secondary-button" />
 					<Button text="提交审核" onAction="#handleSubmit"
 						styleClass="primary-button" />
 					<Button text="返回首页" onAction="#handleBack"

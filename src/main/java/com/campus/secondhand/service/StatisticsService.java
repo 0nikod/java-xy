@@ -63,22 +63,8 @@ public class StatisticsService {
 		return statisticsDao.listRecentOrderTrend();
 	}
 
-	/**
-	 * 生成可直接展示在页面上的运营摘要文本。
-	 */
-	public String buildSummaryText() {
-		return aiService.buildOperationsSummary(buildStatsContext());
-	}
-
 	public String buildSummaryTextStreaming(Consumer<String> onDelta) {
 		return aiService.buildOperationsSummaryStreaming(buildStatsContext(), onDelta);
-	}
-
-	/**
-	 * 生成可直接展示在页面上的图表解读文本。
-	 */
-	public String buildInterpretationText() {
-		return aiService.interpretStatistics(buildStatsContext());
 	}
 
 	public String buildInterpretationTextStreaming(Consumer<String> onDelta) {

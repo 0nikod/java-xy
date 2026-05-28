@@ -194,27 +194,8 @@ public class GoodsService {
 		}
 	}
 
-	public String optimizeDescription(String description) {
-		// 商品描述优化由 AI 服务统一处理，控制器无需关心真实调用还是本地兜底。
-		return aiService.optimizeDescription(description);
-	}
-
 	public String optimizeDescriptionStreaming(String description, Consumer<String> onDelta) {
 		return aiService.optimizeDescriptionStreaming(description, onDelta);
-	}
-
-	public String suggestPrice(String title, String category, double originalPrice, int conditionLevel, String description) {
-		return aiService.suggestPrice(title, category, originalPrice, conditionLevel, description);
-	}
-
-	public String suggestPriceStreaming(String title, String category, double originalPrice, int conditionLevel,
-			String description, Consumer<String> onDelta) {
-		return aiService.suggestPriceStreaming(title, category, originalPrice, conditionLevel, description, onDelta);
-	}
-
-	public String buildPurchaseAdvice(Long goodsId) {
-		Goods goods = getGoodsDetail(goodsId);
-		return aiService.buildPurchaseAdvice(buildGoodsContext(goods));
 	}
 
 	public String buildPurchaseAdviceStreaming(Long goodsId, Consumer<String> onDelta) {
@@ -222,27 +203,8 @@ public class GoodsService {
 		return aiService.buildPurchaseAdviceStreaming(buildGoodsContext(goods), onDelta);
 	}
 
-	public String assistSearch(String userInput) {
-		return aiService.assistSearch(userInput);
-	}
-
 	public String assistSearchStreaming(String userInput, Consumer<String> onDelta) {
 		return aiService.assistSearchStreaming(userInput, onDelta);
-	}
-
-	public String analyzeViolationRisk(Long goodsId) {
-		Goods goods = getGoodsDetail(goodsId);
-		return aiService.analyzeViolationRisk(buildGoodsContext(goods));
-	}
-
-	public String analyzeViolationRiskStreaming(Long goodsId, Consumer<String> onDelta) {
-		Goods goods = getGoodsDetail(goodsId);
-		return aiService.analyzeViolationRiskStreaming(buildGoodsContext(goods), onDelta);
-	}
-
-	public String buildOperationsSummary() {
-		// 运营摘要用于后台首页展示，实际生成逻辑交给 AI 服务统一封装。
-		return aiService.buildOperationsSummary("请生成一段适合管理员首页展示的通用运营摘要。");
 	}
 
 	private String buildGoodsContext(Goods goods) {

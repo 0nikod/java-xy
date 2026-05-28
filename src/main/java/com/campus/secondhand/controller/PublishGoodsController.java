@@ -56,9 +56,6 @@ public class PublishGoodsController {
 	private Button optimizeButton;
 
 	@FXML
-	private Button suggestPriceButton;
-
-	@FXML
 	private Label imageSummaryLabel;
 
 	@FXML
@@ -89,21 +86,6 @@ public class PublishGoodsController {
 		User currentUser = Session.getCurrentUser();
 		if (currentUserLabel != null) {
 			currentUserLabel.setText(currentUser == null ? "未登录" : "当前用户：" + currentUser.getUsername());
-		}
-	}
-
-	@FXML
-	private void handleSuggestPrice() {
-		try {
-			String title = getText(titleField);
-			String category = getText(categoryBox);
-			double originalPrice = parseDouble(getText(originalPriceField), "原价不能为空");
-			int conditionLevel = parseInt(getText(conditionField), "新旧程度不能为空");
-			String description = getText(descriptionArea);
-			startAiSuggestion("定价建议失败", suggestPriceButton, () -> goodsService.suggestPriceStreaming(title, category,
-					originalPrice, conditionLevel, description, delta -> Platform.runLater(() -> appendSuggestion(delta))));
-		} catch (BusinessException ex) {
-			AlertUtil.showWarning("定价建议失败", ex.getMessage());
 		}
 	}
 

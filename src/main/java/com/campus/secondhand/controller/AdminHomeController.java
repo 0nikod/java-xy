@@ -5,6 +5,8 @@ import com.campus.secondhand.config.AppConfig;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.StatisticsService;
 import com.campus.secondhand.util.Session;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
@@ -24,9 +26,29 @@ public class AdminHomeController {
 		if (currentUserLabel != null) {
 			currentUserLabel.setText(currentUser == null ? "未登录" : "当前管理员：" + currentUser.getUsername());
 		}
-		if (summaryLabel != null) {
-			summaryLabel.setText(statisticsService.buildSummaryText());
+		loadSummaryStreaming();
+	}
+
+	private void loadSummaryStreaming() {
+		if (summaryLabel == null) {
+			return;
 		}
+		summaryLabel.setText("");
+		StringBuilder builder = new StringBuilder();
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() {
+				statisticsService.buildSummaryTextStreaming(delta -> Platform.runLater(() -> {
+					builder.append(delta);
+					summaryLabel.setText(builder.toString());
+				}));
+				return null;
+			}
+		};
+		task.setOnFailed(event -> summaryLabel.setText("AI 摘要生成失败"));
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
 	}
 
 	@FXML

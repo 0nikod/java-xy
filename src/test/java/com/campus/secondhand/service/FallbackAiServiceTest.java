@@ -12,7 +12,7 @@ public class FallbackAiServiceTest {
 	public void optimizeDescriptionShouldFallbackWhenPrimaryFails() {
 		AiService fallback = new MockAiService();
 
-		String result = new FallbackAiService(failingAiService(), fallback).optimizeDescription("旧描述");
+		String result = new FallbackAiService(failingAiService(), fallback).optimizeDescriptionStreaming("旧描述", null);
 		Assert.assertTrue(result.startsWith("Mock 优化建议"));
 	}
 
@@ -20,7 +20,7 @@ public class FallbackAiServiceTest {
 	public void buildOperationsSummaryShouldFallbackWhenPrimaryFails() {
 		AiService fallback = new MockAiService();
 
-		String result = new FallbackAiService(failingAiService(), fallback).buildOperationsSummary("统计上下文");
+		String result = new FallbackAiService(failingAiService(), fallback).buildOperationsSummaryStreaming("统计上下文", null);
 		Assert.assertEquals("Mock 运营摘要：统计上下文", result);
 	}
 
@@ -28,42 +28,35 @@ public class FallbackAiServiceTest {
 	public void newAiFeaturesShouldFallbackWhenPrimaryFails() {
 		AiService service = new FallbackAiService(failingAiService(), new MockAiService());
 
-		Assert.assertTrue(service.suggestPrice("教材", "教材", 100.0, 8, "很新").startsWith("Mock 定价建议"));
-		Assert.assertTrue(service.buildPurchaseAdvice("商品上下文").startsWith("Mock 购买建议"));
-		Assert.assertTrue(service.assistSearch("便宜教材").startsWith("Mock 搜索辅助"));
-		Assert.assertTrue(service.interpretStatistics("统计上下文").startsWith("Mock 图表解读"));
+		Assert.assertTrue(service.buildPurchaseAdviceStreaming("商品上下文", null).startsWith("Mock 购买建议"));
+		Assert.assertTrue(service.assistSearchStreaming("便宜教材", null).startsWith("Mock 搜索辅助"));
+		Assert.assertTrue(service.interpretStatisticsStreaming("统计上下文", null).startsWith("Mock 图表解读"));
 	}
 
 	private AiService failingAiService() {
 		return new AiService() {
 			@Override
-			public String optimizeDescription(String rawDescription) {
+			public String optimizeDescriptionStreaming(String rawDescription, java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 
 			@Override
-			public String suggestPrice(String title, String category, double originalPrice, int conditionLevel,
-					String description) {
+			public String buildPurchaseAdviceStreaming(String goodsContext, java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 
 			@Override
-			public String buildPurchaseAdvice(String goodsContext) {
+			public String assistSearchStreaming(String userInput, java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 
 			@Override
-			public String assistSearch(String userInput) {
+			public String buildOperationsSummaryStreaming(String context, java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 
 			@Override
-			public String buildOperationsSummary(String context) {
-				throw new IllegalStateException("boom");
-			}
-
-			@Override
-			public String interpretStatistics(String statsContext) {
+			public String interpretStatisticsStreaming(String statsContext, java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 		};

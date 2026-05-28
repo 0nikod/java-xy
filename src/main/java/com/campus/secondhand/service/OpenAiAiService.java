@@ -6,10 +6,7 @@ import com.openai.client.okhttp.OpenAIOkHttpClient;
 import com.openai.core.http.StreamResponse;
 import com.openai.models.chat.completions.ChatCompletionChunk;
 import com.openai.models.chat.completions.ChatCompletionCreateParams;
-import com.openai.models.responses.Response;
 import com.openai.models.responses.ResponseCreateParams;
-import com.openai.models.responses.ResponseOutputItem;
-import com.openai.models.responses.ResponseOutputMessage;
 import com.openai.models.responses.ResponseStreamEvent;
 import java.util.function.Consumer;
 
@@ -29,57 +26,9 @@ public class OpenAiAiService implements AiService {
 	}
 
 	@Override
-	public String optimizeDescription(String rawDescription) {
-		// 商品描述优化提示词尽量克制，避免模型虚构不存在的商品信息。
-		return requestText("你是校园二手平台商品发布助手。请在不虚构信息的前提下，优化输入描述，输出简洁自然的中文结果。",
-				rawDescription == null ? "" : rawDescription);
-	}
-
-	@Override
-	public String suggestPrice(String title, String category, double originalPrice, int conditionLevel, String description) {
-		String input = String.format("标题：%s\n分类：%s\n原价：%.2f\n成色：%d/10\n描述：%s", title, category,
-				originalPrice, conditionLevel, description);
-		return requestText("你是校园二手平台定价助手。请给出合理售价区间和简短理由，不要虚构市场数据。", input);
-	}
-
-	@Override
-	public String buildPurchaseAdvice(String goodsContext) {
-		return requestText("你是校园二手平台购买顾问。请根据商品信息给出简短购买建议、风险点和验货提醒。", goodsContext == null ? "" : goodsContext);
-	}
-
-	@Override
-	public String assistSearch(String userInput) {
-		return requestText("你是校园二手平台搜索助手。请把用户自然语言需求改写为搜索关键词、推荐分类和排序建议。", userInput == null ? "" : userInput);
-	}
-
-	@Override
-	public String buildOperationsSummary(String context) {
-		// 运营摘要限制输出长度，保证后台首页展示简洁。
-		return requestText("你是校园二手平台运营助理。请根据输入内容输出 3 句以内的中文运营摘要，不要使用 Markdown。", context == null ? "" : context);
-	}
-
-	@Override
-	public String analyzeViolationRisk(String goodsContext) {
-		return requestText("你是校园二手平台审核助手。请分析商品是否存在违规、虚假、风险交易迹象，仅给管理员参考，不做最终决定。", goodsContext == null ? "" : goodsContext);
-	}
-
-	@Override
-	public String interpretStatistics(String statsContext) {
-		return requestText("你是校园二手平台数据分析助手。请解读统计图表，指出运营现状、风险和改进建议，控制在 4 句以内。", statsContext == null ? "" : statsContext);
-	}
-
-	@Override
 	public String optimizeDescriptionStreaming(String rawDescription, Consumer<String> onDelta) {
 		return requestTextStreaming("你是校园二手平台商品发布助手。请在不虚构信息的前提下，优化输入描述，输出简洁自然的中文结果。",
 				rawDescription == null ? "" : rawDescription, onDelta);
-	}
-
-	@Override
-	public String suggestPriceStreaming(String title, String category, double originalPrice, int conditionLevel,
-			String description, Consumer<String> onDelta) {
-		String input = String.format("标题：%s\n分类：%s\n原价：%.2f\n成色：%d/10\n描述：%s", title, category,
-				originalPrice, conditionLevel, description);
-		return requestTextStreaming("你是校园二手平台定价助手。请给出合理售价区间和简短理由，不要虚构市场数据。", input, onDelta);
 	}
 
 	@Override
@@ -101,41 +50,9 @@ public class OpenAiAiService implements AiService {
 	}
 
 	@Override
-	public String analyzeViolationRiskStreaming(String goodsContext, Consumer<String> onDelta) {
-		return requestTextStreaming("你是校园二手平台审核助手。请分析商品是否存在违规、虚假、风险交易迹象，仅给管理员参考，不做最终决定。",
-				goodsContext == null ? "" : goodsContext, onDelta);
-	}
-
-	@Override
 	public String interpretStatisticsStreaming(String statsContext, Consumer<String> onDelta) {
 		return requestTextStreaming("你是校园二手平台数据分析助手。请解读统计图表，指出运营现状、风险和改进建议，控制在 4 句以内。",
 				statsContext == null ? "" : statsContext, onDelta);
-	}
-
-	private String requestText(String instructions, String input) {
-		// 统一封装请求与响应解析，避免不同 AI 功能重复写提取逻辑。
-		Response response = client.responses().create(ResponseCreateParams.builder().model(AppConfig.getOpenAiModel())
-				.instructions(instructions).input(input).maxOutputTokens(1024L).build());
-
-		StringBuilder builder = new StringBuilder();
-		for (ResponseOutputItem item : response.output()) {
-			if (!item.isMessage()) {
-				continue;
-			}
-			ResponseOutputMessage message = item.asMessage();
-			for (ResponseOutputMessage.Content content : message.content()) {
-				if (content.isOutputText()) {
-					if (builder.length() > 0) {
-						builder.append('\n');
-					}
-					builder.append(content.asOutputText().text());
-				}
-			}
-		}
-		if (builder.length() == 0) {
-			throw new IllegalStateException("AI 未返回文本内容");
-		}
-		return builder.toString().trim();
 	}
 
 	private String requestTextStreaming(String instructions, String input, Consumer<String> onDelta) {
