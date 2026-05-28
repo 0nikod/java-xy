@@ -32,6 +32,9 @@ public class AdminStatsController {
 	private Label aiSummaryLabel;
 
 	@FXML
+	private Label chartInterpretationLabel;
+
+	@FXML
 	private PieChart categoryPieChart;
 
 	@FXML
@@ -110,6 +113,9 @@ public class AdminStatsController {
 		}
 		if (aiSummaryLabel != null) {
 			aiSummaryLabel.setText(statisticsService.buildSummaryText());
+		}
+		if (chartInterpretationLabel != null) {
+			chartInterpretationLabel.setText(statisticsService.buildInterpretationText());
 		}
 		populateCategoryChart();
 		populateStatusChart();

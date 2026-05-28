@@ -60,6 +60,9 @@ public class GoodsDetailController {
 	private ListView<String> reviewListView;
 
 	@FXML
+	private TextArea aiAdviceArea;
+
+	@FXML
 	private ImageView imagePreviewView;
 
 	private final GoodsService goodsService = new GoodsService();
@@ -98,6 +101,20 @@ public class GoodsDetailController {
 			SceneManager.show("home.fxml", AppConfig.getAppTitle());
 		} catch (BusinessException ex) {
 			AlertUtil.showWarning("无法购买", ex.getMessage());
+		}
+	}
+
+	@FXML
+	private void handlePurchaseAdvice() {
+		try {
+			String advice = goodsService.buildPurchaseAdvice(goods.getId());
+			if (aiAdviceArea != null) {
+				aiAdviceArea.setText(advice);
+			} else {
+				AlertUtil.showInfo("AI 购买建议", advice);
+			}
+		} catch (BusinessException ex) {
+			AlertUtil.showWarning("购买建议失败", ex.getMessage());
 		}
 	}
 

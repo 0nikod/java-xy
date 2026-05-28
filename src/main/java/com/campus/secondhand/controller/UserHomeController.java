@@ -80,6 +80,13 @@ public class UserHomeController {
 	}
 
 	@FXML
+	private void handleAiSearchAssist() {
+		String input = keywordField == null ? null : keywordField.getText();
+		String suggestion = goodsService.assistSearch(input);
+		setMessage(suggestion);
+	}
+
+	@FXML
 	private void handleReset() {
 		if (keywordField != null) {
 			keywordField.clear();

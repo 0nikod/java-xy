@@ -84,6 +84,20 @@ public class PublishGoodsController {
 	}
 
 	@FXML
+	private void handleSuggestPrice() {
+		try {
+			String suggestion = goodsService.suggestPrice(getText(titleField), getText(categoryBox),
+					parseDouble(getText(originalPriceField), "原价不能为空"),
+					parseInt(getText(conditionField), "新旧程度不能为空"), getText(descriptionArea));
+			if (aiSuggestionArea != null) {
+				aiSuggestionArea.setText(suggestion);
+			}
+		} catch (BusinessException ex) {
+			AlertUtil.showWarning("定价建议失败", ex.getMessage());
+		}
+	}
+
+	@FXML
 	private void handleOptimize() {
 		if (descriptionArea == null) {
 			return;

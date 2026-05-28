@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,6 +16,7 @@ public final class DatabaseInitializer {
 
 	private static final String SCHEMA_RESOURCE = "/db/schema.sql";
 	private static final String SEED_RESOURCE = "/db/seed.sql";
+	private static final String DEMO_SEED_FILE = "seed/demo_goods_seed_snippet.sql";
 
 	private DatabaseInitializer() {
 	}
@@ -24,12 +27,12 @@ public final class DatabaseInitializer {
 			DBUtil.ensureDatabaseReady();
 			executeScript(SCHEMA_RESOURCE);
 			executeScript(SEED_RESOURCE);
+			executeOptionalExternalDemoSeed();
 		} catch (IOException e) {
 			throw new IllegalStateException("读取数据库脚本失败", e);
 		} catch (SQLException e) {
 			throw new IllegalStateException("初始化数据库失败", e);
 		}
-
 	}
 
 	private static void executeScript(String resourcePath) throws IOException, SQLException {
@@ -40,17 +43,35 @@ public final class DatabaseInitializer {
 		}
 
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-			StringBuilder builder = new StringBuilder();
-			String line;
-			while ((line = reader.readLine()) != null) {
-				String trimmed = line.trim();
-				if (trimmed.isEmpty() || trimmed.startsWith("--")) {
-					continue;
-				}
-				builder.append(line).append('\n');
-			}
-			runStatements(builder.toString());
+			runStatements(readSql(reader));
 		}
+	}
+
+	private static void executeOptionalExternalDemoSeed() throws IOException, SQLException {
+		Path databaseParent = AppConfig.resolveDatabasePath().getParent();
+		if (databaseParent == null) {
+			return;
+		}
+		Path demoSeedPath = databaseParent.resolve(DEMO_SEED_FILE).normalize();
+		if (!Files.isRegularFile(demoSeedPath)) {
+			return;
+		}
+		try (BufferedReader reader = Files.newBufferedReader(demoSeedPath, StandardCharsets.UTF_8)) {
+			runStatements(readSql(reader));
+		}
+	}
+
+	private static String readSql(BufferedReader reader) throws IOException {
+		StringBuilder builder = new StringBuilder();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			String trimmed = line.trim();
+			if (trimmed.isEmpty() || trimmed.startsWith("--")) {
+				continue;
+			}
+			builder.append(line).append('\n');
+		}
+		return builder.toString();
 	}
 
 	private static void runStatements(String script) throws SQLException {

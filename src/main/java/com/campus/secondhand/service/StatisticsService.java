@@ -73,10 +73,7 @@ public class StatisticsService {
 	 * 生成可直接展示在页面上的图表解读文本。
 	 */
 	public String buildInterpretationText() {
-		StatsSummary summary = loadSummary();
-		return String.format(
-				"Mock 图表解读：当前商品总量 %d 件，已成交 %d 件，说明基础交易链路已形成；待审核 %d 件，表示后台审核仍在发挥闸门作用；若封禁用户数为 %d，应继续关注异常账号活跃情况。",
-				summary.getTotalGoods(), summary.getSoldGoods(), summary.getPendingGoods(), summary.getBannedUsers());
+		return aiService.interpretStatistics(buildStatsContext());
 	}
 
 	private String buildStatsContext() {

@@ -198,9 +198,33 @@ public class GoodsService {
 		return aiService.optimizeDescription(description);
 	}
 
+	public String suggestPrice(String title, String category, double originalPrice, int conditionLevel, String description) {
+		return aiService.suggestPrice(title, category, originalPrice, conditionLevel, description);
+	}
+
+	public String buildPurchaseAdvice(Long goodsId) {
+		Goods goods = getGoodsDetail(goodsId);
+		return aiService.buildPurchaseAdvice(buildGoodsContext(goods));
+	}
+
+	public String assistSearch(String userInput) {
+		return aiService.assistSearch(userInput);
+	}
+
+	public String analyzeViolationRisk(Long goodsId) {
+		Goods goods = getGoodsDetail(goodsId);
+		return aiService.analyzeViolationRisk(buildGoodsContext(goods));
+	}
+
 	public String buildOperationsSummary() {
 		// 运营摘要用于后台首页展示，实际生成逻辑交给 AI 服务统一封装。
 		return aiService.buildOperationsSummary("请生成一段适合管理员首页展示的通用运营摘要。");
+	}
+
+	private String buildGoodsContext(Goods goods) {
+		return String.format("商品：%s；分类：%s；原价：%.2f；现价：%.2f；成色：%d/10；卖家：%s；状态：%s；描述：%s", goods.getTitle(),
+				goods.getCategory(), goods.getOriginalPrice(), goods.getCurrentPrice(), goods.getConditionLevel(),
+				goods.getSellerUsername(), goods.getStatusText(), goods.getDescription());
 	}
 
 	private void recordAdminLog(User admin, String action, String targetType, Long targetId, String detail) {

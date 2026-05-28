@@ -105,6 +105,20 @@ public class AdminGoodsReviewController {
 	}
 
 	@FXML
+	private void handleAnalyzeRisk() {
+		Goods selected = getSelectedGoods();
+		if (selected == null) {
+			AlertUtil.showWarning("提示", "请先选择一个待审核商品。");
+			return;
+		}
+		try {
+			AlertUtil.showInfo("AI 违规风险分析", goodsService.analyzeViolationRisk(selected.getId()));
+		} catch (BusinessException ex) {
+			AlertUtil.showWarning("分析失败", ex.getMessage());
+		}
+	}
+
+	@FXML
 	private void handleDelete() {
 		// 删除违规商品前先校验是否已选择商品，再把删除原因一并提交给服务层记录日志。
 		Goods selected = getSelectedGoods();

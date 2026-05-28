@@ -37,6 +37,8 @@
 				</VBox>
 				<Button text="搜索" onAction="#handleSearch"
 					styleClass="primary-button" />
+				<Button text="AI 搜索辅助" onAction="#handleAiSearchAssist"
+					styleClass="secondary-button" />
 				<Button text="重置" onAction="#handleReset"
 					styleClass="secondary-button" />
 			</HBox>

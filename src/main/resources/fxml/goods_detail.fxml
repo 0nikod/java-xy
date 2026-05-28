@@ -37,6 +37,8 @@
 						styleClass="secondary-button" />
 					<Button text="查看评价" onAction="#handleRefreshReviews"
 						styleClass="secondary-button" />
+					<Button text="AI 购买建议" onAction="#handlePurchaseAdvice"
+						styleClass="secondary-button" />
 					<Button text="返回列表" onAction="#handleBack"
 						styleClass="secondary-button" />
 				</HBox>
@@ -45,7 +47,10 @@
 				<Label text="商品图片" styleClass="section-label" />
 				<ImageView fx:id="imagePreviewView" fitWidth="280.0"
 					fitHeight="220.0" preserveRatio="true" styleClass="image-preview" />
-				<ListView fx:id="imageListView" prefHeight="130.0" />
+				<ListView fx:id="imageListView" prefHeight="100.0" />
+				<Label text="AI 购买建议" styleClass="section-label" />
+				<TextArea fx:id="aiAdviceArea" prefRowCount="3" wrapText="true"
+					editable="false" promptText="点击 AI 购买建议后显示" />
 				<HBox spacing="8.0">
 					<Label text="商品评价" styleClass="section-label" />
 					<Button text="刷新评价" onAction="#handleRefreshReviews"

@@ -26,12 +26,57 @@ public class FallbackAiService implements AiService {
 	}
 
 	@Override
+	public String suggestPrice(String title, String category, double originalPrice, int conditionLevel, String description) {
+		try {
+			return primary.suggestPrice(title, category, originalPrice, conditionLevel, description);
+		} catch (Exception ignored) {
+			return fallback.suggestPrice(title, category, originalPrice, conditionLevel, description);
+		}
+	}
+
+	@Override
+	public String buildPurchaseAdvice(String goodsContext) {
+		try {
+			return primary.buildPurchaseAdvice(goodsContext);
+		} catch (Exception ignored) {
+			return fallback.buildPurchaseAdvice(goodsContext);
+		}
+	}
+
+	@Override
+	public String assistSearch(String userInput) {
+		try {
+			return primary.assistSearch(userInput);
+		} catch (Exception ignored) {
+			return fallback.assistSearch(userInput);
+		}
+	}
+
+	@Override
 	public String buildOperationsSummary(String context) {
 		// 运营摘要同样采用“先真实、后兜底”的策略，避免后台首页被 AI 故障阻塞。
 		try {
 			return primary.buildOperationsSummary(context);
 		} catch (Exception ignored) {
 			return fallback.buildOperationsSummary(context);
+		}
+	}
+
+	@Override
+	public String analyzeViolationRisk(String goodsContext) {
+		try {
+			return primary.analyzeViolationRisk(goodsContext);
+		} catch (Exception ignored) {
+			return fallback.analyzeViolationRisk(goodsContext);
+		}
+	}
+
+	@Override
+	public String interpretStatistics(String statsContext) {
+		try {
+			return primary.interpretStatistics(statsContext);
+		} catch (Exception ignored) {
+			return fallback.interpretStatistics(statsContext);
 		}
 	}
 }

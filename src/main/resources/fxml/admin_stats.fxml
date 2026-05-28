@@ -27,6 +27,8 @@
 				styleClass="status-text" />
 			<Label fx:id="aiSummaryLabel" wrapText="true"
 				styleClass="subtitle-text" />
+			<Label fx:id="chartInterpretationLabel" wrapText="true"
+				styleClass="subtitle-text" />
 			<HBox spacing="10.0">
 				<Button text="刷新统计" onAction="#handleRefresh"
 					styleClass="primary-button" />
