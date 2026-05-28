@@ -3,9 +3,9 @@
 Goal: 按 `docs/goal.md` 补齐当前仓库缺失的全量功能，使普通用户、管理员、购物车、评价、AI 辅助、统计日志与测试均达到验收要求，并保持 Maven 测试通过。
 
 ## Open
-- [ ] 更新 README/验收说明
 
 ## Done
+- [x] 更新 README/验收说明
 - [x] 确认依赖修复后 `mvn test -q` 已可通过当前测试
 - [x] 补齐数据库与种子数据：`cart_items` 表、待审核演示数据
 - [x] 实现购物车 model/dao/service 与批量结算业务
