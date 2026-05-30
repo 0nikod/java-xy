@@ -182,7 +182,8 @@ public class GoodsDetailController {
 			categoryLabel.setText("分类：" + latest.getCategory());
 		}
 		if (priceLabel != null) {
-			priceLabel.setText(String.format("原价：%.2f  现价：%.2f", latest.getOriginalPrice(), latest.getCurrentPrice()));
+			priceLabel.setText(String.format("原价：¥%.2f  现价：¥%.2f", latest.getOriginalPrice(), latest.getCurrentPrice()));
+			priceLabel.setStyle("-fx-text-fill: red;");
 		}
 		if (conditionLabel != null) {
 			conditionLabel.setText("新旧程度：" + latest.getConditionLevel());
@@ -223,13 +224,11 @@ public class GoodsDetailController {
 		if (reviewListView == null || goods == null) {
 			return;
 		}
+		reviewListView.setPlaceholder(new Label("暂无评价"));
 		List<String> items = new ArrayList<String>();
 		for (Review review : reviewService.listGoodsReviews(goods.getId())) {
 			items.add(String.format("%s：%d 星 - %s（%s）", review.getReviewerUsername(), review.getRating(),
 					review.getContent(), review.getCreatedAt()));
-		}
-		if (items.isEmpty()) {
-			items.add("暂无评价");
 		}
 		reviewListView.setItems(javafx.collections.FXCollections.observableArrayList(items));
 	}

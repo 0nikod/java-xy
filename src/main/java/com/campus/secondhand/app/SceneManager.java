@@ -11,8 +11,10 @@ import javafx.stage.Stage;
 
 public final class SceneManager {
 
-	private static final double DEFAULT_WIDTH = 960.0;
-	private static final double DEFAULT_HEIGHT = 640.0;
+	private static final double DEFAULT_WIDTH = 1120.0;
+	private static final double DEFAULT_HEIGHT = 720.0;
+	private static final double MIN_WIDTH = 960.0;
+	private static final double MIN_HEIGHT = 640.0;
 	private static final String STYLE_PATH = "/css/app.css";
 	private static Stage primaryStage;
 
@@ -21,8 +23,8 @@ public final class SceneManager {
 
 	public static void initialize(Stage stage) {
 		primaryStage = stage;
-		primaryStage.setMinWidth(DEFAULT_WIDTH);
-		primaryStage.setMinHeight(DEFAULT_HEIGHT);
+		primaryStage.setMinWidth(MIN_WIDTH);
+		primaryStage.setMinHeight(MIN_HEIGHT);
 	}
 
 	public static void show(String fxmlName, String title) {

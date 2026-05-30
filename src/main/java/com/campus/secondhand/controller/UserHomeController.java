@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 public class UserHomeController {
@@ -78,6 +79,9 @@ public class UserHomeController {
 		configureFilters();
 		refreshGoods();
 		updateCurrentUser();
+		if (keywordField != null) {
+			keywordField.setOnAction(event -> handleSearch());
+		}
 	}
 
 	@FXML
@@ -188,6 +192,19 @@ public class UserHomeController {
 		}
 		if (priceColumn != null) {
 			priceColumn.setCellValueFactory(new PropertyValueFactory<Goods, Double>("currentPrice"));
+			priceColumn.setCellFactory(column -> new javafx.scene.control.TableCell<Goods, Double>() {
+				@Override
+				protected void updateItem(Double item, boolean empty) {
+					super.updateItem(item, empty);
+					if (empty || item == null) {
+						setText(null);
+						setStyle("");
+					} else {
+						setText(String.format("¥%.2f", item));
+						setStyle("-fx-text-fill: #c0392b; -fx-font-weight: bold;");
+					}
+				}
+			});
 		}
 		if (conditionColumn != null) {
 			conditionColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("conditionLevel"));
@@ -203,6 +220,40 @@ public class UserHomeController {
 		}
 		if (statusColumn != null) {
 			statusColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("statusText"));
+			statusColumn.setCellFactory(column -> new javafx.scene.control.TableCell<Goods, String>() {
+				@Override
+				protected void updateItem(String item, boolean empty) {
+					super.updateItem(item, empty);
+					if (empty || item == null) {
+						setText(null);
+						setGraphic(null);
+					} else {
+						Label badge = new Label(item);
+						switch (item) {
+							case "在售": badge.getStyleClass().add("badge-active"); break;
+							case "已售出": badge.getStyleClass().add("badge-sold"); break;
+							case "待审核": badge.getStyleClass().add("badge-pending"); break;
+							case "已下架": badge.getStyleClass().add("badge-offline"); break;
+							default: badge.getStyleClass().add("badge-sold"); break;
+						}
+						setText(null);
+						setGraphic(badge);
+					}
+				}
+			});
+		}
+		goodsTable.setRowFactory(tv -> {
+			TableRow<Goods> row = new TableRow<>();
+			row.setOnMouseClicked(event -> {
+				if (event.getClickCount() == 2 && !row.isEmpty()) {
+					ViewState.setSelectedGoods(row.getItem());
+					SceneManager.show("goods_detail.fxml", AppConfig.getAppTitle());
+				}
+			});
+			return row;
+		});
+		if (goodsTable != null) {
+			goodsTable.setPlaceholder(new Label("暂无商品"));
 		}
 	}
 

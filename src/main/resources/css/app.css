@@ -149,3 +149,125 @@
     -fx-border-color: #ccd8d1;
     -fx-border-radius: 14;
 }
+
+.primary-button:hover {
+    -fx-background-color: #1d4e45;
+    -fx-cursor: hand;
+}
+.primary-button:pressed {
+    -fx-background-color: #163d36;
+}
+.secondary-button:hover {
+    -fx-background-color: rgba(36, 95, 84, 0.16);
+    -fx-cursor: hand;
+}
+.secondary-button:pressed {
+    -fx-background-color: rgba(36, 95, 84, 0.24);
+}
+.danger-button:hover {
+    -fx-background-color: rgba(144, 61, 52, 0.2);
+    -fx-cursor: hand;
+}
+.danger-button:pressed {
+    -fx-background-color: rgba(144, 61, 52, 0.32);
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(43, 76, 69, 0.04);
+}
+.table-row-cell:even {
+    -fx-background-color: transparent;
+}
+.table-row-cell:odd:selected {
+    -fx-background-color: #cfe4dc;
+}
+
+.status-text-success {
+    -fx-font-size: 13px;
+    -fx-text-fill: #2a7a3e;
+    -fx-background-color: rgba(42, 122, 62, 0.1);
+    -fx-background-radius: 10;
+    -fx-padding: 7 10 7 10;
+}
+.status-text-error {
+    -fx-font-size: 13px;
+    -fx-text-fill: #903d34;
+    -fx-background-color: rgba(144, 61, 52, 0.1);
+    -fx-background-radius: 10;
+    -fx-padding: 7 10 7 10;
+}
+.status-text-warning {
+    -fx-font-size: 13px;
+    -fx-text-fill: #8a6d2b;
+    -fx-background-color: rgba(138, 109, 43, 0.1);
+    -fx-background-radius: 10;
+    -fx-padding: 7 10 7 10;
+}
+
+.text-field:focused,
+.password-field:focused,
+.text-area:focused {
+    -fx-border-color: #245f54;
+    -fx-border-width: 1.5;
+    -fx-effect: dropshadow(gaussian, rgba(36, 95, 84, 0.25), 6, 0, 0, 0);
+}
+
+.price-text {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #c0392b;
+}
+
+.badge-active {
+    -fx-background-color: rgba(42, 122, 62, 0.15);
+    -fx-text-fill: #2a7a3e;
+    -fx-background-radius: 8;
+    -fx-padding: 3 8 3 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+.badge-sold {
+    -fx-background-color: rgba(100, 100, 100, 0.12);
+    -fx-text-fill: #555555;
+    -fx-background-radius: 8;
+    -fx-padding: 3 8 3 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+.badge-pending {
+    -fx-background-color: rgba(200, 140, 30, 0.15);
+    -fx-text-fill: #8a6d2b;
+    -fx-background-radius: 8;
+    -fx-padding: 3 8 3 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+.badge-offline {
+    -fx-background-color: rgba(144, 61, 52, 0.12);
+    -fx-text-fill: #903d34;
+    -fx-background-radius: 8;
+    -fx-padding: 3 8 3 8;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: rgba(255, 255, 255, 0.88);
+}
+.tab-pane .tab {
+    -fx-background-color: rgba(36, 95, 84, 0.06);
+    -fx-background-radius: 8 8 0 0;
+    -fx-padding: 8 16 8 16;
+}
+.tab-pane .tab:selected {
+    -fx-background-color: rgba(36, 95, 84, 0.18);
+}
+.tab-pane .tab .tab-label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #245f54;
+}
+
+.table-view .placeholder .label {
+    -fx-text-fill: #71817e;
+    -fx-font-size: 14px;
+}

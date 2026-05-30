@@ -112,6 +112,11 @@ public class UserCenterController {
 	@FXML
 	private void initialize() {
 		configureTables();
+		publishedGoodsTable.setPlaceholder(new Label("暂无发布的商品"));
+		purchasedOrdersTable.setPlaceholder(new Label("暂无购买订单"));
+		soldOrdersTable.setPlaceholder(new Label("暂无卖出订单"));
+		publishedReviewsTable.setPlaceholder(new Label("暂无发布的评价"));
+		receivedReviewsTable.setPlaceholder(new Label("暂无收到的评价"));
 		refreshAll();
 	}
 

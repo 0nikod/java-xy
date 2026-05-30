@@ -30,6 +30,12 @@ public class LoginController {
 		if (hintLabel != null) {
 			hintLabel.setText("使用 admin/admin123 登录管理员后台，使用 demo_user/user123 登录普通用户首页，使用 demo_buyer/buyer123 登录买家订单页。");
 		}
+		if (usernameField != null) {
+			usernameField.setOnAction(event -> handleLogin());
+		}
+		if (passwordField != null) {
+			passwordField.setOnAction(event -> handleLogin());
+		}
 	}
 
 	@FXML

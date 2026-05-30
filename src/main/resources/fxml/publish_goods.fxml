@@ -32,28 +32,28 @@
 				HBox.hgrow="ALWAYS">
 				<Label text="基本信息" styleClass="section-label" />
 				<GridPane hgap="12.0" vgap="10.0">
-					<Label text="商品名称" styleClass="field-label"
+					<Label text="商品名称 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="0" />
 					<TextField fx:id="titleField" promptText="清晰填写商品名"
 						GridPane.columnIndex="1" GridPane.rowIndex="0" />
-					<Label text="分类" styleClass="field-label"
+					<Label text="分类 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="1" />
 					<ChoiceBox fx:id="categoryBox" prefWidth="220.0"
 						GridPane.columnIndex="1" GridPane.rowIndex="1" />
-					<Label text="原价" styleClass="field-label"
+					<Label text="原价 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="2" />
 					<TextField fx:id="originalPriceField" promptText="数字"
 						GridPane.columnIndex="1" GridPane.rowIndex="2" />
-					<Label text="现价" styleClass="field-label"
+					<Label text="现价 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="3" />
 					<TextField fx:id="currentPriceField" promptText="数字"
 						GridPane.columnIndex="1" GridPane.rowIndex="3" />
-					<Label text="新旧程度" styleClass="field-label"
+					<Label text="新旧程度 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="4" />
 					<TextField fx:id="conditionField" promptText="1-10"
 						GridPane.columnIndex="1" GridPane.rowIndex="4" />
 				</GridPane>
-				<Label text="商品描述" styleClass="section-label" />
+				<Label text="商品描述 *" styleClass="section-label" />
 				<TextArea fx:id="descriptionArea" prefRowCount="7"
 					wrapText="true" promptText="写明版本、使用情况、交易方式和瑕疵" />
 				<HBox spacing="10.0">

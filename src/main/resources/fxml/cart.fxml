@@ -21,6 +21,8 @@
 			<HBox spacing="10.0">
 				<Button text="刷新" onAction="#handleRefresh"
 					styleClass="primary-button" />
+				<Button text="查看详情" onAction="#handleViewDetail"
+					styleClass="secondary-button" />
 				<Button text="移除所选" onAction="#handleRemove"
 					styleClass="danger-button" />
 				<Button text="结算所选" onAction="#handleCheckoutSelected"
@@ -39,7 +41,7 @@
 			<padding>
 				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
 			</padding>
-			<Label text="购物车商品" styleClass="section-label" />
+			<Label text="购物车商品（双击行或选中后点击「查看详情」可进入商品详情页）" styleClass="section-label" />
 			<TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
 				<columns>
 					<TableColumn fx:id="titleColumn" text="商品名称"
