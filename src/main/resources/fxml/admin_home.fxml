@@ -4,75 +4,93 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.AdminHomeController">
-
-	<top>
-		<HBox alignment="CENTER_LEFT" spacing="20.0">
-			<padding>
-				<Insets bottom="32.0" />
-			</padding>
-			<VBox spacing="4.0">
-				<Label text="管理员控制台" styleClass="page-title" />
-				<Label fx:id="currentUserLabel" styleClass="muted-text" />
-			</VBox>
-			<Region HBox.hgrow="ALWAYS" />
-			<Button text="退出登录" onAction="#handleLogout"
-				styleClass="danger-button" />
-		</HBox>
-	</top>
-
 	<center>
-		<VBox spacing="24.0" maxWidth="800.0" alignment="TOP_CENTER">
-
-			<HBox styleClass="hero-panel" alignment="CENTER_LEFT"
-				spacing="20.0">
-				<padding>
-					<Insets top="24.0" right="30.0" bottom="24.0" left="30.0" />
-				</padding>
-				<VBox spacing="8.0" HBox.hgrow="ALWAYS">
-					<Label text="系统概览" styleClass="section-label" />
-					<Label fx:id="summaryLabel" wrapText="true"
-						styleClass="subtitle-text" />
+		<VBox spacing="18.0">
+			<HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="toolbar-panel">
+				<VBox spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="管理员后台" styleClass="page-title" />
+					<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
 				</VBox>
-				<Button text="✨ AI 管理分析"
-					onAction="#handleAiManagementAnalysis" styleClass="primary-button"
-					prefHeight="44.0" />
+				<Button text="AI 管理分析" onAction="#handleAiManagementAnalysis"
+					styleClass="primary-button" />
 			</HBox>
-
-			<HBox spacing="20.0">
-				<!-- Moderation -->
-				<VBox spacing="16.0" styleClass="plain-panel"
-					HBox.hgrow="ALWAYS">
-					<Label text="审核与管理" styleClass="section-label" />
-					<VBox spacing="10.0">
-						<Button text="审核待审商品" onAction="#handleReviewGoods"
-							styleClass="primary-button" maxWidth="Infinity" />
-						<Button text="用户管理" onAction="#handleManageUsers"
-							styleClass="secondary-button" maxWidth="Infinity" />
-					</VBox>
+			<Label fx:id="summaryLabel" wrapText="true"
+				styleClass="status-text" />
+			<HBox spacing="14.0">
+				<VBox styleClass="stat-card-accent" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statUsersLabel" styleClass="stat-card-number" />
+					<Label text="注册用户" styleClass="stat-card-label" />
 				</VBox>
-
-				<!-- Operations -->
-				<VBox spacing="16.0" styleClass="plain-panel"
-					HBox.hgrow="ALWAYS">
-					<Label text="平台运营" styleClass="section-label" />
-					<VBox spacing="10.0">
-						<Button text="平台统计" onAction="#handleViewStats"
-							styleClass="secondary-button" maxWidth="Infinity" />
-						<Button text="系统日志" onAction="#handleViewLogs"
-							styleClass="secondary-button" maxWidth="Infinity" />
-						<Button text="所有评价" onAction="#handleViewReviews"
-							styleClass="secondary-button" maxWidth="Infinity" />
-					</VBox>
+				<VBox styleClass="stat-card" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statGoodsLabel" styleClass="stat-card-number" />
+					<Label text="商品总数" styleClass="stat-card-label" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statPendingLabel" styleClass="stat-card-number" />
+					<Label text="待审核" styleClass="stat-card-label" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statTodayLabel" styleClass="stat-card-number" />
+					<Label text="今日成交" styleClass="stat-card-label" />
 				</VBox>
 			</HBox>
-
+			<GridPane hgap="14.0" vgap="14.0">
+				<columnConstraints>
+					<ColumnConstraints hgrow="ALWAYS" percentWidth="33.3" />
+					<ColumnConstraints hgrow="ALWAYS" percentWidth="33.3" />
+					<ColumnConstraints hgrow="ALWAYS" percentWidth="33.3" />
+				</columnConstraints>
+				<rowConstraints>
+					<RowConstraints />
+					<RowConstraints />
+				</rowConstraints>
+				<VBox styleClass="feature-card-primary" spacing="8.0" alignment="CENTER_LEFT">
+					<Label text="商品审核" styleClass="feature-card-title" />
+					<Label text="查看待审核商品，支持通过或删除违规商品。" styleClass="feature-card-desc" wrapText="true" />
+					<Button text="进入" onAction="#handleReviewGoods"
+						styleClass="primary-button" maxWidth="1.7976931348623157E308" />
+				</VBox>
+				<VBox styleClass="feature-card" spacing="8.0" alignment="CENTER_LEFT" GridPane.columnIndex="1">
+					<Label text="用户管理" styleClass="feature-card-title" />
+					<Label text="查看用户列表，对违规用户进行封禁或解封。" styleClass="feature-card-desc" wrapText="true" />
+					<Button text="进入" onAction="#handleManageUsers"
+						styleClass="secondary-button" maxWidth="1.7976931348623157E308" />
+				</VBox>
+				<VBox styleClass="feature-card" spacing="8.0" alignment="CENTER_LEFT" GridPane.columnIndex="2">
+					<Label text="平台统计" styleClass="feature-card-title" />
+					<Label text="统计商品数量、用户数量和今日成交数据。" styleClass="feature-card-desc" wrapText="true" />
+					<Button text="进入" onAction="#handleViewStats"
+						styleClass="secondary-button" maxWidth="1.7976931348623157E308" />
+				</VBox>
+				<VBox styleClass="feature-card" spacing="8.0" alignment="CENTER_LEFT" GridPane.rowIndex="1">
+					<Label text="操作日志" styleClass="feature-card-title" />
+					<Label text="记录管理员审核、封禁等操作。" styleClass="feature-card-desc" wrapText="true" />
+					<Button text="进入" onAction="#handleViewLogs"
+						styleClass="secondary-button" maxWidth="1.7976931348623157E308" />
+				</VBox>
+				<VBox styleClass="feature-card" spacing="8.0" alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="1">
+					<Label text="评价管理" styleClass="feature-card-title" />
+					<Label text="查看平台交易评价和评分信息。" styleClass="feature-card-desc" wrapText="true" />
+					<Button text="进入" onAction="#handleViewReviews"
+						styleClass="secondary-button" maxWidth="1.7976931348623157E308" />
+				</VBox>
+				<VBox styleClass="feature-card" spacing="8.0" alignment="CENTER_LEFT" GridPane.columnIndex="2" GridPane.rowIndex="1">
+					<Label text="退出登录" styleClass="feature-card-title" />
+					<Label text="结束管理员会话并返回登录页面。" styleClass="feature-card-desc" wrapText="true" />
+					<Button text="退出" onAction="#handleLogout"
+						styleClass="danger-button" maxWidth="1.7976931348623157E308" />
+				</VBox>
+			</GridPane>
 		</VBox>
 	</center>
 </BorderPane>

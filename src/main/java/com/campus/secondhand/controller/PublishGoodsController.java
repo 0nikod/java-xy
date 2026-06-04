@@ -75,7 +75,7 @@ public class PublishGoodsController {
 			categoryBox.getSelectionModel().selectFirst();
 		}
 		if (conditionField != null) {
-			conditionField.setText("8");
+			conditionField.setText("4");
 		}
 		if (imageListView != null) {
 			imageListView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
@@ -95,8 +95,8 @@ public class PublishGoodsController {
 			return;
 		}
 		String description = descriptionArea.getText();
-		startAiSuggestion("描述优化失败", optimizeButton, () -> goodsService.optimizeDescriptionStreaming(description,
-				delta -> Platform.runLater(() -> appendSuggestion(delta))));
+		startAiSuggestion("描述优化失败", optimizeButton,
+				() -> goodsService.optimizeDescriptionStreaming(description, delta -> Platform.runLater(() -> appendSuggestion(delta))));
 	}
 
 	@FXML

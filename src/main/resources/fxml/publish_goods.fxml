@@ -9,125 +9,96 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.VBox?>
 
 <BorderPane styleClass="page-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.PublishGoodsController">
-
 	<top>
-		<VBox spacing="16.0">
-			<padding>
-				<Insets bottom="24.0" />
-			</padding>
-			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Button text="← 取消" onAction="#handleBack"
-					styleClass="secondary-button" />
+		<HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="toolbar-panel">
+			<VBox spacing="4.0" HBox.hgrow="ALWAYS">
 				<Label text="发布商品" styleClass="page-title" />
-				<Region HBox.hgrow="ALWAYS" />
-				<Label fx:id="currentUserLabel" styleClass="muted-text" />
-			</HBox>
-		</VBox>
+				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			</VBox>
+			<Button text="返回首页" onAction="#handleBack"
+				styleClass="secondary-button" />
+		</HBox>
 	</top>
-
 	<center>
-		<HBox spacing="30.0">
-
-			<!-- Left Column: Product Details Form -->
-			<VBox spacing="20.0" styleClass="plain-panel"
-				HBox.hgrow="ALWAYS" maxWidth="600.0">
-				<Label text="商品详情" styleClass="section-label" />
-
-				<GridPane hgap="16.0" vgap="16.0">
+		<HBox spacing="16.0">
+			<padding>
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
+			</padding>
+			<VBox spacing="14.0" styleClass="plain-panel"
+				HBox.hgrow="ALWAYS">
+				<Label text="基本信息" styleClass="section-label" />
+				<GridPane hgap="12.0" vgap="10.0">
 					<columnConstraints>
-						<ColumnConstraints minWidth="120.0"
-							prefWidth="140.0" />
+						<ColumnConstraints minWidth="80.0" />
 						<ColumnConstraints hgrow="ALWAYS" />
 					</columnConstraints>
-
-					<Label text="标题 *" styleClass="field-label"
+					<Label text="商品名称 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="0" />
-					<TextField fx:id="titleField" promptText="您要卖什么商品？"
+					<TextField fx:id="titleField" promptText="清晰填写商品名"
 						GridPane.columnIndex="1" GridPane.rowIndex="0" />
-
-					<Label text="类别 *" styleClass="field-label"
+					<Label text="分类 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="1" />
-					<ChoiceBox fx:id="categoryBox" prefWidth="200.0"
+					<ChoiceBox fx:id="categoryBox"
 						GridPane.columnIndex="1" GridPane.rowIndex="1" />
-
-					<Label text="原价" styleClass="field-label"
+					<Label text="原价 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="2" />
-					<TextField fx:id="originalPriceField" promptText="0.00"
-						GridPane.columnIndex="1" GridPane.rowIndex="2" maxWidth="200.0" />
-
-					<Label text="售价 *" styleClass="field-label"
+					<TextField fx:id="originalPriceField" promptText="数字"
+						GridPane.columnIndex="1" GridPane.rowIndex="2" />
+					<Label text="现价 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="3" />
-					<TextField fx:id="currentPriceField" promptText="0.00"
-						GridPane.columnIndex="1" GridPane.rowIndex="3" maxWidth="200.0" />
-
-					<Label text="成色 *" styleClass="field-label"
+					<TextField fx:id="currentPriceField" promptText="数字"
+						GridPane.columnIndex="1" GridPane.rowIndex="3" />
+					<Label text="新旧程度 *" styleClass="field-label"
 						GridPane.columnIndex="0" GridPane.rowIndex="4" />
-					<TextField fx:id="conditionField"
-						promptText="例如 9成新、全新、二手" GridPane.columnIndex="1"
-						GridPane.rowIndex="4" maxWidth="200.0" />
+					<TextField fx:id="conditionField" promptText="1-5"
+						GridPane.columnIndex="1" GridPane.rowIndex="4" />
 				</GridPane>
-
-				<VBox spacing="8.0">
-					<Label text="描述 *" styleClass="field-label" />
-					<TextArea fx:id="descriptionArea" prefRowCount="6"
-						wrapText="true" promptText="描述商品的成色、瑕疵以及取货说明。" />
-				</VBox>
-
-				<HBox spacing="12.0" alignment="CENTER_LEFT">
-					<Button fx:id="optimizeButton" text="✨ AI 优化描述"
-						onAction="#handleOptimize" styleClass="secondary-button" />
-					<Region HBox.hgrow="ALWAYS" />
-					<Button text="提交审核" onAction="#handleSubmit"
-						styleClass="primary-button" prefWidth="200.0" prefHeight="44.0" />
+				<Region styleClass="section-divider" />
+				<Label text="商品描述 *" styleClass="section-label" />
+				<TextArea fx:id="descriptionArea" prefRowCount="7"
+					wrapText="true" promptText="写明版本、使用情况、交易方式和瑕疵" />
+				<HBox spacing="10.0" styleClass="bottom-action-bar">
+					<VBox spacing="2.0" HBox.hgrow="ALWAYS">
+						<Label text="提交审核" styleClass="section-label" />
+						<Label text="提交后商品进入待审核状态，管理员审核通过后会在商品市场展示。" styleClass="subtitle-text" wrapText="true" />
+					</VBox>
+					<HBox spacing="10.0" alignment="CENTER_RIGHT">
+						<Button fx:id="optimizeButton" text="AI 优化描述" onAction="#handleOptimize"
+							styleClass="secondary-button" />
+						<Button text="提交审核" onAction="#handleSubmit"
+							styleClass="primary-button" />
+					</HBox>
 				</HBox>
-
-				<TextArea fx:id="aiSuggestionArea" prefRowCount="3"
-					wrapText="true" editable="false" promptText="AI 建议将显示在此处..."
-					styleClass="text-area" />
+				<TextArea fx:id="aiSuggestionArea" prefRowCount="4"
+					wrapText="true" editable="false" promptText="AI 建议会显示在这里" />
 			</VBox>
-
-			<!-- Right Column: Images -->
-			<VBox spacing="16.0" prefWidth="340.0" styleClass="plain-panel">
-				<VBox spacing="4.0">
-					<Label text="商品图片" styleClass="section-label" />
-					<Label text="最多添加3张图片。第一张为封面。" styleClass="subtitle-text"
-						wrapText="true" />
-				</VBox>
-
+			<VBox spacing="12.0" minWidth="260.0" styleClass="plain-panel">
+				<Label text="商品图片" styleClass="section-label" />
+				<Label text="最多 3 张，设为主图后会在列表中优先展示。"
+					styleClass="subtitle-text" wrapText="true" />
 				<Label fx:id="imageSummaryLabel" text="已选择 0 张图片。"
 					styleClass="status-text" />
-
-				<VBox alignment="CENTER"
-					style="-fx-background-color: #F9FAFB; -fx-background-radius: 12; -fx-padding: 10;">
-					<ImageView fx:id="imagePreviewView" fitWidth="280.0"
-						fitHeight="200.0" preserveRatio="true" styleClass="image-preview" />
-				</VBox>
-
-				<ListView fx:id="imageListView" prefHeight="120.0" />
-
-				<VBox spacing="10.0">
-					<Button text="添加图片" onAction="#handleAddImages"
-						styleClass="secondary-button" maxWidth="Infinity" />
-					<HBox spacing="10" alignment="CENTER_LEFT">
-						<Button text="设为封面" onAction="#handleSetPrimaryImage"
-							styleClass="secondary-button" HBox.hgrow="ALWAYS"
-							maxWidth="Infinity" />
-						<Button text="移除" onAction="#handleRemoveImage"
-							styleClass="danger-button" HBox.hgrow="ALWAYS"
-							maxWidth="Infinity" />
-					</HBox>
-				</VBox>
+				<ListView fx:id="imageListView" prefHeight="140.0"
+					VBox.vgrow="ALWAYS" />
+				<ImageView fx:id="imagePreviewView" fitWidth="260.0"
+					fitHeight="180.0" preserveRatio="true" styleClass="image-preview" />
+				<Button text="添加图片" onAction="#handleAddImages"
+					styleClass="secondary-button" maxWidth="260.0" />
+				<Button text="删除所选图片" onAction="#handleRemoveImage"
+					styleClass="danger-button" maxWidth="260.0" />
+				<Button text="设为主图" onAction="#handleSetPrimaryImage"
+					styleClass="secondary-button" maxWidth="260.0" />
 			</VBox>
-
 		</HBox>
 	</center>
 </BorderPane>

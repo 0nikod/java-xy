@@ -18,17 +18,34 @@ public class AdminHomeController {
 	@FXML
 	private Label summaryLabel;
 
+	@FXML
+	private Label statUsersLabel;
+
+	@FXML
+	private Label statGoodsLabel;
+
+	@FXML
+	private Label statPendingLabel;
+
+	@FXML
+	private Label statTodayLabel;
+
 	private final StatisticsService statisticsService = new StatisticsService();
 
 	@FXML
 	private void initialize() {
 		User currentUser = Session.getCurrentUser();
 		if (currentUserLabel != null) {
-			currentUserLabel.setText(currentUser == null ? "未登录" : "当前管理员：" + currentUser.getUsername());
+			if (currentUser == null) {
+				currentUserLabel.setText("未登录");
+			} else {
+				currentUserLabel.setText("当前管理员: " + currentUser.getUsername());
+			}
 		}
 		if (summaryLabel != null) {
-			summaryLabel.setText("点击“AI 管理分析”生成运营分析摘要。");
+			summaryLabel.setText("点击 AI 管理分析 生成运营分析摘要。");
 		}
+		loadStatCards();
 	}
 
 	@FXML
@@ -87,5 +104,35 @@ public class AdminHomeController {
 	private void handleLogout() {
 		Session.clear();
 		SceneManager.show("login.fxml", AppConfig.getAppTitle());
+	}
+
+	private void loadStatCards() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() {
+				try {
+					com.campus.secondhand.model.StatsSummary summary = statisticsService.loadSummary();
+					Platform.runLater(() -> {
+						if (statUsersLabel != null) {
+							statUsersLabel.setText(String.valueOf(summary.getTotalUsers()));
+						}
+						if (statGoodsLabel != null) {
+							statGoodsLabel.setText(String.valueOf(summary.getTotalGoods()));
+						}
+						if (statPendingLabel != null) {
+							statPendingLabel.setText(String.valueOf(summary.getPendingGoods()));
+						}
+						if (statTodayLabel != null) {
+							statTodayLabel.setText(String.valueOf(summary.getTodayOrders()));
+						}
+					});
+				} catch (Exception ignored) {
+				}
+				return null;
+			}
+		};
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
 	}
 }

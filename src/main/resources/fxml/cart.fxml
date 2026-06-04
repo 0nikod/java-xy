@@ -7,66 +7,75 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.CartController">
-
 	<top>
-		<VBox spacing="16.0">
-			<padding>
-				<Insets bottom="24.0" />
-			</padding>
-			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Label text="购物车" styleClass="page-title" />
-				<Region HBox.hgrow="ALWAYS" />
-				<VBox alignment="CENTER_RIGHT">
-					<Label fx:id="currentUserLabel" styleClass="muted-text" />
-					<Label fx:id="messageLabel" styleClass="status-text" />
+		<VBox spacing="12.0" styleClass="toolbar-panel">
+			<HBox alignment="CENTER_LEFT" spacing="16.0">
+				<VBox spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="我的购物车" styleClass="page-title" />
+					<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
 				</VBox>
+				<Button text="返回首页" onAction="#handleBack"
+					styleClass="secondary-button" />
 			</HBox>
-
-			<HBox alignment="CENTER_LEFT" spacing="12.0"
-				styleClass="toolbar-panel">
+			<HBox spacing="10.0">
 				<Button text="刷新" onAction="#handleRefresh"
 					styleClass="secondary-button" />
-				<Region HBox.hgrow="ALWAYS" />
-				<Button text="查看商品" onAction="#handleViewDetail"
+				<Button text="查看详情" onAction="#handleViewDetail"
 					styleClass="secondary-button" />
-				<Button text="删除所选" onAction="#handleRemove"
+				<Button text="移除所选" onAction="#handleRemove"
 					styleClass="danger-button" />
-				<Button text="结算所选" onAction="#handleCheckoutSelected"
-					styleClass="primary-button" />
-				<Button text="结算全部" onAction="#handleCheckoutAll"
-					styleClass="primary-button" />
 			</HBox>
+			<Label fx:id="messageLabel" wrapText="true"
+				styleClass="status-text" />
 		</VBox>
 	</top>
-
 	<center>
-		<VBox spacing="16.0" styleClass="plain-panel">
-			<Label text="您的商品" styleClass="section-label" />
-
+		<VBox spacing="10.0">
+			<padding>
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
+			</padding>
+			<Label text="购物车商品（双击行可查看详情）" styleClass="section-label" />
 			<TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
 				<columns>
 					<TableColumn fx:id="titleColumn" text="商品名称"
-						prefWidth="250.0" />
-					<TableColumn fx:id="priceColumn" text="价格"
-						prefWidth="100.0" />
-					<TableColumn fx:id="categoryColumn" text="类别"
-						prefWidth="120.0" />
+						prefWidth="170.0" />
+					<TableColumn fx:id="categoryColumn" text="分类"
+						prefWidth="80.0" />
+					<TableColumn fx:id="priceColumn" text="现价"
+						prefWidth="80.0" />
 					<TableColumn fx:id="sellerColumn" text="卖家"
-						prefWidth="150.0" />
-					<TableColumn fx:id="statusColumn" text="状态"
 						prefWidth="100.0" />
-					<TableColumn fx:id="imageColumn" text="图片"
-						prefWidth="150.0" />
-					<TableColumn fx:id="createdAtColumn" text="添加时间"
-						prefWidth="160.0" />
+					<TableColumn fx:id="statusColumn" text="状态"
+						prefWidth="80.0" />
+					<TableColumn fx:id="imageColumn" text="主图"
+						prefWidth="120.0" />
+					<TableColumn fx:id="createdAtColumn" text="加入时间"
+						prefWidth="140.0" />
 				</columns>
 			</TableView>
 		</VBox>
 	</center>
+	<bottom>
+		<HBox spacing="14.0" styleClass="bottom-action-bar">
+			<VBox spacing="2.0" HBox.hgrow="ALWAYS">
+				<Label fx:id="selectedCountLabel" text="已选 0 件" styleClass="section-label" />
+				<HBox spacing="6.0" alignment="CENTER_LEFT">
+					<Label text="合计金额" styleClass="subtitle-text" />
+					<Label fx:id="totalPriceLabel" text="0.00" styleClass="product-big-price" />
+				</HBox>
+			</VBox>
+			<HBox spacing="10.0" alignment="CENTER_RIGHT">
+				<Button text="结算所选" onAction="#handleCheckoutSelected"
+					styleClass="primary-button" />
+				<Button text="全部结算" onAction="#handleCheckoutAll"
+					styleClass="secondary-button" />
+			</HBox>
+		</HBox>
+	</bottom>
 </BorderPane>

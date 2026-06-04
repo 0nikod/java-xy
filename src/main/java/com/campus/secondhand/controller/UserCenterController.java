@@ -37,6 +37,21 @@ public class UserCenterController {
 	private Label summaryLabel;
 
 	@FXML
+	private Label usernameDisplayLabel;
+
+	@FXML
+	private Label roleDisplayLabel;
+
+	@FXML
+	private Label publishedCountLabel;
+
+	@FXML
+	private Label purchasedCountLabel;
+
+	@FXML
+	private Label soldCountLabel;
+
+	@FXML
 	private TableView<Goods> publishedGoodsTable;
 
 	@FXML
@@ -225,6 +240,12 @@ public class UserCenterController {
 		if (currentUserLabel != null) {
 			currentUserLabel.setText("当前用户：" + currentUser.getUsername());
 		}
+		if (usernameDisplayLabel != null) {
+			usernameDisplayLabel.setText(currentUser.getUsername());
+		}
+		if (roleDisplayLabel != null) {
+			roleDisplayLabel.setText(currentUser.getRole() == com.campus.secondhand.model.UserRole.ADMIN ? "管理员" : "普通用户");
+		}
 
 		List<Goods> publishedGoods = goodsService.listUserPublishedGoods(currentUser);
 		List<Order> purchasedOrders = orderService.listPurchasedOrders(currentUser);
@@ -246,6 +267,15 @@ public class UserCenterController {
 		}
 		if (receivedReviewsTable != null) {
 			receivedReviewsTable.setItems(FXCollections.observableArrayList(receivedReviews));
+		}
+		if (publishedCountLabel != null) {
+			publishedCountLabel.setText(String.valueOf(publishedGoods.size()));
+		}
+		if (purchasedCountLabel != null) {
+			purchasedCountLabel.setText(String.valueOf(purchasedOrders.size()));
+		}
+		if (soldCountLabel != null) {
+			soldCountLabel.setText(String.valueOf(soldOrders.size()));
 		}
 		if (summaryLabel != null) {
 			summaryLabel.setText(String.format("我发布 %d 件商品，买入 %d 笔订单，卖出 %d 笔订单。", publishedGoods.size(),

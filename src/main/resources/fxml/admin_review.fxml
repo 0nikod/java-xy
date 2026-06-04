@@ -11,83 +11,57 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.AdminGoodsReviewController">
-
 	<top>
-		<VBox spacing="16.0">
-			<padding>
-				<Insets bottom="24.0" />
-			</padding>
-			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Button text="← 控制台" onAction="#handleBack"
-					styleClass="secondary-button" />
-				<Label text="商品审核" styleClass="page-title" />
-				<Region HBox.hgrow="ALWAYS" />
-				<Label fx:id="currentUserLabel" styleClass="muted-text" />
-			</HBox>
-			<HBox styleClass="toolbar-panel">
-				<Label fx:id="detailLabel" wrapText="true"
-					styleClass="status-text" />
-			</HBox>
+		<VBox spacing="8.0" styleClass="toolbar-panel">
+			<Label text="商品审核" styleClass="page-title" />
+			<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			<Label fx:id="detailLabel" wrapText="true"
+				styleClass="status-text" />
 		</VBox>
 	</top>
-
 	<center>
-		<HBox spacing="24.0">
-			<!-- Left Column: Pending Table -->
-			<VBox spacing="16.0" HBox.hgrow="ALWAYS"
-				styleClass="plain-panel">
-				<Label text="待审商品" styleClass="section-label" />
+		<HBox spacing="16.0">
+			<padding>
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
+			</padding>
+			<VBox spacing="10.0" HBox.hgrow="ALWAYS">
+				<Label text="待审核列表" styleClass="section-label" />
 				<TableView fx:id="pendingTable" VBox.vgrow="ALWAYS">
 					<columns>
 						<TableColumn fx:id="titleColumn" text="商品名称"
-							prefWidth="240.0" />
+							prefWidth="190.0" />
 						<TableColumn fx:id="sellerColumn" text="卖家"
-							prefWidth="140.0" />
-						<TableColumn fx:id="categoryColumn" text="类别"
 							prefWidth="120.0" />
-						<TableColumn fx:id="priceColumn" text="价格"
+						<TableColumn fx:id="categoryColumn" text="分类"
 							prefWidth="100.0" />
+						<TableColumn fx:id="priceColumn" text="现价"
+							prefWidth="90.0" />
 						<TableColumn fx:id="statusColumn" text="状态"
 							prefWidth="100.0" />
 					</columns>
 				</TableView>
 			</VBox>
-
-			<!-- Right Column: Moderation Actions -->
-			<VBox spacing="20.0" prefWidth="380.0" styleClass="plain-panel">
-				<VBox spacing="4.0">
-					<Label text="审核与操作" styleClass="section-label" />
-					<Label text="从列表中选择商品以查看其详细信息和图片。" styleClass="subtitle-text"
-						wrapText="true" />
-				</VBox>
-
-				<VBox spacing="12.0" styleClass="hero-panel"
-					style="-fx-padding: 16;">
-					<ImageView fx:id="imagePreviewView" fitWidth="300.0"
-						fitHeight="200.0" preserveRatio="true" styleClass="image-preview" />
-					<ListView fx:id="imageListView" prefHeight="90.0"
-						orientation="HORIZONTAL" styleClass="list-view" />
-				</VBox>
-
-				<VBox spacing="8.0" VBox.vgrow="ALWAYS">
-					<Label text="拒绝原因（删除商品时必填）" styleClass="field-label" />
-					<TextArea fx:id="deleteReasonArea" prefRowCount="4"
-						wrapText="true" promptText="说明该商品为何违反平台规则..."
-						styleClass="text-area" />
-				</VBox>
-
-				<HBox spacing="12.0">
-					<Button text="违规删除" onAction="#handleDelete"
-						styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-					<Button text="审核通过" onAction="#handleApprove"
-						styleClass="primary-button" HBox.hgrow="ALWAYS"
-						maxWidth="Infinity" />
-				</HBox>
+			<VBox spacing="12.0" minWidth="280.0" styleClass="plain-panel">
+				<Label text="审核操作" styleClass="section-label" />
+				<Label text="选择左侧商品后，核对详情、图片和删除原因，再执行审核。"
+					styleClass="subtitle-text" wrapText="true" />
+				<Label text="删除原因" styleClass="field-label" />
+				<TextArea fx:id="deleteReasonArea" prefRowCount="4"
+					wrapText="true" promptText="删除违规商品时必填" />
+				<Label text="商品图片" styleClass="field-label" />
+				<ImageView fx:id="imagePreviewView" fitWidth="280.0"
+					fitHeight="170.0" preserveRatio="true" styleClass="image-preview" />
+				<ListView fx:id="imageListView" prefHeight="110.0" />
+				<Button text="审核通过" onAction="#handleApprove"
+					styleClass="primary-button" maxWidth="290.0" />
+				<Button text="删除违规商品" onAction="#handleDelete"
+					styleClass="danger-button" maxWidth="290.0" />
+				<Button text="返回后台" onAction="#handleBack"
+					styleClass="secondary-button" maxWidth="290.0" />
 			</VBox>
 		</HBox>
 	</center>

@@ -9,142 +9,144 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.UserCenterController">
-
 	<top>
-		<VBox spacing="20.0">
-			<padding>
-				<Insets bottom="24.0" />
-			</padding>
-			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<VBox>
-					<Label text="个人中心" styleClass="page-title" />
-					<Label fx:id="currentUserLabel" styleClass="muted-text" />
-				</VBox>
-				<Region HBox.hgrow="ALWAYS" />
+		<VBox spacing="12.0" styleClass="toolbar-panel">
+			<VBox spacing="4.0">
+				<Label text="个人中心" styleClass="page-title" />
+				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			</VBox>
+			<Label fx:id="summaryLabel" styleClass="status-text"
+				wrapText="true" />
+			<HBox spacing="10.0">
 				<Button text="刷新数据" onAction="#handleRefresh"
+					styleClass="primary-button" />
+				<Button text="下架所选商品" onAction="#handleOffShelf"
+					styleClass="danger-button" />
+				<Button text="评价所选订单" onAction="#handleCreateReview"
 					styleClass="secondary-button" />
-			</HBox>
-
-			<HBox styleClass="hero-panel" alignment="CENTER_LEFT">
-				<padding>
-					<Insets top="20.0" right="24.0" bottom="20.0" left="24.0" />
-				</padding>
-				<Label fx:id="summaryLabel" styleClass="section-label"
-					wrapText="true" />
+				<Button text="返回首页" onAction="#handleBack"
+					styleClass="secondary-button" />
 			</HBox>
 		</VBox>
 	</top>
-
 	<center>
-		<VBox spacing="16.0" styleClass="plain-panel">
-			<TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE"
-				styleClass="tab-pane">
+		<VBox spacing="12.0">
+			<padding>
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
+			</padding>
+			<HBox spacing="18.0" alignment="CENTER_LEFT" styleClass="user-info-card">
+				<VBox spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label fx:id="usernameDisplayLabel" text="用户名" styleClass="page-title" />
+					<Label fx:id="roleDisplayLabel" text="普通用户" styleClass="subtitle-text" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="2.0" alignment="CENTER" HBox.hgrow="ALWAYS">
+					<Label fx:id="publishedCountLabel" text="--" styleClass="stat-card-number" />
+					<Label text="发布" styleClass="stat-card-label" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="2.0" alignment="CENTER" HBox.hgrow="ALWAYS">
+					<Label fx:id="purchasedCountLabel" text="--" styleClass="stat-card-number" />
+					<Label text="购买" styleClass="stat-card-label" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="2.0" alignment="CENTER" HBox.hgrow="ALWAYS">
+					<Label fx:id="soldCountLabel" text="--" styleClass="stat-card-number" />
+					<Label text="卖出" styleClass="stat-card-label" />
+				</VBox>
+			</HBox>
+			<TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
 				<tabs>
-					<Tab text="我发布的">
-						<VBox spacing="12.0">
+					<Tab text="我的商品">
+						<VBox spacing="8.0">
 							<padding>
-								<Insets top="16.0" />
+								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
 							</padding>
-							<HBox alignment="CENTER_RIGHT">
-								<Button text="下架商品" onAction="#handleOffShelf"
-									styleClass="danger-button" />
-							</HBox>
-							<TableView fx:id="publishedGoodsTable"
-								VBox.vgrow="ALWAYS">
+							<TableView fx:id="publishedGoodsTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
 								<columns>
-									<TableColumn fx:id="publishedTitleColumn"
-										text="商品名称" prefWidth="260.0" />
-									<TableColumn fx:id="publishedCategoryColumn"
-										text="类别" prefWidth="130.0" />
-									<TableColumn fx:id="publishedPriceColumn" text="价格"
+									<TableColumn fx:id="publishedTitleColumn" text="商品名称"
+										prefWidth="260.0" />
+									<TableColumn fx:id="publishedCategoryColumn" text="分类"
+										prefWidth="130.0" />
+									<TableColumn fx:id="publishedPriceColumn" text="现价"
 										prefWidth="110.0" />
-									<TableColumn fx:id="publishedStatusColumn"
-										text="状态" prefWidth="130.0" />
+									<TableColumn fx:id="publishedStatusColumn" text="状态"
+										prefWidth="130.0" />
 								</columns>
 							</TableView>
 						</VBox>
 					</Tab>
-					<Tab text="我买到的">
-						<VBox spacing="12.0">
+					<Tab text="购买订单">
+						<VBox spacing="8.0">
 							<padding>
-								<Insets top="16.0" />
+								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
 							</padding>
-							<HBox alignment="CENTER_RIGHT">
-								<Button text="撰写评价" onAction="#handleCreateReview"
-									styleClass="primary-button" />
-							</HBox>
-							<TableView fx:id="purchasedOrdersTable"
-								VBox.vgrow="ALWAYS">
+							<TableView fx:id="purchasedOrdersTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
 								<columns>
 									<TableColumn fx:id="purchasedOrderNoColumn"
-										text="订单号" prefWidth="240.0" />
-									<TableColumn fx:id="purchasedGoodsColumn"
-										text="商品名称" prefWidth="220.0" />
-									<TableColumn fx:id="purchasedPriceColumn" text="价格"
+										text="订单号" prefWidth="220.0" />
+									<TableColumn fx:id="purchasedGoodsColumn" text="商品名称"
+										prefWidth="180.0" />
+									<TableColumn fx:id="purchasedPriceColumn" text="成交价"
 										prefWidth="100.0" />
-									<TableColumn fx:id="purchasedSellerColumn"
-										text="卖家" prefWidth="140.0" />
+									<TableColumn fx:id="purchasedSellerColumn" text="卖家"
+										prefWidth="120.0" />
 								</columns>
 							</TableView>
 						</VBox>
 					</Tab>
-					<Tab text="我卖出的">
-						<VBox spacing="12.0">
+					<Tab text="卖出订单">
+						<VBox spacing="8.0">
 							<padding>
-								<Insets top="16.0" />
+								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
 							</padding>
-							<TableView fx:id="soldOrdersTable" VBox.vgrow="ALWAYS">
+							<TableView fx:id="soldOrdersTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
 								<columns>
 									<TableColumn fx:id="soldOrderNoColumn" text="订单号"
-										prefWidth="240.0" />
-									<TableColumn fx:id="soldGoodsColumn" text="商品名称"
 										prefWidth="220.0" />
-									<TableColumn fx:id="soldPriceColumn" text="价格"
+									<TableColumn fx:id="soldGoodsColumn" text="商品名称"
+										prefWidth="180.0" />
+									<TableColumn fx:id="soldPriceColumn" text="成交价"
 										prefWidth="100.0" />
 									<TableColumn fx:id="soldBuyerColumn" text="买家"
-										prefWidth="140.0" />
+										prefWidth="120.0" />
 								</columns>
 							</TableView>
 						</VBox>
 					</Tab>
-					<Tab text="我发表的评价">
-						<VBox spacing="12.0">
+					<Tab text="我的评价">
+						<VBox spacing="8.0">
 							<padding>
-								<Insets top="16.0" />
+								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
 							</padding>
-							<TableView fx:id="publishedReviewsTable"
-								VBox.vgrow="ALWAYS">
+							<TableView fx:id="publishedReviewsTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
 								<columns>
-									<TableColumn fx:id="publishedReviewGoodsColumn"
-										text="商品" prefWidth="200.0" />
-									<TableColumn fx:id="publishedReviewRatingColumn"
-										text="评分" prefWidth="100.0" />
-									<TableColumn fx:id="publishedReviewContentColumn"
-										text="内容" prefWidth="400.0" />
+									<TableColumn fx:id="publishedReviewGoodsColumn" text="商品"
+										prefWidth="180.0" />
+									<TableColumn fx:id="publishedReviewRatingColumn" text="评分"
+										prefWidth="80.0" />
+									<TableColumn fx:id="publishedReviewContentColumn" text="内容"
+										prefWidth="260.0" />
 								</columns>
 							</TableView>
 						</VBox>
 					</Tab>
-					<Tab text="我收到的评价">
-						<VBox spacing="12.0">
+					<Tab text="收到的评价">
+						<VBox spacing="8.0">
 							<padding>
-								<Insets top="16.0" />
+								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
 							</padding>
-							<TableView fx:id="receivedReviewsTable"
-								VBox.vgrow="ALWAYS">
+							<TableView fx:id="receivedReviewsTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
 								<columns>
-									<TableColumn fx:id="receivedReviewGoodsColumn"
-										text="商品" prefWidth="200.0" />
-									<TableColumn fx:id="receivedReviewRatingColumn"
-										text="评分" prefWidth="100.0" />
-									<TableColumn fx:id="receivedReviewContentColumn"
-										text="内容" prefWidth="400.0" />
+									<TableColumn fx:id="receivedReviewGoodsColumn" text="商品"
+										prefWidth="180.0" />
+									<TableColumn fx:id="receivedReviewRatingColumn" text="评分"
+										prefWidth="80.0" />
+									<TableColumn fx:id="receivedReviewContentColumn" text="内容"
+										prefWidth="260.0" />
 								</columns>
 							</TableView>
 						</VBox>

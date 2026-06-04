@@ -93,13 +93,27 @@ public class User {
 	 * 获取角色的文本表示。
 	 */
 	public String getRoleText() {
-		return role == null ? "" : role.name();
+		if (role == null) {
+			return "";
+		}
+		switch (role) {
+			case ADMIN: return "管理员";
+			case USER: return "普通用户";
+			default: return role.name();
+		}
 	}
 
 	/**
 	 * 获取状态的文本表示。
 	 */
 	public String getStatusText() {
-		return status == null ? "" : status.name();
+		if (status == null) {
+			return "";
+		}
+		switch (status) {
+			case NORMAL: return "正常";
+			case BANNED: return "已封禁";
+			default: return status.name();
+		}
 	}
 }

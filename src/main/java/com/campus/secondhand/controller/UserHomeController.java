@@ -9,6 +9,7 @@ import com.campus.secondhand.model.GoodsSortOption;
 import com.campus.secondhand.model.User;
 import com.campus.secondhand.service.BusinessException;
 import com.campus.secondhand.service.GoodsService;
+import com.campus.secondhand.service.StatisticsService;
 import com.campus.secondhand.util.Session;
 import com.campus.secondhand.util.ViewState;
 import java.util.List;
@@ -23,27 +24,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
-import javafx.scene.Node;
-import javafx.fxml.FXMLLoader;
-import java.io.IOException;
+
 public class UserHomeController {
-
-	@FXML
-	private BorderPane rootPane;
-
-	@FXML
-	private VBox marketplaceView;
-
-	@FXML
-	private Button navMarketplace;
-	@FXML
-	private Button navPublished;
-	@FXML
-	private Button navCart;
-	@FXML
-	private Button navUserCenter;
 
 	@FXML
 	private Label currentUserLabel;
@@ -62,6 +44,18 @@ public class UserHomeController {
 
 	@FXML
 	private Button aiSearchAssistButton;
+
+	@FXML
+	private Label statTotalLabel;
+
+	@FXML
+	private Label statOnSaleLabel;
+
+	@FXML
+	private Label statTodayLabel;
+
+	@FXML
+	private Label statCartLabel;
 
 	@FXML
 	private TableView<Goods> goodsTable;
@@ -91,6 +85,7 @@ public class UserHomeController {
 	private TableColumn<Goods, String> statusColumn;
 
 	private final GoodsService goodsService = new GoodsService();
+	private final StatisticsService statisticsService = new StatisticsService();
 
 	@FXML
 	private void initialize() {
@@ -98,6 +93,7 @@ public class UserHomeController {
 		configureFilters();
 		refreshGoods();
 		updateCurrentUser();
+		loadStatCards();
 		if (keywordField != null) {
 			keywordField.setOnAction(event -> handleSearch());
 		}
@@ -158,26 +154,8 @@ public class UserHomeController {
 	}
 
 	@FXML
-	private void handleMarketplace() {
-		rootPane.setCenter(marketplaceView);
-		setActiveNav(navMarketplace);
-		refreshGoods();
-	}
-
-	@FXML
 	private void handleUserCenter() {
-		User currentUser = Session.getCurrentUser();
-		if (currentUser == null) {
-			SceneManager.show("login.fxml", AppConfig.getAppTitle());
-			return;
-		}
-		try {
-			Node view = FXMLLoader.load(getClass().getResource("/fxml/user_center.fxml"));
-			rootPane.setCenter(view);
-			setActiveNav(navUserCenter);
-		} catch (IOException e) {
-			setMessage("无法加载页面");
-		}
+		SceneManager.show("user_center.fxml", AppConfig.getAppTitle());
 	}
 
 	@FXML
@@ -187,13 +165,7 @@ public class UserHomeController {
 			SceneManager.show("login.fxml", AppConfig.getAppTitle());
 			return;
 		}
-		try {
-			Node view = FXMLLoader.load(getClass().getResource("/fxml/cart.fxml"));
-			rootPane.setCenter(view);
-			setActiveNav(navCart);
-		} catch (IOException e) {
-			setMessage("无法加载页面");
-		}
+		SceneManager.show("cart.fxml", AppConfig.getAppTitle());
 	}
 
 	@FXML
@@ -214,27 +186,9 @@ public class UserHomeController {
 			SceneManager.show("login.fxml", AppConfig.getAppTitle());
 			return;
 		}
-		rootPane.setCenter(marketplaceView);
-		setActiveNav(navPublished);
 		List<Goods> goods = goodsService.listUserPublishedGoods(currentUser);
 		goodsTable.setItems(FXCollections.observableArrayList(goods));
 		setMessage("已切换到我发布的商品列表。");
-	}
-
-	private void setActiveNav(Button activeBtn) {
-		if (navMarketplace != null)
-			navMarketplace.getStyleClass().remove("active");
-		if (navPublished != null)
-			navPublished.getStyleClass().remove("active");
-		if (navCart != null)
-			navCart.getStyleClass().remove("active");
-		if (navUserCenter != null)
-			navUserCenter.getStyleClass().remove("active");
-		if (activeBtn != null) {
-			if (!activeBtn.getStyleClass().contains("active")) {
-				activeBtn.getStyleClass().add("active");
-			}
-		}
 	}
 
 	@FXML
@@ -269,6 +223,22 @@ public class UserHomeController {
 		}
 		if (conditionColumn != null) {
 			conditionColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("conditionLevel"));
+			conditionColumn.setCellFactory(column -> new javafx.scene.control.TableCell<Goods, Integer>() {
+				@Override
+				protected void updateItem(Integer item, boolean empty) {
+					super.updateItem(item, empty);
+					if (empty || item == null) {
+						setText(null);
+					} else {
+						int stars = Math.min(Math.max(item, 0), 5);
+						StringBuilder sb = new StringBuilder();
+						for (int i = 0; i < 5; i++) {
+							sb.append(i < stars ? "★" : "☆");
+						}
+						setText(sb.toString());
+					}
+				}
+			});
 		}
 		if (imageColumn != null) {
 			imageColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("primaryImageName"));
@@ -291,21 +261,11 @@ public class UserHomeController {
 					} else {
 						Label badge = new Label(item);
 						switch (item) {
-							case "在售" :
-								badge.getStyleClass().add("badge-active");
-								break;
-							case "已售出" :
-								badge.getStyleClass().add("badge-sold");
-								break;
-							case "待审核" :
-								badge.getStyleClass().add("badge-pending");
-								break;
-							case "已下架" :
-								badge.getStyleClass().add("badge-offline");
-								break;
-							default :
-								badge.getStyleClass().add("badge-sold");
-								break;
+							case "在售": badge.getStyleClass().add("badge-active"); break;
+							case "已售出": badge.getStyleClass().add("badge-sold"); break;
+							case "待审核": badge.getStyleClass().add("badge-pending"); break;
+							case "已下架": badge.getStyleClass().add("badge-offline"); break;
+							default: badge.getStyleClass().add("badge-sold"); break;
 						}
 						setText(null);
 						setGraphic(badge);
@@ -415,5 +375,41 @@ public class UserHomeController {
 		if (messageLabel != null) {
 			messageLabel.setText(text);
 		}
+	}
+
+	private void loadStatCards() {
+		Task<Void> task = new Task<Void>() {
+			@Override
+			protected Void call() {
+				try {
+					com.campus.secondhand.model.StatsSummary summary = statisticsService.loadSummary();
+					int cartCount = 0;
+					User currentUser = Session.getCurrentUser();
+					if (currentUser != null) {
+						cartCount = new com.campus.secondhand.dao.CartDao().listByUserId(currentUser.getId()).size();
+					}
+					final int cart = cartCount;
+					javafx.application.Platform.runLater(() -> {
+						if (statTotalLabel != null) {
+							statTotalLabel.setText(String.valueOf(summary.getTotalGoods()));
+						}
+						if (statOnSaleLabel != null) {
+							statOnSaleLabel.setText(String.valueOf(summary.getOnSaleGoods()));
+						}
+						if (statTodayLabel != null) {
+							statTodayLabel.setText(String.valueOf(summary.getTodayOrders()));
+						}
+						if (statCartLabel != null) {
+							statCartLabel.setText(String.valueOf(cart));
+						}
+					});
+				} catch (Exception ignored) {
+				}
+				return null;
+			}
+		};
+		Thread thread = new Thread(task);
+		thread.setDaemon(true);
+		thread.start();
 	}
 }
