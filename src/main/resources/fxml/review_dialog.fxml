@@ -17,27 +17,26 @@
 	</padding>
 
 	<VBox spacing="8.0">
-		<Label text="Write a Review" styleClass="page-title" />
+		<Label text="撰写评价" styleClass="page-title" />
 		<Label fx:id="orderLabel" wrapText="true"
 			styleClass="subtitle-text" />
 	</VBox>
 
 	<VBox spacing="8.0">
-		<Label text="Rating" styleClass="field-label" />
+		<Label text="评分" styleClass="field-label" />
 		<ChoiceBox fx:id="ratingBox" prefWidth="140.0" />
 	</VBox>
 
 	<VBox spacing="8.0">
-		<Label text="Your Review" styleClass="field-label" />
+		<Label text="您的评价" styleClass="field-label" />
 		<TextArea fx:id="contentArea" prefRowCount="5"
-			wrapText="true" promptText="Tell others about your experience..."
-			styleClass="text-area" />
+			wrapText="true" promptText="与他人分享您的体验..." styleClass="text-area" />
 	</VBox>
 
 	<HBox spacing="12.0" alignment="CENTER_RIGHT">
-		<Button text="Cancel" onAction="#handleCancel"
+		<Button text="取消" onAction="#handleCancel"
 			styleClass="secondary-button" />
-		<Button text="Submit Review" onAction="#handleSubmit"
+		<Button text="提交评价" onAction="#handleSubmit"
 			styleClass="primary-button" prefWidth="140.0" />
 	</HBox>
 </VBox>

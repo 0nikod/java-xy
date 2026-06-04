@@ -20,7 +20,7 @@
 				<Insets bottom="24.0" />
 			</padding>
 			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Label text="Shopping Cart" styleClass="page-title" />
+				<Label text="购物车" styleClass="page-title" />
 				<Region HBox.hgrow="ALWAYS" />
 				<VBox alignment="CENTER_RIGHT">
 					<Label fx:id="currentUserLabel" styleClass="muted-text" />
@@ -30,16 +30,16 @@
 
 			<HBox alignment="CENTER_LEFT" spacing="12.0"
 				styleClass="toolbar-panel">
-				<Button text="Refresh" onAction="#handleRefresh"
+				<Button text="刷新" onAction="#handleRefresh"
 					styleClass="secondary-button" />
 				<Region HBox.hgrow="ALWAYS" />
-				<Button text="View Item" onAction="#handleViewDetail"
+				<Button text="查看商品" onAction="#handleViewDetail"
 					styleClass="secondary-button" />
-				<Button text="Remove Selected" onAction="#handleRemove"
+				<Button text="删除所选" onAction="#handleRemove"
 					styleClass="danger-button" />
-				<Button text="Checkout Selected"
-					onAction="#handleCheckoutSelected" styleClass="primary-button" />
-				<Button text="Checkout All" onAction="#handleCheckoutAll"
+				<Button text="结算所选" onAction="#handleCheckoutSelected"
+					styleClass="primary-button" />
+				<Button text="结算全部" onAction="#handleCheckoutAll"
 					styleClass="primary-button" />
 			</HBox>
 		</VBox>
@@ -47,23 +47,23 @@
 
 	<center>
 		<VBox spacing="16.0" styleClass="plain-panel">
-			<Label text="Your Items" styleClass="section-label" />
+			<Label text="您的商品" styleClass="section-label" />
 
 			<TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
 				<columns>
-					<TableColumn fx:id="titleColumn" text="Item Name"
+					<TableColumn fx:id="titleColumn" text="商品名称"
 						prefWidth="250.0" />
-					<TableColumn fx:id="priceColumn" text="Price"
+					<TableColumn fx:id="priceColumn" text="价格"
 						prefWidth="100.0" />
-					<TableColumn fx:id="categoryColumn" text="Category"
+					<TableColumn fx:id="categoryColumn" text="类别"
 						prefWidth="120.0" />
-					<TableColumn fx:id="sellerColumn" text="Seller"
+					<TableColumn fx:id="sellerColumn" text="卖家"
 						prefWidth="150.0" />
-					<TableColumn fx:id="statusColumn" text="Status"
+					<TableColumn fx:id="statusColumn" text="状态"
 						prefWidth="100.0" />
-					<TableColumn fx:id="imageColumn" text="Image"
+					<TableColumn fx:id="imageColumn" text="图片"
 						prefWidth="150.0" />
-					<TableColumn fx:id="createdAtColumn" text="Added At"
+					<TableColumn fx:id="createdAtColumn" text="添加时间"
 						prefWidth="160.0" />
 				</columns>
 			</TableView>

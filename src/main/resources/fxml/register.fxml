@@ -20,33 +20,32 @@
 			</padding>
 
 			<VBox alignment="CENTER" spacing="8.0">
-				<Label text="Create an Account" styleClass="title-text" />
-				<Label text="Join Campus Secondhand Platform today"
-					styleClass="subtitle-text" />
+				<Label text="创建账号" styleClass="title-text" />
+				<Label text="立即加入校园二手交易平台" styleClass="subtitle-text" />
 			</VBox>
 
 			<VBox spacing="16.0" prefWidth="380.0">
 				<VBox spacing="8.0">
-					<Label text="Username" styleClass="field-label" />
-					<TextField fx:id="usernameField"
-						promptText="Choose a username" prefHeight="42.0" />
+					<Label text="用户名" styleClass="field-label" />
+					<TextField fx:id="usernameField" promptText="请选择用户名"
+						prefHeight="42.0" />
 				</VBox>
 				<VBox spacing="8.0">
-					<Label text="Password" styleClass="field-label" />
+					<Label text="密码" styleClass="field-label" />
 					<PasswordField fx:id="passwordField"
-						promptText="Create a secure password" prefHeight="42.0" />
+						promptText="请创建一个安全的密码" prefHeight="42.0" />
 				</VBox>
 				<VBox spacing="8.0">
-					<Label text="Contact Details" styleClass="field-label" />
-					<TextField fx:id="phoneField"
-						promptText="Phone number or campus ID" prefHeight="42.0" />
+					<Label text="联系方式" styleClass="field-label" />
+					<TextField fx:id="phoneField" promptText="电话号码或校园卡号"
+						prefHeight="42.0" />
 				</VBox>
 			</VBox>
 
 			<VBox spacing="12.0" prefWidth="380.0">
-				<Button text="Register Account" onAction="#handleRegister"
+				<Button text="注册账号" onAction="#handleRegister"
 					styleClass="primary-button" prefWidth="380.0" prefHeight="46.0" />
-				<Button text="Back to Sign In" onAction="#handleBackToLogin"
+				<Button text="返回登录" onAction="#handleBackToLogin"
 					styleClass="secondary-button" prefWidth="380.0" prefHeight="46.0" />
 			</VBox>
 

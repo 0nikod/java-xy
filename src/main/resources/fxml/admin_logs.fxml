@@ -20,14 +20,14 @@
 				<Insets bottom="24.0" />
 			</padding>
 			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Button text="← Dashboard" onAction="#handleBack"
+				<Button text="← 控制台" onAction="#handleBack"
 					styleClass="secondary-button" />
 				<VBox>
-					<Label text="System Operations Log" styleClass="page-title" />
+					<Label text="系统操作日志" styleClass="page-title" />
 					<Label fx:id="currentUserLabel" styleClass="muted-text" />
 				</VBox>
 				<Region HBox.hgrow="ALWAYS" />
-				<Button text="Refresh Logs" onAction="#handleRefresh"
+				<Button text="刷新日志" onAction="#handleRefresh"
 					styleClass="primary-button" />
 			</HBox>
 		</VBox>
@@ -35,20 +35,20 @@
 
 	<center>
 		<VBox spacing="16.0" styleClass="plain-panel">
-			<Label text="Audit Trail" styleClass="section-label" />
+			<Label text="审计轨迹" styleClass="section-label" />
 			<TableView fx:id="logTable" VBox.vgrow="ALWAYS">
 				<columns>
-					<TableColumn fx:id="adminColumn" text="Admin"
+					<TableColumn fx:id="adminColumn" text="管理员"
 						prefWidth="160.0" />
-					<TableColumn fx:id="actionColumn" text="Action Type"
+					<TableColumn fx:id="actionColumn" text="操作类型"
 						prefWidth="150.0" />
-					<TableColumn fx:id="targetTypeColumn"
-						text="Target Object" prefWidth="140.0" />
-					<TableColumn fx:id="targetIdColumn" text="Target ID"
+					<TableColumn fx:id="targetTypeColumn" text="目标对象"
+						prefWidth="140.0" />
+					<TableColumn fx:id="targetIdColumn" text="目标 ID"
 						prefWidth="100.0" />
-					<TableColumn fx:id="detailColumn" text="Details"
+					<TableColumn fx:id="detailColumn" text="详情"
 						prefWidth="380.0" />
-					<TableColumn fx:id="createdAtColumn" text="Timestamp"
+					<TableColumn fx:id="createdAtColumn" text="时间戳"
 						prefWidth="180.0" />
 				</columns>
 			</TableView>

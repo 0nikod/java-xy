@@ -26,14 +26,14 @@
 				<Insets bottom="24.0" />
 			</padding>
 			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Button text="← Dashboard" onAction="#handleBack"
+				<Button text="← 控制台" onAction="#handleBack"
 					styleClass="secondary-button" />
 				<VBox>
-					<Label text="Platform Analytics" styleClass="page-title" />
+					<Label text="平台分析" styleClass="page-title" />
 					<Label fx:id="currentUserLabel" styleClass="muted-text" />
 				</VBox>
 				<Region HBox.hgrow="ALWAYS" />
-				<Button fx:id="refreshButton" text="Refresh Analytics"
+				<Button fx:id="refreshButton" text="刷新分析"
 					onAction="#handleRefresh" styleClass="primary-button" />
 			</HBox>
 
@@ -42,7 +42,7 @@
 				<Label fx:id="statsCardLabel" wrapText="true"
 					styleClass="section-label" />
 				<HBox spacing="10.0">
-					<Label text="✨ AI Insights:"
+					<Label text="✨ AI 洞察:"
 						style="-fx-font-weight: bold; -fx-text-fill: #6366F1;" />
 					<VBox spacing="4.0">
 						<Label fx:id="aiSummaryLabel" wrapText="true"
@@ -66,33 +66,32 @@
 				<HBox spacing="20.0">
 					<VBox spacing="10.0" styleClass="plain-panel"
 						HBox.hgrow="ALWAYS" alignment="CENTER">
-						<Label text="Items by Category" styleClass="section-label" />
+						<Label text="商品类别分布" styleClass="section-label" />
 						<PieChart fx:id="categoryPieChart" prefHeight="260.0" />
 					</VBox>
 					<VBox spacing="10.0" styleClass="plain-panel"
 						HBox.hgrow="ALWAYS" alignment="CENTER">
-						<Label text="Item Status Distribution"
-							styleClass="section-label" />
+						<Label text="商品状态分布" styleClass="section-label" />
 						<BarChart fx:id="statusBarChart" prefHeight="260.0"
 							legendVisible="false">
 							<xAxis>
-								<CategoryAxis label="Status" />
+								<CategoryAxis label="状态" />
 							</xAxis>
 							<yAxis>
-								<NumberAxis label="Count" />
+								<NumberAxis label="数量" />
 							</yAxis>
 						</BarChart>
 					</VBox>
 					<VBox spacing="10.0" styleClass="plain-panel"
 						HBox.hgrow="ALWAYS" alignment="CENTER">
-						<Label text="Recent Sales Trend" styleClass="section-label" />
+						<Label text="近期销售趋势" styleClass="section-label" />
 						<LineChart fx:id="trendLineChart" prefHeight="260.0"
 							legendVisible="false">
 							<xAxis>
-								<CategoryAxis label="Date" />
+								<CategoryAxis label="日期" />
 							</xAxis>
 							<yAxis>
-								<NumberAxis label="Orders" />
+								<NumberAxis label="订单量" />
 							</yAxis>
 						</LineChart>
 					</VBox>
@@ -101,46 +100,44 @@
 				<HBox spacing="20.0">
 					<VBox spacing="10.0" styleClass="plain-panel"
 						HBox.hgrow="ALWAYS" alignment="CENTER">
-						<Label text="Sales Volume by Category"
-							styleClass="section-label" />
+						<Label text="商品类别销量" styleClass="section-label" />
 						<BarChart fx:id="categorySoldCountBarChart"
 							prefHeight="260.0" legendVisible="false">
 							<xAxis>
-								<CategoryAxis label="Category" />
+								<CategoryAxis label="类别" />
 							</xAxis>
 							<yAxis>
-								<NumberAxis label="Volume" />
+								<NumberAxis label="销量" />
 							</yAxis>
 						</BarChart>
 					</VBox>
 					<VBox spacing="10.0" styleClass="plain-panel"
 						HBox.hgrow="ALWAYS" alignment="CENTER">
-						<Label text="Revenue by Category" styleClass="section-label" />
+						<Label text="商品类别销售额" styleClass="section-label" />
 						<BarChart fx:id="categoryRevenueBarChart"
 							prefHeight="260.0" legendVisible="false">
 							<xAxis>
-								<CategoryAxis label="Category" />
+								<CategoryAxis label="类别" />
 							</xAxis>
 							<yAxis>
-								<NumberAxis label="Revenue" />
+								<NumberAxis label="销售额" />
 							</yAxis>
 						</BarChart>
 					</VBox>
 				</HBox>
 
 				<VBox spacing="10.0" styleClass="plain-panel">
-					<Label text="User Activity Overview"
-						styleClass="section-label" />
+					<Label text="用户活动概览" styleClass="section-label" />
 					<TableView fx:id="detailTable" prefHeight="260.0">
 						<columns>
-							<TableColumn fx:id="detailUserColumn" text="Username"
+							<TableColumn fx:id="detailUserColumn" text="用户名"
 								prefWidth="250.0" />
-							<TableColumn fx:id="detailStatusColumn"
-								text="Account Status" prefWidth="150.0" />
+							<TableColumn fx:id="detailStatusColumn" text="账户状态"
+								prefWidth="150.0" />
 							<TableColumn fx:id="detailGoodsCountColumn"
-								text="Items Listed" prefWidth="150.0" />
+								text="上架商品数" prefWidth="150.0" />
 							<TableColumn fx:id="detailSoldCountColumn"
-								text="Items Sold" prefWidth="150.0" />
+								text="售出商品数" prefWidth="150.0" />
 						</columns>
 					</TableView>
 				</VBox>

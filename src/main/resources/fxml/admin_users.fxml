@@ -21,10 +21,10 @@
 				<Insets bottom="24.0" />
 			</padding>
 			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Button text="← Dashboard" onAction="#handleBack"
+				<Button text="← 控制台" onAction="#handleBack"
 					styleClass="secondary-button" />
 				<VBox>
-					<Label text="User Management" styleClass="page-title" />
+					<Label text="用户管理" styleClass="page-title" />
 					<Label fx:id="currentUserLabel" styleClass="muted-text" />
 				</VBox>
 			</HBox>
@@ -32,20 +32,20 @@
 			<HBox alignment="BOTTOM_LEFT" spacing="12.0"
 				styleClass="toolbar-panel">
 				<VBox spacing="6.0" HBox.hgrow="ALWAYS">
-					<Label text="Search User" styleClass="field-label" />
-					<TextField fx:id="keywordField"
-						promptText="Search by username..." prefWidth="300.0" />
+					<Label text="搜索用户" styleClass="field-label" />
+					<TextField fx:id="keywordField" promptText="按用户名搜索..."
+						prefWidth="300.0" />
 				</VBox>
-				<Button text="Search" onAction="#handleSearch"
+				<Button text="搜索" onAction="#handleSearch"
 					styleClass="primary-button" />
-				<Button text="Reset" onAction="#handleReset"
+				<Button text="重置" onAction="#handleReset"
 					styleClass="secondary-button" />
 
 				<Region HBox.hgrow="ALWAYS" />
 
-				<Button text="Ban User" onAction="#handleBan"
+				<Button text="封禁用户" onAction="#handleBan"
 					styleClass="danger-button" />
-				<Button text="Unban User" onAction="#handleUnban"
+				<Button text="解封用户" onAction="#handleUnban"
 					styleClass="secondary-button" />
 			</HBox>
 			<Label fx:id="summaryLabel" styleClass="status-text" />
@@ -54,20 +54,20 @@
 
 	<center>
 		<VBox spacing="16.0" styleClass="plain-panel">
-			<Label text="All Users" styleClass="section-label" />
+			<Label text="所有用户" styleClass="section-label" />
 			<TableView fx:id="userTable" VBox.vgrow="ALWAYS">
 				<columns>
-					<TableColumn fx:id="usernameColumn" text="Username"
+					<TableColumn fx:id="usernameColumn" text="用户名"
 						prefWidth="180.0" />
-					<TableColumn fx:id="phoneColumn" text="Contact Info"
+					<TableColumn fx:id="phoneColumn" text="联系方式"
 						prefWidth="180.0" />
-					<TableColumn fx:id="roleColumn" text="Role"
+					<TableColumn fx:id="roleColumn" text="角色"
 						prefWidth="120.0" />
-					<TableColumn fx:id="statusColumn" text="Status"
+					<TableColumn fx:id="statusColumn" text="状态"
 						prefWidth="120.0" />
-					<TableColumn fx:id="goodsCountColumn"
-						text="Items Listed" prefWidth="140.0" />
-					<TableColumn fx:id="soldCountColumn" text="Items Sold"
+					<TableColumn fx:id="goodsCountColumn" text="上架商品数"
+						prefWidth="140.0" />
+					<TableColumn fx:id="soldCountColumn" text="售出商品数"
 						prefWidth="140.0" />
 				</columns>
 			</TableView>

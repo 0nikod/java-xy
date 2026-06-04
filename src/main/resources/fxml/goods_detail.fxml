@@ -22,9 +22,9 @@
 			<padding>
 				<Insets bottom="24.0" />
 			</padding>
-			<Button text="← Back" onAction="#handleBack"
+			<Button text="← 返回" onAction="#handleBack"
 				styleClass="secondary-button" />
-			<Label text="Item Details" styleClass="page-title" />
+			<Label text="商品详情" styleClass="page-title" />
 		</HBox>
 	</top>
 
@@ -45,9 +45,9 @@
 				<VBox styleClass="plain-panel" spacing="12.0"
 					VBox.vgrow="ALWAYS">
 					<HBox alignment="CENTER_LEFT">
-						<Label text="Customer Reviews" styleClass="section-label" />
+						<Label text="买家评价" styleClass="section-label" />
 						<Region HBox.hgrow="ALWAYS" />
-						<Button text="Refresh" onAction="#handleRefreshReviews"
+						<Button text="刷新" onAction="#handleRefreshReviews"
 							styleClass="secondary-button" />
 					</HBox>
 					<ListView fx:id="reviewListView" prefHeight="200.0"
@@ -77,30 +77,29 @@
 					<VBox spacing="12.0"
 						style="-fx-background-color: #F9FAFB; -fx-padding: 16; -fx-background-radius: 12;">
 						<HBox spacing="8.0">
-							<Label text="Condition:" styleClass="field-label" />
+							<Label text="成色:" styleClass="field-label" />
 							<Label fx:id="conditionLabel" styleClass="subtitle-text" />
 						</HBox>
 						<HBox spacing="8.0">
-							<Label text="Seller:" styleClass="field-label" />
+							<Label text="卖家:" styleClass="field-label" />
 							<Label fx:id="sellerLabel" styleClass="subtitle-text" />
 						</HBox>
 						<HBox spacing="8.0">
-							<Label text="Posted:" styleClass="field-label" />
+							<Label text="发布时间:" styleClass="field-label" />
 							<Label fx:id="createdAtLabel" styleClass="subtitle-text" />
 						</HBox>
 					</VBox>
 
 					<VBox spacing="8.0">
-						<Label text="Description" styleClass="section-label" />
+						<Label text="描述" styleClass="section-label" />
 						<TextArea fx:id="descriptionArea" prefRowCount="6"
 							wrapText="true" editable="false" styleClass="text-area" />
 					</VBox>
 
 					<HBox spacing="12.0">
-						<Button fx:id="buyButton" text="Buy Now"
-							onAction="#handleBuy" styleClass="primary-button"
-							prefWidth="200.0" prefHeight="44.0" />
-						<Button text="Add to Cart" onAction="#handleAddToCart"
+						<Button fx:id="buyButton" text="立即购买" onAction="#handleBuy"
+							styleClass="primary-button" prefWidth="200.0" prefHeight="44.0" />
+						<Button text="加入购物车" onAction="#handleAddToCart"
 							styleClass="secondary-button" prefWidth="200.0" prefHeight="44.0" />
 					</HBox>
 				</VBox>
@@ -108,15 +107,13 @@
 				<!-- AI Assistant Card -->
 				<VBox styleClass="plain-panel" spacing="12.0">
 					<HBox alignment="CENTER_LEFT">
-						<Label text="AI Shopping Assistant"
-							styleClass="section-label" />
+						<Label text="AI 购物助手" styleClass="section-label" />
 						<Region HBox.hgrow="ALWAYS" />
-						<Button fx:id="purchaseAdviceButton" text="Get Advice"
+						<Button fx:id="purchaseAdviceButton" text="获取建议"
 							onAction="#handlePurchaseAdvice" styleClass="secondary-button" />
 					</HBox>
 					<TextArea fx:id="aiAdviceArea" prefRowCount="4"
-						wrapText="true" editable="false"
-						promptText="Click 'Get Advice' to analyze this item..."
+						wrapText="true" editable="false" promptText="点击“获取建议”分析此商品..."
 						styleClass="text-area" />
 				</VBox>
 			</VBox>

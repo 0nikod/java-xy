@@ -20,14 +20,14 @@
 				<Insets bottom="24.0" />
 			</padding>
 			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Button text="← Dashboard" onAction="#handleBack"
+				<Button text="← 控制台" onAction="#handleBack"
 					styleClass="secondary-button" />
 				<VBox>
-					<Label text="All Platform Reviews" styleClass="page-title" />
+					<Label text="平台所有评价" styleClass="page-title" />
 					<Label fx:id="currentUserLabel" styleClass="muted-text" />
 				</VBox>
 				<Region HBox.hgrow="ALWAYS" />
-				<Button text="Refresh Reviews" onAction="#handleRefresh"
+				<Button text="刷新评价" onAction="#handleRefresh"
 					styleClass="primary-button" />
 			</HBox>
 		</VBox>
@@ -35,20 +35,20 @@
 
 	<center>
 		<VBox spacing="16.0" styleClass="plain-panel">
-			<Label text="Review Feed" styleClass="section-label" />
+			<Label text="评价列表" styleClass="section-label" />
 			<TableView fx:id="reviewTable" VBox.vgrow="ALWAYS">
 				<columns>
-					<TableColumn fx:id="goodsColumn" text="Item"
+					<TableColumn fx:id="goodsColumn" text="商品"
 						prefWidth="200.0" />
-					<TableColumn fx:id="reviewerColumn" text="Reviewer"
+					<TableColumn fx:id="reviewerColumn" text="评价人"
 						prefWidth="120.0" />
-					<TableColumn fx:id="sellerColumn" text="Seller"
+					<TableColumn fx:id="sellerColumn" text="卖家"
 						prefWidth="120.0" />
-					<TableColumn fx:id="ratingColumn" text="Rating"
+					<TableColumn fx:id="ratingColumn" text="评分"
 						prefWidth="80.0" />
-					<TableColumn fx:id="contentColumn"
-						text="Review Content" prefWidth="360.0" />
-					<TableColumn fx:id="createdAtColumn" text="Date"
+					<TableColumn fx:id="contentColumn" text="评价内容"
+						prefWidth="360.0" />
+					<TableColumn fx:id="createdAtColumn" text="日期"
 						prefWidth="140.0" />
 				</columns>
 			</TableView>

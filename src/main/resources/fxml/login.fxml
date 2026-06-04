@@ -21,28 +21,27 @@
 			</padding>
 
 			<VBox alignment="CENTER" spacing="8.0">
-				<Label text="Welcome Back" styleClass="title-text" />
-				<Label text="Sign in to Campus Secondhand Platform"
-					styleClass="subtitle-text" />
+				<Label text="欢迎回来" styleClass="title-text" />
+				<Label text="登录校园二手交易平台" styleClass="subtitle-text" />
 			</VBox>
 
 			<VBox spacing="16.0" prefWidth="380.0">
 				<VBox spacing="8.0">
-					<Label text="Username" styleClass="field-label" />
-					<TextField fx:id="usernameField"
-						promptText="Enter your username" prefHeight="42.0" />
+					<Label text="用户名" styleClass="field-label" />
+					<TextField fx:id="usernameField" promptText="请输入用户名"
+						prefHeight="42.0" />
 				</VBox>
 				<VBox spacing="8.0">
-					<Label text="Password" styleClass="field-label" />
+					<Label text="密码" styleClass="field-label" />
 					<PasswordField fx:id="passwordField"
-						promptText="Enter your password" prefHeight="42.0" />
+						promptText="请输入密码" prefHeight="42.0" />
 				</VBox>
 			</VBox>
 
 			<VBox spacing="12.0" prefWidth="380.0">
-				<Button text="Sign In" onAction="#handleLogin"
+				<Button text="登录" onAction="#handleLogin"
 					styleClass="primary-button" prefWidth="380.0" prefHeight="46.0" />
-				<Button text="Create an account" onAction="#handleRegister"
+				<Button text="创建账号" onAction="#handleRegister"
 					styleClass="secondary-button" prefWidth="380.0" prefHeight="46.0" />
 			</VBox>
 
