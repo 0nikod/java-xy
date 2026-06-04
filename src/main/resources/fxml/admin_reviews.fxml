@@ -8,40 +8,42 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.campus.secondhand.controller.AdminReviewController">
-	<top>
-		<VBox spacing="12.0" styleClass="toolbar-panel">
-			<VBox spacing="4.0">
-				<Label text="全部评价" styleClass="page-title" />
-				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
-			</VBox>
-			<HBox spacing="10.0">
-				<Button text="刷新评价" onAction="#handleRefresh"
-					styleClass="primary-button" />
-				<Button text="返回后台" onAction="#handleBack"
-					styleClass="secondary-button" />
-			</HBox>
-		</VBox>
-	</top>
-	<center>
-		<VBox spacing="10.0">
-			<padding>
-				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
-			</padding>
-			<Label text="平台评价列表" styleClass="section-label" />
-			<TableView fx:id="reviewTable" VBox.vgrow="ALWAYS">
-				<columns>
-					<TableColumn fx:id="goodsColumn" text="商品" prefWidth="180.0" />
-					<TableColumn fx:id="reviewerColumn" text="评价用户" prefWidth="120.0" />
-					<TableColumn fx:id="sellerColumn" text="卖家" prefWidth="120.0" />
-					<TableColumn fx:id="ratingColumn" text="评分" prefWidth="80.0" />
-					<TableColumn fx:id="contentColumn" text="内容" prefWidth="320.0" />
-					<TableColumn fx:id="createdAtColumn" text="时间" prefWidth="170.0" />
-				</columns>
-			</TableView>
-		</VBox>
-	</center>
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.campus.secondhand.controller.AdminReviewController">
+    
+    <top>
+        <VBox spacing="16.0">
+            <padding>
+                <Insets bottom="24.0" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+                <Button text="← Dashboard" onAction="#handleBack" styleClass="secondary-button" />
+                <VBox>
+                    <Label text="All Platform Reviews" styleClass="page-title" />
+                    <Label fx:id="currentUserLabel" styleClass="muted-text" />
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="Refresh Reviews" onAction="#handleRefresh" styleClass="primary-button" />
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="16.0" styleClass="plain-panel">
+            <Label text="Review Feed" styleClass="section-label" />
+            <TableView fx:id="reviewTable" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="goodsColumn" text="Item" prefWidth="200.0" />
+                    <TableColumn fx:id="reviewerColumn" text="Reviewer" prefWidth="120.0" />
+                    <TableColumn fx:id="sellerColumn" text="Seller" prefWidth="120.0" />
+                    <TableColumn fx:id="ratingColumn" text="Rating" prefWidth="80.0" />
+                    <TableColumn fx:id="contentColumn" text="Review Content" prefWidth="360.0" />
+                    <TableColumn fx:id="createdAtColumn" text="Date" prefWidth="140.0" />
+                </columns>
+            </TableView>
+        </VBox>
+    </center>
 </BorderPane>

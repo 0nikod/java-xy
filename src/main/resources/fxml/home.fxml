@@ -9,83 +9,103 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.campus.secondhand.controller.UserHomeController">
-	<top>
-		<VBox spacing="14.0" styleClass="toolbar-panel">
-			<VBox spacing="4.0">
-				<Label text="商品市场" styleClass="page-title" />
-				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
-			</VBox>
-			<HBox alignment="CENTER_LEFT" spacing="12.0">
-				<VBox spacing="6.0">
-					<Label text="关键词" styleClass="field-label" />
-					<TextField fx:id="keywordField" prefWidth="280.0"
-						promptText="名称、分类、描述、卖家" />
-				</VBox>
-				<VBox spacing="6.0">
-					<Label text="分类" styleClass="field-label" />
-					<ChoiceBox fx:id="categoryBox" prefWidth="130.0" />
-				</VBox>
-				<VBox spacing="6.0">
-					<Label text="排序" styleClass="field-label" />
-					<ChoiceBox fx:id="sortBox" prefWidth="150.0" />
-				</VBox>
-				<Button text="搜索" onAction="#handleSearch"
-					styleClass="primary-button" />
-				<Button fx:id="aiSearchAssistButton" text="AI 搜索辅助" onAction="#handleAiSearchAssist"
-					styleClass="secondary-button" />
-				<Button text="重置" onAction="#handleReset"
-					styleClass="secondary-button" />
-			</HBox>
-			<HBox alignment="CENTER_LEFT" spacing="10.0">
-				<Button text="发布商品" onAction="#handlePublish"
-					styleClass="primary-button" />
-				<Button text="查看所选详情" onAction="#handleDetail"
-					styleClass="secondary-button" />
-				<Button text="我的发布" onAction="#handleMyPublished"
-					styleClass="secondary-button" />
-				<Button text="个人中心" onAction="#handleUserCenter"
-					styleClass="secondary-button" />
-				<Button text="购物车" onAction="#handleCart"
-					styleClass="secondary-button" />
-				<Button text="退出登录" onAction="#handleLogout"
-					styleClass="secondary-button" />
-			</HBox>
-			<Label fx:id="messageLabel" wrapText="true"
-				styleClass="status-text" />
-		</VBox>
-	</top>
-	<center>
-		<VBox spacing="10.0">
-			<padding>
-				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
-			</padding>
-			<Label text="可购买商品" styleClass="section-label" />
-			<TableView fx:id="goodsTable" VBox.vgrow="ALWAYS">
-				<columns>
-					<TableColumn fx:id="titleColumn" text="商品名称"
-						prefWidth="190.0" />
-					<TableColumn fx:id="categoryColumn" text="分类"
-						prefWidth="100.0" />
-					<TableColumn fx:id="priceColumn" text="现价"
-						prefWidth="90.0" />
-					<TableColumn fx:id="conditionColumn" text="成色"
-						prefWidth="80.0" />
-					<TableColumn fx:id="imageColumn" text="主图"
-						prefWidth="150.0" />
-					<TableColumn fx:id="sellerColumn" text="卖家"
-						prefWidth="120.0" />
-					<TableColumn fx:id="createdAtColumn" text="发布时间"
-						prefWidth="160.0" />
-					<TableColumn fx:id="statusColumn" text="状态"
-						prefWidth="100.0" />
-				</columns>
-			</TableView>
-		</VBox>
-	</center>
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.campus.secondhand.controller.UserHomeController">
+    
+    <!-- Sidebar Navigation -->
+    <left>
+        <VBox styleClass="sidebar" prefWidth="240.0" spacing="10.0">
+            <padding>
+                <Insets top="24.0" right="0.0" bottom="24.0" left="0.0" />
+            </padding>
+            <VBox spacing="4.0">
+                <padding>
+                    <Insets right="24.0" left="24.0" bottom="24.0" />
+                </padding>
+                <Label text="Campus" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: 800;" />
+                <Label text="Secondhand" style="-fx-text-fill: #6366F1; -fx-font-size: 24px; -fx-font-weight: 800;" />
+            </VBox>
+            
+            <VBox spacing="8.0">
+                <padding>
+                    <Insets right="24.0" left="24.0" bottom="16.0" />
+                </padding>
+                <Label fx:id="currentUserLabel" styleClass="muted-text" text="Welcome, User" wrapText="true" />
+            </VBox>
+            
+            <!-- Navigation Links -->
+            <Button text="Marketplace" styleClass="sidebar-button, active" prefWidth="240.0" />
+            <Button text="My Published" onAction="#handleMyPublished" styleClass="sidebar-button" prefWidth="240.0" />
+            <Button text="My Cart" onAction="#handleCart" styleClass="sidebar-button" prefWidth="240.0" />
+            <Button text="User Center" onAction="#handleUserCenter" styleClass="sidebar-button" prefWidth="240.0" />
+            
+            <Region VBox.vgrow="ALWAYS" />
+            
+            <Button text="Sign Out" onAction="#handleLogout" styleClass="sidebar-button" prefWidth="240.0" />
+        </VBox>
+    </left>
+    
+    <!-- Main Content Area -->
+    <center>
+        <VBox spacing="20.0" styleClass="plain-panel">
+            <BorderPane.margin>
+                <Insets left="24.0" />
+            </BorderPane.margin>
+            
+            <!-- Header & Search -->
+            <VBox spacing="16.0">
+                <HBox alignment="CENTER_LEFT" spacing="16.0">
+                    <Label text="Marketplace" styleClass="page-title" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="Sell an Item" onAction="#handlePublish" styleClass="primary-button" />
+                </HBox>
+                
+                <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                        <Label text="Search" styleClass="field-label" />
+                        <TextField fx:id="keywordField" promptText="Search items, descriptions, sellers..." prefWidth="300.0" />
+                    </VBox>
+                    <VBox spacing="6.0">
+                        <Label text="Category" styleClass="field-label" />
+                        <ChoiceBox fx:id="categoryBox" prefWidth="140.0" />
+                    </VBox>
+                    <VBox spacing="6.0">
+                        <Label text="Sort By" styleClass="field-label" />
+                        <ChoiceBox fx:id="sortBox" prefWidth="140.0" />
+                    </VBox>
+                    <Button text="Filter" onAction="#handleSearch" styleClass="secondary-button" />
+                    <Button fx:id="aiSearchAssistButton" text="AI Assist" onAction="#handleAiSearchAssist" styleClass="secondary-button" />
+                    <Button text="Clear" onAction="#handleReset" styleClass="secondary-button" />
+                </HBox>
+                
+                <Label fx:id="messageLabel" wrapText="true" styleClass="status-text" />
+            </VBox>
+            
+            <!-- Table Area -->
+            <VBox spacing="12.0" VBox.vgrow="ALWAYS">
+                <HBox alignment="CENTER_LEFT">
+                    <Label text="Available Items" styleClass="section-label" />
+                    <Region HBox.hgrow="ALWAYS" />
+                    <Button text="View Details" onAction="#handleDetail" styleClass="secondary-button" />
+                </HBox>
+                
+                <TableView fx:id="goodsTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="titleColumn" text="Title" prefWidth="200.0" />
+                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="90.0" />
+                        <TableColumn fx:id="categoryColumn" text="Category" prefWidth="110.0" />
+                        <TableColumn fx:id="conditionColumn" text="Condition" prefWidth="90.0" />
+                        <TableColumn fx:id="imageColumn" text="Image" prefWidth="120.0" />
+                        <TableColumn fx:id="sellerColumn" text="Seller" prefWidth="120.0" />
+                        <TableColumn fx:id="createdAtColumn" text="Posted At" prefWidth="140.0" />
+                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="90.0" />
+                    </columns>
+                </TableView>
+            </VBox>
+        </VBox>
+    </center>
 </BorderPane>
