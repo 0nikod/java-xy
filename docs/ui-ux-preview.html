@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>校园二手交易平台界面优化预览</title>
+  <style>
+    :root {
+      --bg-1: #eef2ec;
+      --bg-2: #dfe8e2;
+      --ink: #1f2a2e;
+      --muted: #667572;
+      --card: rgba(255,255,255,.90);
+      --line: rgba(43,76,69,.14);
+      --green: #245f54;
+      --green-2: #2f7d6f;
+      --green-3: #dcece5;
+      --gold: #b78a22;
+      --red: #963f35;
+      --blue: #375f8c;
+      --shadow: 0 18px 44px rgba(20,39,34,.13);
+      --shadow-soft: 0 8px 24px rgba(20,39,34,.07);
+      --radius: 20px;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Microsoft YaHei", "Noto Sans CJK SC", "SimSun", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 8% 8%, rgba(47,125,111,.14), transparent 32%),
+        radial-gradient(circle at 90% 4%, rgba(183,138,34,.12), transparent 28%),
+        linear-gradient(135deg, var(--bg-1), var(--bg-2));
+      min-height: 100vh;
+    }
+
+    header { padding: 40px 52px 22px; }
+    .hero-title { display: flex; justify-content: space-between; gap: 24px; align-items: flex-end; }
+    h1 { font-size: 36px; margin: 0 0 10px; letter-spacing: -1px; }
+    .lead { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.75; max-width: 840px; }
+    .tag { padding: 8px 14px; background: rgba(36,95,84,.1); color: var(--green); border-radius: 999px; font-weight: 700; white-space: nowrap; }
+
+    .tabs {
+      display: flex; gap: 10px; padding: 8px 52px 20px; flex-wrap: wrap;
+      position: sticky; top: 0; z-index: 20;
+      background: rgba(239,244,239,.86); backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(43,76,69,.08);
+    }
+    .tabs a {
+      text-decoration: none; color: var(--green); background: rgba(255,255,255,.76);
+      border: 1px solid var(--line); border-radius: 999px; padding: 8px 13px;
+      font-size: 13px; font-weight: 700;
+    }
+    .tabs a:hover { background: var(--green); color: white; }
+
+    main { padding: 0 52px 70px; }
+    section { margin: 34px 0 54px; }
+    .section-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; gap: 16px; }
+    h2 { margin: 0; font-size: 25px; }
+    h3 { margin: 0 0 12px; }
+    .section-desc { color: var(--muted); font-size: 14px; max-width: 780px; line-height: 1.75; }
+
+    .frame { background: rgba(255,255,255,.42); border: 1px solid rgba(43,76,69,.12); border-radius: 30px; box-shadow: var(--shadow); padding: 18px; overflow: hidden; }
+    .app { min-height: 540px; border-radius: 24px; background: linear-gradient(135deg, #eef2ec, #dfe8e2); padding: 22px; overflow: hidden; position: relative; }
+    .panel { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-soft); padding: 22px; position: relative; }
+    .panel.soft { background: rgba(255,255,255,.72); box-shadow: none; }
+    .toolbar { display: flex; justify-content: space-between; gap: 18px; align-items: center; margin-bottom: 18px; }
+    .title { font-size: 26px; font-weight: 900; margin: 0; }
+    .sub { color: var(--muted); font-size: 13px; margin-top: 6px; line-height: 1.6; }
+    .label { font-size: 12px; color: #40504d; font-weight: 800; }
+
+    .btn { border: 0; border-radius: 12px; padding: 10px 16px; font-weight: 800; color: var(--green); background: rgba(36,95,84,.09); border: 1px solid rgba(36,95,84,.26); }
+    .btn.primary { background: var(--green); color: white; }
+    .btn.danger { color: var(--red); border-color: rgba(150,63,53,.30); background: rgba(150,63,53,.08); }
+    .btn.ai { background: linear-gradient(135deg, var(--green), var(--green-2)); color: white; box-shadow: 0 10px 24px rgba(36,95,84,.25); }
+    .btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 14px; margin: 14px 0 18px; }
+    .stat-card { background: rgba(255,255,255,.88); border: 1px solid var(--line); border-radius: 18px; padding: 16px; box-shadow: 0 8px 24px rgba(20,39,34,.06); }
+    .stat-card .num { font-size: 28px; font-weight: 900; color: var(--green); }
+    .stat-card .label { color: var(--muted); font-size: 12px; margin-top: 4px; }
+    .stat-card.accent { background: linear-gradient(135deg, var(--green), var(--green-2)); color: white; }
+    .stat-card.accent .num, .stat-card.accent .label { color: white; }
+
+    .search { display: flex; gap: 10px; align-items: center; background: rgba(255,255,255,.78); border: 1px solid var(--line); padding: 10px; border-radius: 18px; margin-bottom: 14px; }
+    .search input, .field, select, textarea { border: 1px solid #cfd9d4; border-radius: 12px; padding: 11px 12px; background: #fbfcfa; color: var(--ink); outline: 0; }
+    .search input { flex: 1; }
+
+    table { width: 100%; border-collapse: separate; border-spacing: 0; overflow: hidden; background: rgba(255,255,255,.88); border-radius: 18px; border: 1px solid var(--line); }
+    th { text-align: left; color: #40504d; background: #e2ebe6; font-size: 13px; padding: 13px; }
+    td { padding: 13px; border-top: 1px solid rgba(43,76,69,.08); font-size: 13px; }
+    tr:nth-child(even) td { background: rgba(43,76,69,.035); }
+    .price { color: #c0392b; font-weight: 900; }
+    .badge { display: inline-flex; align-items: center; border-radius: 999px; padding: 4px 10px; font-size: 12px; font-weight: 900; }
+    .active { background: rgba(42,122,62,.14); color: #2a7a3e; }
+    .pending { background: rgba(183,138,34,.16); color: #7b5b15; }
+    .sold { background: rgba(100,100,100,.12); color: #555; }
+    .off { background: rgba(150,63,53,.12); color: var(--red); }
+
+    .split { display: grid; grid-template-columns: 1.04fr .96fr; gap: 18px; min-height: 560px; }
+    .brand { background: linear-gradient(135deg, #1d4e45, #2f7d6f); color: white; border-radius: 24px; padding: 44px; display: flex; flex-direction: column; justify-content: space-between; min-height: 520px; overflow: hidden; position: relative; }
+    .brand::after { content: "JAVA"; position: absolute; right: -22px; bottom: -26px; font-size: 104px; font-weight: 900; opacity: .10; letter-spacing: -4px; }
+    .brand h3 { font-size: 33px; margin: 0; line-height: 1.28; }
+    .brand p { opacity: .84; line-height: 1.85; }
+    .brand-mark { width: 74px; height: 74px; border-radius: 22px; background: rgba(255,255,255,.16); border: 1px solid rgba(255,255,255,.28); display: grid; place-items: center; font-size: 25px; font-weight: 900; margin-bottom: 24px; }
+    .login-card { display: flex; flex-direction: column; justify-content: center; gap: 14px; padding: 42px; }
+    .form-group { display: flex; flex-direction: column; gap: 7px; }
+
+    .nav-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .feature { padding: 18px; border-radius: 20px; background: rgba(255,255,255,.84); border: 1px solid var(--line); min-height: 132px; box-shadow: 0 8px 24px rgba(20,39,34,.06); }
+    .feature .icon { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: rgba(36,95,84,.10); color: var(--green); font-weight: 900; margin-bottom: 12px; }
+    .feature b { display:block; font-size: 17px; margin-bottom: 8px; }
+    .feature span { color: var(--muted); font-size: 13px; line-height: 1.6; }
+    .feature.primary { background: linear-gradient(135deg, var(--green), var(--green-2)); color: white; }
+    .feature.primary .icon { background: rgba(255,255,255,.18); color: white; }
+    .feature.primary span { color: rgba(255,255,255,.82); }
+
+    .detail-layout { display: grid; grid-template-columns: 1fr 340px; gap: 18px; }
+    .product-title { font-size: 31px; font-weight: 900; margin: 0 0 8px; }
+    .big-price { font-size: 34px; color: #c0392b; font-weight: 950; margin: 12px 0; }
+    .meta-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin: 16px 0; }
+    .meta { padding: 12px; border-radius: 14px; background: rgba(36,95,84,.06); }
+    .meta small { color: var(--muted); display:block; margin-bottom: 4px; }
+    .photo { height: 230px; border-radius: 18px; background: linear-gradient(135deg, #d9e7df, #f6faf7); border: 1px dashed rgba(36,95,84,.25); display: grid; place-items: center; color: var(--green); font-size: 20px; font-weight: 900; }
+    .review { padding: 12px; border-radius: 14px; background: rgba(255,255,255,.75); border: 1px solid rgba(43,76,69,.08); margin-top: 10px; }
+    .stars { color: #b78a22; letter-spacing: 2px; font-weight: 900; }
+
+    .form-layout { display: grid; grid-template-columns: 1fr 320px; gap: 18px; }
+    .grid-form { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 14px; }
+    .image-drop { height: 250px; border: 2px dashed rgba(36,95,84,.26); background: rgba(36,95,84,.04); border-radius: 18px; display: grid; place-items: center; text-align: center; color: var(--muted); }
+    .bottom-bar { position: sticky; bottom: 0; margin-top: 16px; padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,.92); border: 1px solid var(--line); display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -8px 24px rgba(20,39,34,.08); }
+
+    .user-card { display: flex; align-items: center; gap: 18px; margin-bottom: 16px; }
+    .avatar { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; color: white; font-size: 26px; font-weight: 900; background: linear-gradient(135deg, var(--green), var(--green-2)); }
+    .tabs-mock { display: flex; gap: 8px; margin: 8px 0 14px; }
+    .tab { padding: 10px 16px; border-radius: 14px 14px 0 0; background: rgba(36,95,84,.08); color: var(--green); font-weight: 800; font-size: 13px; }
+    .tab.on { background: rgba(36,95,84,.18); }
+
+    .chart-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .chart { height: 210px; border-radius: 18px; background: rgba(255,255,255,.78); border: 1px solid var(--line); padding: 16px; position: relative; overflow: hidden; }
+    .chart::after { content: ""; position: absolute; left: 18px; right: 18px; bottom: 28px; height: 100px; background: linear-gradient(90deg, #245f54 12%, transparent 12% 20%, #2f7d6f 20% 35%, transparent 35% 45%, #b78a22 45% 64%, transparent 64% 74%, #8aa89c 74% 90%); opacity: .72; border-radius: 8px; }
+    .chart.pie::after { width: 130px; height: 130px; border-radius: 50%; left: 50%; transform: translateX(-50%); bottom: 28px; background: conic-gradient(#245f54 0 42%, #2f7d6f 42% 68%, #b78a22 68% 84%, #cadbd2 84%); }
+
+    .note { padding: 16px 18px; border-left: 4px solid var(--green); background: rgba(255,255,255,.72); border-radius: 14px; color: #40504d; line-height: 1.8; }
+    .priority { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .priority .panel { min-height: 150px; }
+
+    @media (max-width: 1100px) {
+      header, main { padding-left: 22px; padding-right: 22px; }
+      .tabs { padding-left: 22px; padding-right: 22px; }
+      .split, .detail-layout, .form-layout { grid-template-columns: 1fr; }
+      .stat-grid, .chart-grid, .nav-grid, .priority { grid-template-columns: repeat(2, minmax(0,1fr)); }
+    }
+    @media (max-width: 720px) {
+      .stat-grid, .chart-grid, .nav-grid, .priority, .grid-form, .meta-grid { grid-template-columns: 1fr; }
+      h1 { font-size: 28px; }
+      .hero-title { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero-title">
+      <div>
+        <h1>校园二手交易平台界面优化预览</h1>
+        <p class="lead">本方案面向 Java 程序设计课程大作业，不采用过度商业化或花哨风格，而是保留 JavaFX 桌面应用的清晰结构，增强信息层级、功能入口和演示观感，让作品更像一个完整、稳重、易讲解的课程设计系统。</p>
+      </div>
+      <div class="tag">课程作业风格：清晰、规范、完整</div>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <a href="#overview">总体策略</a>
+    <a href="#auth">登录注册</a>
+    <a href="#market">商品首页</a>
+    <a href="#detail">商品详情</a>
+    <a href="#publish">发布商品</a>
+    <a href="#cart">购物车</a>
+    <a href="#user">个人中心</a>
+    <a href="#admin">管理员首页</a>
+    <a href="#stats">统计页</a>
+    <a href="#priority">落地优先级</a>
+  </nav>
+
+  <main>
+    <section id="overview">
+      <div class="section-head">
+        <div>
+          <h2>总体优化策略</h2>
+          <p class="section-desc">优化方向不是做成互联网产品首页，而是做成“结构规范、模块清楚、答辩好讲”的 Java 大作业界面。核心方法是：保留表格和表单，增加统计卡片、功能卡片、信息分区和明确的主操作按钮。</p>
+        </div>
+      </div>
+      <div class="priority">
+        <div class="panel"><h3>一、强化系统完整性</h3><p class="section-desc">登录、用户端、管理员端都保持统一风格，让老师能看出这是一个完整系统，而不是多个页面简单拼接。</p></div>
+        <div class="panel"><h3>二、强化课程作业表达</h3><p class="section-desc">突出注册登录、商品发布、购买、审核、统计这些评分项，页面布局服务于答辩讲解。</p></div>
+        <div class="panel"><h3>三、减少花哨元素</h3><p class="section-desc">不使用 emoji，不使用过度动画和复杂视觉，只用稳重配色、卡片层次、规范排版提升质感。</p></div>
+      </div>
+    </section>
+
+    <section id="auth">
+      <div class="section-head"><h2>登录 / 注册页：课程系统入口</h2><p class="section-desc">登录页建议采用左右分栏：左侧介绍系统主题和课程设计定位，右侧是标准登录表单。这样既美观，又符合课程作业的正式感。</p></div>
+      <div class="frame"><div class="app split">
+        <div class="brand">
+          <div>
+            <div class="brand-mark">JAVA</div>
+            <h3>校园二手教材与物品交易平台</h3>
+            <p>本系统面向校园闲置资源循环利用场景，实现普通用户与管理员两类角色，包含注册登录、商品浏览、发布、购买、审核、用户管理和数据统计等功能。</p>
+          </div>
+          <div>JavaFX 图形界面 · SQLite 本地数据存储 · MVC 分层结构</div>
+        </div>
+        <div class="panel login-card">
+          <div><div class="title">用户登录</div><div class="sub">请输入账号信息，系统会根据角色进入对应页面</div></div>
+          <div class="form-group"><span class="label">用户名</span><input class="field" value="demo_user" /></div>
+          <div class="form-group"><span class="label">密码</span><input class="field" type="password" value="user123" /></div>
+          <button class="btn primary">进入系统</button>
+          <button class="btn">注册普通用户</button>
+          <div class="badge active">演示提示：默认账号信息可放在底部说明中</div>
+        </div>
+      </div></div>
+    </section>
+
+    <section id="market">
+      <div class="section-head"><h2>商品首页：突出浏览、搜索、发布入口</h2><p class="section-desc">首页是普通用户功能评分的核心页面。建议顶部增加数据概览，中间做规范搜索区，底部保留商品表格，体现功能完整性。</p></div>
+      <div class="frame"><div class="app">
+        <div class="toolbar panel">
+          <div><div class="title">商品市场</div><div class="sub">当前用户：demo_user · 可浏览、搜索和购买校园二手物品</div></div>
+          <div class="btn-row"><button class="btn primary">发布商品</button><button class="btn">个人中心</button><button class="btn">购物车</button></div>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card accent"><div class="num">128</div><div class="label">平台商品</div></div>
+          <div class="stat-card"><div class="num">86</div><div class="label">正在出售</div></div>
+          <div class="stat-card"><div class="num">12</div><div class="label">今日新增</div></div>
+          <div class="stat-card"><div class="num">3</div><div class="label">购物车商品</div></div>
+        </div>
+        <div class="search"><input placeholder="输入商品名称、分类或描述关键字" value="高等数学"/><select><option>全部分类</option></select><select><option>最新发布</option></select><button class="btn primary">搜索</button><button class="btn ai">AI 搜索辅助</button></div>
+        <table><thead><tr><th>商品名称</th><th>分类</th><th>现价</th><th>成色</th><th>卖家</th><th>状态</th></tr></thead><tbody>
+          <tr><td>高等数学教材第七版</td><td>教材</td><td class="price">¥28.00</td><td><span class="stars">★★★★☆</span></td><td>demo_user</td><td><span class="badge active">在售</span></td></tr>
+          <tr><td>蓝牙耳机 95新</td><td>数码</td><td class="price">¥59.00</td><td><span class="stars">★★★★★</span></td><td>demo_buyer</td><td><span class="badge pending">待审核</span></td></tr>
+          <tr><td>宿舍收纳盒三件套</td><td>生活用品</td><td class="price">¥15.00</td><td><span class="stars">★★★☆☆</span></td><td>student01</td><td><span class="badge active">在售</span></td></tr>
+        </tbody></table>
+      </div></div>
+    </section>
+
+    <section id="detail">
+      <div class="section-head"><h2>商品详情：突出交易信息</h2><p class="section-desc">详情页重点是让用户清楚看到价格、成色、卖家、状态和购买按钮。视觉上保持课程项目的清晰朴素，同时让核心信息更醒目。</p></div>
+      <div class="frame"><div class="app detail-layout">
+        <div class="panel">
+          <h3 class="product-title">高等数学教材第七版</h3>
+          <span class="badge active">在售</span>
+          <div class="big-price">¥28.00</div>
+          <div class="meta-grid">
+            <div class="meta"><small>分类</small>教材</div><div class="meta"><small>成色</small><span class="stars">★★★★☆</span></div>
+            <div class="meta"><small>卖家</small>demo_user</div><div class="meta"><small>发布时间</small>2026-06-04</div>
+          </div>
+          <h3>商品描述</h3><p class="section-desc">教材保存完好，无缺页，适合下学期高等数学课程使用。书内有少量铅笔笔记，方便复习重点。</p>
+          <div class="bottom-bar"><div><b>交易操作</b><div class="sub">购买成功后系统生成订单，并将商品状态改为已售出</div></div><div class="btn-row"><button class="btn primary">立即购买</button><button class="btn">加入购物车</button><button class="btn ai">AI 购买建议</button></div></div>
+        </div>
+        <div class="panel soft"><div class="photo">商品图片预览区</div><h3>商品评价</h3><div class="review"><span class="stars">★★★★★</span><p class="sub">书籍保存较好，交易过程顺利。</p></div><div class="review"><span class="stars">★★★★☆</span><p class="sub">价格合理，适合课程学习使用。</p></div></div>
+      </div></div>
+    </section>
+
+    <section id="publish">
+      <div class="section-head"><h2>发布商品：表单分区，降低填写压力</h2><p class="section-desc">发布页面建议分成“基本信息、商品描述、商品图片”三块，老师演示时可以逐步讲解。</p></div>
+      <div class="frame"><div class="app form-layout">
+        <div class="panel"><div class="title">发布商品</div><p class="sub">填写商品信息后提交管理员审核</p><h3>基本信息</h3><div class="grid-form"><div class="form-group"><span class="label">商品名称</span><input class="field" placeholder="例如：高等数学教材"/></div><div class="form-group"><span class="label">分类</span><select><option>教材</option></select></div><div class="form-group"><span class="label">原价</span><input class="field" placeholder="68.00"/></div><div class="form-group"><span class="label">现价</span><input class="field" placeholder="28.00"/></div></div><h3>商品描述</h3><textarea rows="6" style="width:100%" placeholder="描述新旧程度、是否有瑕疵、交易方式等信息"></textarea><div class="btn-row" style="margin-top:14px"><button class="btn ai">AI 优化描述</button><button class="btn primary">提交审核</button><button class="btn">返回首页</button></div></div>
+        <div class="panel soft"><h3>商品图片</h3><div class="image-drop"><div><b>添加商品图片</b><p>建议上传 1 至 3 张图片，展示封面、细节和瑕疵位置。</p></div></div><button class="btn primary" style="width:100%;margin-top:14px">选择图片</button></div>
+      </div></div>
+    </section>
+
+    <section id="cart">
+      <div class="section-head"><h2>购物车：强化批量结算流程</h2><p class="section-desc">购物车页面增加底部结算栏，始终显示已选数量和合计金额，更符合真实交易流程。</p></div>
+      <div class="frame"><div class="app">
+        <div class="toolbar panel"><div><div class="title">我的购物车</div><div class="sub">选择商品后可批量结算</div></div><div class="btn-row"><button class="btn">刷新</button><button class="btn danger">移除所选</button></div></div>
+        <table><thead><tr><th>选择</th><th>商品名称</th><th>分类</th><th>现价</th><th>卖家</th><th>状态</th></tr></thead><tbody><tr><td>已选</td><td>高等数学教材</td><td>教材</td><td class="price">¥28.00</td><td>demo_user</td><td><span class="badge active">在售</span></td></tr><tr><td>已选</td><td>宿舍收纳盒</td><td>生活用品</td><td class="price">¥15.00</td><td>student01</td><td><span class="badge active">在售</span></td></tr></tbody></table>
+        <div class="bottom-bar"><div><b>已选 2 件</b><div class="sub">合计金额 <span class="price">¥43.00</span></div></div><div class="btn-row"><button class="btn primary">结算所选</button><button class="btn">全部结算</button></div></div>
+      </div></div>
+    </section>
+
+    <section id="user">
+      <div class="section-head"><h2>个人中心：用户信息与交易记录分区</h2><p class="section-desc">个人中心建议在标签页上方增加用户信息卡和数据摘要，便于展示“我的发布、我的购买、我的卖出”等评分功能。</p></div>
+      <div class="frame"><div class="app">
+        <div class="panel user-card"><div class="avatar">用</div><div style="flex:1"><div class="title">demo_user</div><div class="sub">普通用户 · 联系方式 138****8888</div></div><div class="stat-card"><div class="num">5</div><div class="label">发布</div></div><div class="stat-card"><div class="num">2</div><div class="label">购买</div></div><div class="stat-card"><div class="num">1</div><div class="label">卖出</div></div></div>
+        <div class="tabs-mock"><div class="tab on">我的商品</div><div class="tab">购买订单</div><div class="tab">卖出订单</div><div class="tab">我的评价</div><div class="tab">收到评价</div></div>
+        <table><thead><tr><th>商品名称</th><th>分类</th><th>现价</th><th>状态</th></tr></thead><tbody><tr><td>蓝牙耳机</td><td>数码</td><td class="price">¥59.00</td><td><span class="badge pending">待审核</span></td></tr><tr><td>旧书架</td><td>生活用品</td><td class="price">¥20.00</td><td><span class="badge off">已下架</span></td></tr></tbody></table>
+      </div></div>
+    </section>
+
+    <section id="admin">
+      <div class="section-head"><h2>管理员首页：课程作业后台仪表盘</h2><p class="section-desc">管理员首页不要只是几个按钮，建议改为“统计概览 + 功能入口”。这能直接对应评分标准里的商品审核、用户管理和数据统计。</p></div>
+      <div class="frame"><div class="app">
+        <div class="toolbar panel"><div><div class="title">管理员后台</div><div class="sub">当前管理员：admin · 管理商品审核、用户账号、统计数据和操作日志</div></div><button class="btn ai">AI 管理分析</button></div>
+        <div class="stat-grid"><div class="stat-card accent"><div class="num">32</div><div class="label">注册用户</div></div><div class="stat-card"><div class="num">128</div><div class="label">商品总数</div></div><div class="stat-card"><div class="num">7</div><div class="label">待审核</div></div><div class="stat-card"><div class="num">12</div><div class="label">今日成交</div></div></div>
+        <div class="nav-grid"><div class="feature primary"><div class="icon">审</div><b>商品审核</b><span>查看待审核商品，支持通过或删除违规商品。</span></div><div class="feature"><div class="icon">用</div><b>用户管理</b><span>查看用户列表，对违规用户进行封禁或解封。</span></div><div class="feature"><div class="icon">统</div><b>平台统计</b><span>统计商品数量、用户数量和今日成交数据。</span></div><div class="feature"><div class="icon">志</div><b>操作日志</b><span>记录管理员审核、封禁等操作。</span></div><div class="feature"><div class="icon">评</div><b>评价管理</b><span>查看平台交易评价和评分信息。</span></div><div class="feature"><div class="icon">退</div><b>退出登录</b><span>结束管理员会话并返回登录页面。</span></div></div>
+      </div></div>
+    </section>
+
+    <section id="stats">
+      <div class="section-head"><h2>统计页：数字卡片与图表分区</h2><p class="section-desc">统计页应体现“数据统计”评分项。建议用大号数字卡片展示关键指标，再展示饼图、柱状图和折线图。</p></div>
+      <div class="frame"><div class="app">
+        <div class="toolbar panel"><div><div class="title">平台统计</div><div class="sub">展示平台商品、用户和成交数据</div></div><div class="btn-row"><button class="btn primary">刷新统计</button><button class="btn ai">AI 图表解读</button></div></div>
+        <div class="stat-grid"><div class="stat-card accent"><div class="num">128</div><div class="label">总商品数</div></div><div class="stat-card"><div class="num">32</div><div class="label">总用户数</div></div><div class="stat-card"><div class="num">12</div><div class="label">今日成交</div></div><div class="stat-card"><div class="num">¥856</div><div class="label">成交金额</div></div></div>
+        <div class="chart-grid"><div class="chart pie"><b>商品分类占比</b></div><div class="chart"><b>商品状态分布</b></div><div class="chart"><b>最近成交趋势</b></div></div>
+        <div class="note" style="margin-top:14px">AI 摘要示例：教材类商品占比较高，说明系统符合校园二手教材交易主题；今日成交量稳定，平台运行状态良好。</div>
+      </div></div>
+    </section>
+
+    <section id="priority">
+      <div class="section-head"><h2>落地优先级</h2><p class="section-desc">建议按答辩展示价值排序，不要一次性大改所有页面。</p></div>
+      <div class="priority">
+        <div class="panel"><h3>第一阶段：入口与后台</h3><p class="section-desc">登录/注册双栏、首页统计卡片、管理员首页仪表盘。这三处最影响第一印象。</p></div>
+        <div class="panel"><h3>第二阶段：交易主流程</h3><p class="section-desc">商品详情、发布商品、购物车结算栏。对应普通用户功能评分中的发布和交易流程。</p></div>
+        <div class="panel"><h3>第三阶段：完善展示</h3><p class="section-desc">个人中心、统计页、评价和日志样式。用于提升完整度和答辩展示质量。</p></div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
