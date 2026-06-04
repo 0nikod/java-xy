@@ -15,8 +15,8 @@ public class CartDao {
 
 	public int insert(CartItem cartItem) {
 		String sql = "INSERT INTO cart_items (user_id, goods_id, created_at) VALUES (?, ?, ?)";
-		try (Connection connection = DBUtil.getConnection(); PreparedStatement ps = connection.prepareStatement(sql,
-				PreparedStatement.RETURN_GENERATED_KEYS)) {
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setLong(1, cartItem.getUserId());
 			ps.setLong(2, cartItem.getGoodsId());
 			ps.setString(3, cartItem.getCreatedAt());
@@ -74,8 +74,9 @@ public class CartDao {
 	}
 
 	public int deleteByIdAndUser(Long cartItemId, Long userId) {
-		try (Connection connection = DBUtil.getConnection(); PreparedStatement ps = connection
-				.prepareStatement("DELETE FROM cart_items WHERE id = ? AND user_id = ?")) {
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement ps = connection
+						.prepareStatement("DELETE FROM cart_items WHERE id = ? AND user_id = ?")) {
 			ps.setLong(1, cartItemId);
 			ps.setLong(2, userId);
 			return ps.executeUpdate();

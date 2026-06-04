@@ -119,11 +119,11 @@ public class AdminStatsController {
 		// 汇总卡片、AI 文案和三类图表共用同一批统计数据，确保口径一致。
 		StatsSummary summary = statisticsService.loadSummary();
 		if (statsCardLabel != null) {
-			statsCardLabel
-					.setText(String.format("用户总数：%d | 正常：%d | 封禁：%d | 商品总数：%d | 在售：%d | 待审核：%d | 已成交订单：%d | 今日成交量：%d | 成交额：%.2f 元",
-							summary.getTotalUsers(), summary.getNormalUsers(), summary.getBannedUsers(),
-							summary.getTotalGoods(), summary.getOnSaleGoods(), summary.getPendingGoods(),
-							summary.getTotalOrders(), summary.getTodayOrders(), summary.getTotalRevenue()));
+			statsCardLabel.setText(String.format(
+					"用户总数：%d | 正常：%d | 封禁：%d | 商品总数：%d | 在售：%d | 待审核：%d | 已成交订单：%d | 今日成交量：%d | 成交额：%.2f 元",
+					summary.getTotalUsers(), summary.getNormalUsers(), summary.getBannedUsers(),
+					summary.getTotalGoods(), summary.getOnSaleGoods(), summary.getPendingGoods(),
+					summary.getTotalOrders(), summary.getTodayOrders(), summary.getTotalRevenue()));
 		}
 		if (aiSummaryLabel != null) {
 			aiSummaryLabel.setText("");

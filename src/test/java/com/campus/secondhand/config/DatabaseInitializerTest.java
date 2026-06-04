@@ -46,7 +46,8 @@ public class DatabaseInitializerTest {
 			}
 			try (Connection connection = DBUtil.getConnection();
 					Statement statement = connection.createStatement();
-					ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS total FROM goods WHERE status = 'PENDING'")) {
+					ResultSet resultSet = statement
+							.executeQuery("SELECT COUNT(*) AS total FROM goods WHERE status = 'PENDING'")) {
 				Assert.assertTrue(resultSet.next());
 				Assert.assertTrue(resultSet.getInt("total") >= 1);
 			}

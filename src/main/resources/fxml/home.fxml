@@ -13,99 +13,127 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane fx:id="rootPane" styleClass="page-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.UserHomeController">
-    
-    <!-- Sidebar Navigation -->
-    <left>
-        <VBox styleClass="sidebar" prefWidth="240.0" spacing="10.0">
-            <padding>
-                <Insets top="24.0" right="0.0" bottom="24.0" left="0.0" />
-            </padding>
-            <VBox spacing="4.0">
-                <padding>
-                    <Insets right="24.0" left="24.0" bottom="24.0" />
-                </padding>
-                <Label text="Campus" style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: 800;" />
-                <Label text="Secondhand" style="-fx-text-fill: #6366F1; -fx-font-size: 24px; -fx-font-weight: 800;" />
-            </VBox>
-            
-            <VBox spacing="8.0">
-                <padding>
-                    <Insets right="24.0" left="24.0" bottom="16.0" />
-                </padding>
-                <Label fx:id="currentUserLabel" styleClass="muted-text" text="Welcome, User" wrapText="true" />
-            </VBox>
-            
-            <!-- Navigation Links -->
-            <Button fx:id="navMarketplace" text="Marketplace" onAction="#handleMarketplace" styleClass="sidebar-button, active" prefWidth="240.0" />
-            <Button fx:id="navPublished" text="My Published" onAction="#handleMyPublished" styleClass="sidebar-button" prefWidth="240.0" />
-            <Button fx:id="navCart" text="My Cart" onAction="#handleCart" styleClass="sidebar-button" prefWidth="240.0" />
-            <Button fx:id="navUserCenter" text="User Center" onAction="#handleUserCenter" styleClass="sidebar-button" prefWidth="240.0" />
-            
-            <Region VBox.vgrow="ALWAYS" />
-            
-            <Button text="Sign Out" onAction="#handleLogout" styleClass="sidebar-button" prefWidth="240.0" />
-        </VBox>
-    </left>
-    
-    <!-- Main Content Area -->
-    <center>
-        <VBox fx:id="marketplaceView" spacing="20.0" styleClass="plain-panel">
-            <BorderPane.margin>
-                <Insets left="24.0" />
-            </BorderPane.margin>
-            
-            <!-- Header & Search -->
-            <VBox spacing="16.0">
-                <HBox alignment="CENTER_LEFT" spacing="16.0">
-                    <Label text="Marketplace" styleClass="page-title" />
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Button text="Sell an Item" onAction="#handlePublish" styleClass="primary-button" />
-                </HBox>
-                
-                <HBox alignment="BOTTOM_LEFT" spacing="12.0">
-                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
-                        <Label text="Search" styleClass="field-label" />
-                        <TextField fx:id="keywordField" promptText="Search items, descriptions, sellers..." prefWidth="300.0" />
-                    </VBox>
-                    <VBox spacing="6.0">
-                        <Label text="Category" styleClass="field-label" />
-                        <ChoiceBox fx:id="categoryBox" prefWidth="140.0" />
-                    </VBox>
-                    <VBox spacing="6.0">
-                        <Label text="Sort By" styleClass="field-label" />
-                        <ChoiceBox fx:id="sortBox" prefWidth="140.0" />
-                    </VBox>
-                    <Button text="Filter" onAction="#handleSearch" styleClass="secondary-button" />
-                    <Button fx:id="aiSearchAssistButton" text="AI Assist" onAction="#handleAiSearchAssist" styleClass="secondary-button" />
-                    <Button text="Clear" onAction="#handleReset" styleClass="secondary-button" />
-                </HBox>
-                
-                <Label fx:id="messageLabel" wrapText="true" styleClass="status-text" />
-            </VBox>
-            
-            <!-- Table Area -->
-            <VBox spacing="12.0" VBox.vgrow="ALWAYS">
-                <HBox alignment="CENTER_LEFT">
-                    <Label text="Available Items" styleClass="section-label" />
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Button text="View Details" onAction="#handleDetail" styleClass="secondary-button" />
-                </HBox>
-                
-                <TableView fx:id="goodsTable" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="titleColumn" text="Title" prefWidth="200.0" />
-                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="90.0" />
-                        <TableColumn fx:id="categoryColumn" text="Category" prefWidth="110.0" />
-                        <TableColumn fx:id="conditionColumn" text="Condition" prefWidth="90.0" />
-                        <TableColumn fx:id="imageColumn" text="Image" prefWidth="120.0" />
-                        <TableColumn fx:id="sellerColumn" text="Seller" prefWidth="120.0" />
-                        <TableColumn fx:id="createdAtColumn" text="Posted At" prefWidth="140.0" />
-                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="90.0" />
-                    </columns>
-                </TableView>
-            </VBox>
-        </VBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.UserHomeController">
+
+	<!-- Sidebar Navigation -->
+	<left>
+		<VBox styleClass="sidebar" prefWidth="240.0" spacing="10.0">
+			<padding>
+				<Insets top="24.0" right="0.0" bottom="24.0" left="0.0" />
+			</padding>
+			<VBox spacing="4.0">
+				<padding>
+					<Insets right="24.0" left="24.0" bottom="24.0" />
+				</padding>
+				<Label text="Campus"
+					style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: 800;" />
+				<Label text="Secondhand"
+					style="-fx-text-fill: #6366F1; -fx-font-size: 24px; -fx-font-weight: 800;" />
+			</VBox>
+
+			<VBox spacing="8.0">
+				<padding>
+					<Insets right="24.0" left="24.0" bottom="16.0" />
+				</padding>
+				<Label fx:id="currentUserLabel" styleClass="muted-text"
+					text="Welcome, User" wrapText="true" />
+			</VBox>
+
+			<!-- Navigation Links -->
+			<Button fx:id="navMarketplace" text="Marketplace"
+				onAction="#handleMarketplace" styleClass="sidebar-button, active"
+				prefWidth="240.0" />
+			<Button fx:id="navPublished" text="My Published"
+				onAction="#handleMyPublished" styleClass="sidebar-button"
+				prefWidth="240.0" />
+			<Button fx:id="navCart" text="My Cart" onAction="#handleCart"
+				styleClass="sidebar-button" prefWidth="240.0" />
+			<Button fx:id="navUserCenter" text="User Center"
+				onAction="#handleUserCenter" styleClass="sidebar-button"
+				prefWidth="240.0" />
+
+			<Region VBox.vgrow="ALWAYS" />
+
+			<Button text="Sign Out" onAction="#handleLogout"
+				styleClass="sidebar-button" prefWidth="240.0" />
+		</VBox>
+	</left>
+
+	<!-- Main Content Area -->
+	<center>
+		<VBox fx:id="marketplaceView" spacing="20.0"
+			styleClass="plain-panel">
+			<BorderPane.margin>
+				<Insets left="24.0" />
+			</BorderPane.margin>
+
+			<!-- Header & Search -->
+			<VBox spacing="16.0">
+				<HBox alignment="CENTER_LEFT" spacing="16.0">
+					<Label text="Marketplace" styleClass="page-title" />
+					<Region HBox.hgrow="ALWAYS" />
+					<Button text="Sell an Item" onAction="#handlePublish"
+						styleClass="primary-button" />
+				</HBox>
+
+				<HBox alignment="BOTTOM_LEFT" spacing="12.0">
+					<VBox spacing="6.0" HBox.hgrow="ALWAYS">
+						<Label text="Search" styleClass="field-label" />
+						<TextField fx:id="keywordField"
+							promptText="Search items, descriptions, sellers..."
+							prefWidth="300.0" />
+					</VBox>
+					<VBox spacing="6.0">
+						<Label text="Category" styleClass="field-label" />
+						<ChoiceBox fx:id="categoryBox" prefWidth="140.0" />
+					</VBox>
+					<VBox spacing="6.0">
+						<Label text="Sort By" styleClass="field-label" />
+						<ChoiceBox fx:id="sortBox" prefWidth="140.0" />
+					</VBox>
+					<Button text="Filter" onAction="#handleSearch"
+						styleClass="secondary-button" />
+					<Button fx:id="aiSearchAssistButton" text="AI Assist"
+						onAction="#handleAiSearchAssist" styleClass="secondary-button" />
+					<Button text="Clear" onAction="#handleReset"
+						styleClass="secondary-button" />
+				</HBox>
+
+				<Label fx:id="messageLabel" wrapText="true"
+					styleClass="status-text" />
+			</VBox>
+
+			<!-- Table Area -->
+			<VBox spacing="12.0" VBox.vgrow="ALWAYS">
+				<HBox alignment="CENTER_LEFT">
+					<Label text="Available Items" styleClass="section-label" />
+					<Region HBox.hgrow="ALWAYS" />
+					<Button text="View Details" onAction="#handleDetail"
+						styleClass="secondary-button" />
+				</HBox>
+
+				<TableView fx:id="goodsTable" VBox.vgrow="ALWAYS">
+					<columns>
+						<TableColumn fx:id="titleColumn" text="Title"
+							prefWidth="200.0" />
+						<TableColumn fx:id="priceColumn" text="Price"
+							prefWidth="90.0" />
+						<TableColumn fx:id="categoryColumn" text="Category"
+							prefWidth="110.0" />
+						<TableColumn fx:id="conditionColumn" text="Condition"
+							prefWidth="90.0" />
+						<TableColumn fx:id="imageColumn" text="Image"
+							prefWidth="120.0" />
+						<TableColumn fx:id="sellerColumn" text="Seller"
+							prefWidth="120.0" />
+						<TableColumn fx:id="createdAtColumn" text="Posted At"
+							prefWidth="140.0" />
+						<TableColumn fx:id="statusColumn" text="Status"
+							prefWidth="90.0" />
+					</columns>
+				</TableView>
+			</VBox>
+		</VBox>
+	</center>
 </BorderPane>

@@ -182,7 +182,8 @@ public class GoodsDetailController {
 			categoryLabel.setText("分类：" + latest.getCategory());
 		}
 		if (priceLabel != null) {
-			priceLabel.setText(String.format("原价：¥%.2f  现价：¥%.2f", latest.getOriginalPrice(), latest.getCurrentPrice()));
+			priceLabel
+					.setText(String.format("原价：¥%.2f  现价：¥%.2f", latest.getOriginalPrice(), latest.getCurrentPrice()));
 			priceLabel.setStyle("-fx-text-fill: red;");
 		}
 		if (conditionLabel != null) {

@@ -88,7 +88,8 @@ public class StatisticsService {
 	private String buildStatsContext() {
 		// 将关键指标拼成一段自然语言，供 AI 或 Mock 摘要使用。
 		StatsSummary summary = loadSummary();
-		return String.format("当前共有 %d 位用户，其中正常 %d 位、封禁 %d 位；平台累计 %d 件商品，在售 %d 件、待审核 %d 件、已售 %d 件；累计订单 %d 笔，今日成交 %d 笔，成交额 %.2f 元。",
+		return String.format(
+				"当前共有 %d 位用户，其中正常 %d 位、封禁 %d 位；平台累计 %d 件商品，在售 %d 件、待审核 %d 件、已售 %d 件；累计订单 %d 笔，今日成交 %d 笔，成交额 %.2f 元。",
 				summary.getTotalUsers(), summary.getNormalUsers(), summary.getBannedUsers(), summary.getTotalGoods(),
 				summary.getOnSaleGoods(), summary.getPendingGoods(), summary.getSoldGoods(), summary.getTotalOrders(),
 				summary.getTodayOrders(), summary.getTotalRevenue());

@@ -11,36 +11,43 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="auth-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.LoginController">
-    <center>
-        <VBox alignment="CENTER" maxWidth="480.0" spacing="24.0" styleClass="hero-panel">
-            <padding>
-                <Insets top="48.0" right="48.0" bottom="48.0" left="48.0" />
-            </padding>
-            
-            <VBox alignment="CENTER" spacing="8.0">
-                <Label text="Welcome Back" styleClass="title-text" />
-                <Label text="Sign in to Campus Secondhand Platform" styleClass="subtitle-text" />
-            </VBox>
-            
-            <VBox spacing="16.0" prefWidth="380.0">
-                <VBox spacing="8.0">
-                    <Label text="Username" styleClass="field-label" />
-                    <TextField fx:id="usernameField" promptText="Enter your username" prefHeight="42.0" />
-                </VBox>
-                <VBox spacing="8.0">
-                    <Label text="Password" styleClass="field-label" />
-                    <PasswordField fx:id="passwordField" promptText="Enter your password" prefHeight="42.0" />
-                </VBox>
-            </VBox>
-            
-            <VBox spacing="12.0" prefWidth="380.0">
-                <Button text="Sign In" onAction="#handleLogin" styleClass="primary-button" prefWidth="380.0" prefHeight="46.0" />
-                <Button text="Create an account" onAction="#handleRegister" styleClass="secondary-button" prefWidth="380.0" prefHeight="46.0" />
-            </VBox>
-            
-            <Label fx:id="hintLabel" wrapText="true" maxWidth="380.0" alignment="CENTER" />
-        </VBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.LoginController">
+	<center>
+		<VBox alignment="CENTER" maxWidth="480.0" spacing="24.0"
+			styleClass="hero-panel">
+			<padding>
+				<Insets top="48.0" right="48.0" bottom="48.0" left="48.0" />
+			</padding>
+
+			<VBox alignment="CENTER" spacing="8.0">
+				<Label text="Welcome Back" styleClass="title-text" />
+				<Label text="Sign in to Campus Secondhand Platform"
+					styleClass="subtitle-text" />
+			</VBox>
+
+			<VBox spacing="16.0" prefWidth="380.0">
+				<VBox spacing="8.0">
+					<Label text="Username" styleClass="field-label" />
+					<TextField fx:id="usernameField"
+						promptText="Enter your username" prefHeight="42.0" />
+				</VBox>
+				<VBox spacing="8.0">
+					<Label text="Password" styleClass="field-label" />
+					<PasswordField fx:id="passwordField"
+						promptText="Enter your password" prefHeight="42.0" />
+				</VBox>
+			</VBox>
+
+			<VBox spacing="12.0" prefWidth="380.0">
+				<Button text="Sign In" onAction="#handleLogin"
+					styleClass="primary-button" prefWidth="380.0" prefHeight="46.0" />
+				<Button text="Create an account" onAction="#handleRegister"
+					styleClass="secondary-button" prefWidth="380.0" prefHeight="46.0" />
+			</VBox>
+
+			<Label fx:id="hintLabel" wrapText="true" maxWidth="380.0"
+				alignment="CENTER" />
+		</VBox>
+	</center>
 </BorderPane>

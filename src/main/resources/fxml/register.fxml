@@ -10,40 +10,48 @@
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane styleClass="auth-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.RegisterController">
-    <center>
-        <VBox alignment="CENTER" maxWidth="480.0" spacing="24.0" styleClass="hero-panel">
-            <padding>
-                <Insets top="48.0" right="48.0" bottom="48.0" left="48.0" />
-            </padding>
-            
-            <VBox alignment="CENTER" spacing="8.0">
-                <Label text="Create an Account" styleClass="title-text" />
-                <Label text="Join Campus Secondhand Platform today" styleClass="subtitle-text" />
-            </VBox>
-            
-            <VBox spacing="16.0" prefWidth="380.0">
-                <VBox spacing="8.0">
-                    <Label text="Username" styleClass="field-label" />
-                    <TextField fx:id="usernameField" promptText="Choose a username" prefHeight="42.0" />
-                </VBox>
-                <VBox spacing="8.0">
-                    <Label text="Password" styleClass="field-label" />
-                    <PasswordField fx:id="passwordField" promptText="Create a secure password" prefHeight="42.0" />
-                </VBox>
-                <VBox spacing="8.0">
-                    <Label text="Contact Details" styleClass="field-label" />
-                    <TextField fx:id="phoneField" promptText="Phone number or campus ID" prefHeight="42.0" />
-                </VBox>
-            </VBox>
-            
-            <VBox spacing="12.0" prefWidth="380.0">
-                <Button text="Register Account" onAction="#handleRegister" styleClass="primary-button" prefWidth="380.0" prefHeight="46.0" />
-                <Button text="Back to Sign In" onAction="#handleBackToLogin" styleClass="secondary-button" prefWidth="380.0" prefHeight="46.0" />
-            </VBox>
-            
-            <Label fx:id="hintLabel" wrapText="true" maxWidth="380.0" alignment="CENTER" />
-        </VBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.RegisterController">
+	<center>
+		<VBox alignment="CENTER" maxWidth="480.0" spacing="24.0"
+			styleClass="hero-panel">
+			<padding>
+				<Insets top="48.0" right="48.0" bottom="48.0" left="48.0" />
+			</padding>
+
+			<VBox alignment="CENTER" spacing="8.0">
+				<Label text="Create an Account" styleClass="title-text" />
+				<Label text="Join Campus Secondhand Platform today"
+					styleClass="subtitle-text" />
+			</VBox>
+
+			<VBox spacing="16.0" prefWidth="380.0">
+				<VBox spacing="8.0">
+					<Label text="Username" styleClass="field-label" />
+					<TextField fx:id="usernameField"
+						promptText="Choose a username" prefHeight="42.0" />
+				</VBox>
+				<VBox spacing="8.0">
+					<Label text="Password" styleClass="field-label" />
+					<PasswordField fx:id="passwordField"
+						promptText="Create a secure password" prefHeight="42.0" />
+				</VBox>
+				<VBox spacing="8.0">
+					<Label text="Contact Details" styleClass="field-label" />
+					<TextField fx:id="phoneField"
+						promptText="Phone number or campus ID" prefHeight="42.0" />
+				</VBox>
+			</VBox>
+
+			<VBox spacing="12.0" prefWidth="380.0">
+				<Button text="Register Account" onAction="#handleRegister"
+					styleClass="primary-button" prefWidth="380.0" prefHeight="46.0" />
+				<Button text="Back to Sign In" onAction="#handleBackToLogin"
+					styleClass="secondary-button" prefWidth="380.0" prefHeight="46.0" />
+			</VBox>
+
+			<Label fx:id="hintLabel" wrapText="true" maxWidth="380.0"
+				alignment="CENTER" />
+		</VBox>
+	</center>
 </BorderPane>

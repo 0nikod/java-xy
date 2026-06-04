@@ -14,64 +14,84 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.AdminGoodsReviewController">
-    
-    <top>
-        <VBox spacing="16.0">
-            <padding>
-                <Insets bottom="24.0" />
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Button text="← Dashboard" onAction="#handleBack" styleClass="secondary-button" />
-                <Label text="Item Moderation" styleClass="page-title" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Label fx:id="currentUserLabel" styleClass="muted-text" />
-            </HBox>
-            <HBox styleClass="toolbar-panel">
-                <Label fx:id="detailLabel" wrapText="true" styleClass="status-text" />
-            </HBox>
-        </VBox>
-    </top>
-    
-    <center>
-        <HBox spacing="24.0">
-            <!-- Left Column: Pending Table -->
-            <VBox spacing="16.0" HBox.hgrow="ALWAYS" styleClass="plain-panel">
-                <Label text="Pending Items" styleClass="section-label" />
-                <TableView fx:id="pendingTable" VBox.vgrow="ALWAYS">
-                    <columns>
-                        <TableColumn fx:id="titleColumn" text="Item Name" prefWidth="240.0" />
-                        <TableColumn fx:id="sellerColumn" text="Seller" prefWidth="140.0" />
-                        <TableColumn fx:id="categoryColumn" text="Category" prefWidth="120.0" />
-                        <TableColumn fx:id="priceColumn" text="Price" prefWidth="100.0" />
-                        <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0" />
-                    </columns>
-                </TableView>
-            </VBox>
-            
-            <!-- Right Column: Moderation Actions -->
-            <VBox spacing="20.0" prefWidth="380.0" styleClass="plain-panel">
-                <VBox spacing="4.0">
-                    <Label text="Review &amp; Action" styleClass="section-label" />
-                    <Label text="Select an item from the list to review its details and photos." styleClass="subtitle-text" wrapText="true" />
-                </VBox>
-                
-                <VBox spacing="12.0" styleClass="hero-panel" style="-fx-padding: 16;">
-                    <ImageView fx:id="imagePreviewView" fitWidth="300.0" fitHeight="200.0" preserveRatio="true" styleClass="image-preview" />
-                    <ListView fx:id="imageListView" prefHeight="90.0" orientation="HORIZONTAL" styleClass="list-view" />
-                </VBox>
-                
-                <VBox spacing="8.0" VBox.vgrow="ALWAYS">
-                    <Label text="Rejection Reason (Required for Deletion)" styleClass="field-label" />
-                    <TextArea fx:id="deleteReasonArea" prefRowCount="4" wrapText="true" promptText="Explain why this item violates platform rules..." styleClass="text-area" />
-                </VBox>
-                
-                <HBox spacing="12.0">
-                    <Button text="Delete Violation" onAction="#handleDelete" styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                    <Button text="Approve Item" onAction="#handleApprove" styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                </HBox>
-            </VBox>
-        </HBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.AdminGoodsReviewController">
+
+	<top>
+		<VBox spacing="16.0">
+			<padding>
+				<Insets bottom="24.0" />
+			</padding>
+			<HBox alignment="CENTER_LEFT" spacing="20.0">
+				<Button text="← Dashboard" onAction="#handleBack"
+					styleClass="secondary-button" />
+				<Label text="Item Moderation" styleClass="page-title" />
+				<Region HBox.hgrow="ALWAYS" />
+				<Label fx:id="currentUserLabel" styleClass="muted-text" />
+			</HBox>
+			<HBox styleClass="toolbar-panel">
+				<Label fx:id="detailLabel" wrapText="true"
+					styleClass="status-text" />
+			</HBox>
+		</VBox>
+	</top>
+
+	<center>
+		<HBox spacing="24.0">
+			<!-- Left Column: Pending Table -->
+			<VBox spacing="16.0" HBox.hgrow="ALWAYS"
+				styleClass="plain-panel">
+				<Label text="Pending Items" styleClass="section-label" />
+				<TableView fx:id="pendingTable" VBox.vgrow="ALWAYS">
+					<columns>
+						<TableColumn fx:id="titleColumn" text="Item Name"
+							prefWidth="240.0" />
+						<TableColumn fx:id="sellerColumn" text="Seller"
+							prefWidth="140.0" />
+						<TableColumn fx:id="categoryColumn" text="Category"
+							prefWidth="120.0" />
+						<TableColumn fx:id="priceColumn" text="Price"
+							prefWidth="100.0" />
+						<TableColumn fx:id="statusColumn" text="Status"
+							prefWidth="100.0" />
+					</columns>
+				</TableView>
+			</VBox>
+
+			<!-- Right Column: Moderation Actions -->
+			<VBox spacing="20.0" prefWidth="380.0" styleClass="plain-panel">
+				<VBox spacing="4.0">
+					<Label text="Review &amp; Action" styleClass="section-label" />
+					<Label
+						text="Select an item from the list to review its details and photos."
+						styleClass="subtitle-text" wrapText="true" />
+				</VBox>
+
+				<VBox spacing="12.0" styleClass="hero-panel"
+					style="-fx-padding: 16;">
+					<ImageView fx:id="imagePreviewView" fitWidth="300.0"
+						fitHeight="200.0" preserveRatio="true" styleClass="image-preview" />
+					<ListView fx:id="imageListView" prefHeight="90.0"
+						orientation="HORIZONTAL" styleClass="list-view" />
+				</VBox>
+
+				<VBox spacing="8.0" VBox.vgrow="ALWAYS">
+					<Label text="Rejection Reason (Required for Deletion)"
+						styleClass="field-label" />
+					<TextArea fx:id="deleteReasonArea" prefRowCount="4"
+						wrapText="true"
+						promptText="Explain why this item violates platform rules..."
+						styleClass="text-area" />
+				</VBox>
+
+				<HBox spacing="12.0">
+					<Button text="Delete Violation" onAction="#handleDelete"
+						styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+					<Button text="Approve Item" onAction="#handleApprove"
+						styleClass="primary-button" HBox.hgrow="ALWAYS"
+						maxWidth="Infinity" />
+				</HBox>
+			</VBox>
+		</HBox>
+	</center>
 </BorderPane>

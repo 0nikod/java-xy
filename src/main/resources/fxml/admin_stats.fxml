@@ -17,94 +17,134 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.AdminStatsController">
-    
-    <top>
-        <VBox spacing="16.0">
-            <padding>
-                <Insets bottom="24.0" />
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Button text="← Dashboard" onAction="#handleBack" styleClass="secondary-button" />
-                <VBox>
-                    <Label text="Platform Analytics" styleClass="page-title" />
-                    <Label fx:id="currentUserLabel" styleClass="muted-text" />
-                </VBox>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button fx:id="refreshButton" text="Refresh Analytics" onAction="#handleRefresh" styleClass="primary-button" />
-            </HBox>
-            
-            <VBox spacing="12.0" styleClass="hero-panel" style="-fx-padding: 24;">
-                <Label fx:id="statsCardLabel" wrapText="true" styleClass="section-label" />
-                <HBox spacing="10.0">
-                    <Label text="✨ AI Insights:" style="-fx-font-weight: bold; -fx-text-fill: #6366F1;" />
-                    <VBox spacing="4.0">
-                        <Label fx:id="aiSummaryLabel" wrapText="true" styleClass="subtitle-text" />
-                        <Label fx:id="chartInterpretationLabel" wrapText="true" styleClass="subtitle-text" />
-                    </VBox>
-                </HBox>
-            </VBox>
-        </VBox>
-    </top>
-    
-    <center>
-        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
-            <VBox spacing="20.0">
-                <padding>
-                    <Insets right="10.0" />
-                </padding>
-                
-                <HBox spacing="20.0">
-                    <VBox spacing="10.0" styleClass="plain-panel" HBox.hgrow="ALWAYS" alignment="CENTER">
-                        <Label text="Items by Category" styleClass="section-label" />
-                        <PieChart fx:id="categoryPieChart" prefHeight="260.0" />
-                    </VBox>
-                    <VBox spacing="10.0" styleClass="plain-panel" HBox.hgrow="ALWAYS" alignment="CENTER">
-                        <Label text="Item Status Distribution" styleClass="section-label" />
-                        <BarChart fx:id="statusBarChart" prefHeight="260.0" legendVisible="false">
-                            <xAxis><CategoryAxis label="Status" /></xAxis>
-                            <yAxis><NumberAxis label="Count" /></yAxis>
-                        </BarChart>
-                    </VBox>
-                    <VBox spacing="10.0" styleClass="plain-panel" HBox.hgrow="ALWAYS" alignment="CENTER">
-                        <Label text="Recent Sales Trend" styleClass="section-label" />
-                        <LineChart fx:id="trendLineChart" prefHeight="260.0" legendVisible="false">
-                            <xAxis><CategoryAxis label="Date" /></xAxis>
-                            <yAxis><NumberAxis label="Orders" /></yAxis>
-                        </LineChart>
-                    </VBox>
-                </HBox>
-                
-                <HBox spacing="20.0">
-                    <VBox spacing="10.0" styleClass="plain-panel" HBox.hgrow="ALWAYS" alignment="CENTER">
-                        <Label text="Sales Volume by Category" styleClass="section-label" />
-                        <BarChart fx:id="categorySoldCountBarChart" prefHeight="260.0" legendVisible="false">
-                            <xAxis><CategoryAxis label="Category" /></xAxis>
-                            <yAxis><NumberAxis label="Volume" /></yAxis>
-                        </BarChart>
-                    </VBox>
-                    <VBox spacing="10.0" styleClass="plain-panel" HBox.hgrow="ALWAYS" alignment="CENTER">
-                        <Label text="Revenue by Category" styleClass="section-label" />
-                        <BarChart fx:id="categoryRevenueBarChart" prefHeight="260.0" legendVisible="false">
-                            <xAxis><CategoryAxis label="Category" /></xAxis>
-                            <yAxis><NumberAxis label="Revenue" /></yAxis>
-                        </BarChart>
-                    </VBox>
-                </HBox>
-                
-                <VBox spacing="10.0" styleClass="plain-panel">
-                    <Label text="User Activity Overview" styleClass="section-label" />
-                    <TableView fx:id="detailTable" prefHeight="260.0">
-                        <columns>
-                            <TableColumn fx:id="detailUserColumn" text="Username" prefWidth="250.0" />
-                            <TableColumn fx:id="detailStatusColumn" text="Account Status" prefWidth="150.0" />
-                            <TableColumn fx:id="detailGoodsCountColumn" text="Items Listed" prefWidth="150.0" />
-                            <TableColumn fx:id="detailSoldCountColumn" text="Items Sold" prefWidth="150.0" />
-                        </columns>
-                    </TableView>
-                </VBox>
-            </VBox>
-        </ScrollPane>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.AdminStatsController">
+
+	<top>
+		<VBox spacing="16.0">
+			<padding>
+				<Insets bottom="24.0" />
+			</padding>
+			<HBox alignment="CENTER_LEFT" spacing="20.0">
+				<Button text="← Dashboard" onAction="#handleBack"
+					styleClass="secondary-button" />
+				<VBox>
+					<Label text="Platform Analytics" styleClass="page-title" />
+					<Label fx:id="currentUserLabel" styleClass="muted-text" />
+				</VBox>
+				<Region HBox.hgrow="ALWAYS" />
+				<Button fx:id="refreshButton" text="Refresh Analytics"
+					onAction="#handleRefresh" styleClass="primary-button" />
+			</HBox>
+
+			<VBox spacing="12.0" styleClass="hero-panel"
+				style="-fx-padding: 24;">
+				<Label fx:id="statsCardLabel" wrapText="true"
+					styleClass="section-label" />
+				<HBox spacing="10.0">
+					<Label text="✨ AI Insights:"
+						style="-fx-font-weight: bold; -fx-text-fill: #6366F1;" />
+					<VBox spacing="4.0">
+						<Label fx:id="aiSummaryLabel" wrapText="true"
+							styleClass="subtitle-text" />
+						<Label fx:id="chartInterpretationLabel" wrapText="true"
+							styleClass="subtitle-text" />
+					</VBox>
+				</HBox>
+			</VBox>
+		</VBox>
+	</top>
+
+	<center>
+		<ScrollPane fitToWidth="true"
+			style="-fx-background-color: transparent;">
+			<VBox spacing="20.0">
+				<padding>
+					<Insets right="10.0" />
+				</padding>
+
+				<HBox spacing="20.0">
+					<VBox spacing="10.0" styleClass="plain-panel"
+						HBox.hgrow="ALWAYS" alignment="CENTER">
+						<Label text="Items by Category" styleClass="section-label" />
+						<PieChart fx:id="categoryPieChart" prefHeight="260.0" />
+					</VBox>
+					<VBox spacing="10.0" styleClass="plain-panel"
+						HBox.hgrow="ALWAYS" alignment="CENTER">
+						<Label text="Item Status Distribution"
+							styleClass="section-label" />
+						<BarChart fx:id="statusBarChart" prefHeight="260.0"
+							legendVisible="false">
+							<xAxis>
+								<CategoryAxis label="Status" />
+							</xAxis>
+							<yAxis>
+								<NumberAxis label="Count" />
+							</yAxis>
+						</BarChart>
+					</VBox>
+					<VBox spacing="10.0" styleClass="plain-panel"
+						HBox.hgrow="ALWAYS" alignment="CENTER">
+						<Label text="Recent Sales Trend" styleClass="section-label" />
+						<LineChart fx:id="trendLineChart" prefHeight="260.0"
+							legendVisible="false">
+							<xAxis>
+								<CategoryAxis label="Date" />
+							</xAxis>
+							<yAxis>
+								<NumberAxis label="Orders" />
+							</yAxis>
+						</LineChart>
+					</VBox>
+				</HBox>
+
+				<HBox spacing="20.0">
+					<VBox spacing="10.0" styleClass="plain-panel"
+						HBox.hgrow="ALWAYS" alignment="CENTER">
+						<Label text="Sales Volume by Category"
+							styleClass="section-label" />
+						<BarChart fx:id="categorySoldCountBarChart"
+							prefHeight="260.0" legendVisible="false">
+							<xAxis>
+								<CategoryAxis label="Category" />
+							</xAxis>
+							<yAxis>
+								<NumberAxis label="Volume" />
+							</yAxis>
+						</BarChart>
+					</VBox>
+					<VBox spacing="10.0" styleClass="plain-panel"
+						HBox.hgrow="ALWAYS" alignment="CENTER">
+						<Label text="Revenue by Category" styleClass="section-label" />
+						<BarChart fx:id="categoryRevenueBarChart"
+							prefHeight="260.0" legendVisible="false">
+							<xAxis>
+								<CategoryAxis label="Category" />
+							</xAxis>
+							<yAxis>
+								<NumberAxis label="Revenue" />
+							</yAxis>
+						</BarChart>
+					</VBox>
+				</HBox>
+
+				<VBox spacing="10.0" styleClass="plain-panel">
+					<Label text="User Activity Overview"
+						styleClass="section-label" />
+					<TableView fx:id="detailTable" prefHeight="260.0">
+						<columns>
+							<TableColumn fx:id="detailUserColumn" text="Username"
+								prefWidth="250.0" />
+							<TableColumn fx:id="detailStatusColumn"
+								text="Account Status" prefWidth="150.0" />
+							<TableColumn fx:id="detailGoodsCountColumn"
+								text="Items Listed" prefWidth="150.0" />
+							<TableColumn fx:id="detailSoldCountColumn"
+								text="Items Sold" prefWidth="150.0" />
+						</columns>
+					</TableView>
+				</VBox>
+			</VBox>
+		</ScrollPane>
+	</center>
 </BorderPane>

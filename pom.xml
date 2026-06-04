@@ -161,10 +161,10 @@
                 <executions>
                     <execution>
                         <id>build-fat-jar</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>single</goal>
                         </goals>
+                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -175,10 +175,10 @@
                 <executions>
                     <execution>
                         <id>copy-fat-jar-to-dist</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <outputDirectory>${project.basedir}/dist</outputDirectory>
                             <resources>
@@ -194,10 +194,10 @@
                     </execution>
                     <execution>
                         <id>copy-runtime-data-to-dist</id>
-                        <phase>package</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
+                        <phase>package</phase>
                         <configuration>
                             <outputDirectory>${project.basedir}/dist/data</outputDirectory>
                             <resources>
@@ -214,15 +214,6 @@
                 <groupId>com.akathist.maven.plugins.launch4j</groupId>
                 <artifactId>launch4j-maven-plugin</artifactId>
                 <version>${launch4j.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>build-windows-exe</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>launch4j</goal>
-                        </goals>
-                    </execution>
-                </executions>
                 <configuration>
                     <outfile>${project.basedir}/dist/CampusSecondhand.exe</outfile>
                     <jar>${project.basedir}/dist/${project.build.finalName}-jar-with-dependencies.jar</jar>
@@ -236,6 +227,15 @@
                         <bundledJrePath>jre</bundledJrePath>
                     </jre>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>build-windows-exe</id>
+                        <goals>
+                            <goal>launch4j</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

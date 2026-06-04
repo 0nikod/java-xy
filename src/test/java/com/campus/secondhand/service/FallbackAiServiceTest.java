@@ -20,7 +20,8 @@ public class FallbackAiServiceTest {
 	public void buildOperationsSummaryShouldFallbackWhenPrimaryFails() {
 		AiService fallback = new MockAiService();
 
-		String result = new FallbackAiService(failingAiService(), fallback).buildOperationsSummaryStreaming("统计上下文", null);
+		String result = new FallbackAiService(failingAiService(), fallback).buildOperationsSummaryStreaming("统计上下文",
+				null);
 		Assert.assertEquals("Mock 运营摘要：统计上下文", result);
 	}
 
@@ -36,12 +37,14 @@ public class FallbackAiServiceTest {
 	private AiService failingAiService() {
 		return new AiService() {
 			@Override
-			public String optimizeDescriptionStreaming(String rawDescription, java.util.function.Consumer<String> onDelta) {
+			public String optimizeDescriptionStreaming(String rawDescription,
+					java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 
 			@Override
-			public String buildPurchaseAdviceStreaming(String goodsContext, java.util.function.Consumer<String> onDelta) {
+			public String buildPurchaseAdviceStreaming(String goodsContext,
+					java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 
@@ -56,7 +59,8 @@ public class FallbackAiServiceTest {
 			}
 
 			@Override
-			public String interpretStatisticsStreaming(String statsContext, java.util.function.Consumer<String> onDelta) {
+			public String interpretStatisticsStreaming(String statsContext,
+					java.util.function.Consumer<String> onDelta) {
 				throw new IllegalStateException("boom");
 			}
 		};

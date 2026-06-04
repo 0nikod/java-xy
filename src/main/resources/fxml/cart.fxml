@@ -11,49 +11,62 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.CartController">
-    
-    <top>
-        <VBox spacing="16.0">
-            <padding>
-                <Insets bottom="24.0" />
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Label text="Shopping Cart" styleClass="page-title" />
-                <Region HBox.hgrow="ALWAYS" />
-                <VBox alignment="CENTER_RIGHT">
-                    <Label fx:id="currentUserLabel" styleClass="muted-text" />
-                    <Label fx:id="messageLabel" styleClass="status-text" />
-                </VBox>
-            </HBox>
-            
-            <HBox alignment="CENTER_LEFT" spacing="12.0" styleClass="toolbar-panel">
-                <Button text="Refresh" onAction="#handleRefresh" styleClass="secondary-button" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Button text="View Item" onAction="#handleViewDetail" styleClass="secondary-button" />
-                <Button text="Remove Selected" onAction="#handleRemove" styleClass="danger-button" />
-                <Button text="Checkout Selected" onAction="#handleCheckoutSelected" styleClass="primary-button" />
-                <Button text="Checkout All" onAction="#handleCheckoutAll" styleClass="primary-button" />
-            </HBox>
-        </VBox>
-    </top>
-    
-    <center>
-        <VBox spacing="16.0" styleClass="plain-panel">
-            <Label text="Your Items" styleClass="section-label" />
-            
-            <TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="titleColumn" text="Item Name" prefWidth="250.0" />
-                    <TableColumn fx:id="priceColumn" text="Price" prefWidth="100.0" />
-                    <TableColumn fx:id="categoryColumn" text="Category" prefWidth="120.0" />
-                    <TableColumn fx:id="sellerColumn" text="Seller" prefWidth="150.0" />
-                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="100.0" />
-                    <TableColumn fx:id="imageColumn" text="Image" prefWidth="150.0" />
-                    <TableColumn fx:id="createdAtColumn" text="Added At" prefWidth="160.0" />
-                </columns>
-            </TableView>
-        </VBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.CartController">
+
+	<top>
+		<VBox spacing="16.0">
+			<padding>
+				<Insets bottom="24.0" />
+			</padding>
+			<HBox alignment="CENTER_LEFT" spacing="20.0">
+				<Label text="Shopping Cart" styleClass="page-title" />
+				<Region HBox.hgrow="ALWAYS" />
+				<VBox alignment="CENTER_RIGHT">
+					<Label fx:id="currentUserLabel" styleClass="muted-text" />
+					<Label fx:id="messageLabel" styleClass="status-text" />
+				</VBox>
+			</HBox>
+
+			<HBox alignment="CENTER_LEFT" spacing="12.0"
+				styleClass="toolbar-panel">
+				<Button text="Refresh" onAction="#handleRefresh"
+					styleClass="secondary-button" />
+				<Region HBox.hgrow="ALWAYS" />
+				<Button text="View Item" onAction="#handleViewDetail"
+					styleClass="secondary-button" />
+				<Button text="Remove Selected" onAction="#handleRemove"
+					styleClass="danger-button" />
+				<Button text="Checkout Selected"
+					onAction="#handleCheckoutSelected" styleClass="primary-button" />
+				<Button text="Checkout All" onAction="#handleCheckoutAll"
+					styleClass="primary-button" />
+			</HBox>
+		</VBox>
+	</top>
+
+	<center>
+		<VBox spacing="16.0" styleClass="plain-panel">
+			<Label text="Your Items" styleClass="section-label" />
+
+			<TableView fx:id="cartTable" VBox.vgrow="ALWAYS">
+				<columns>
+					<TableColumn fx:id="titleColumn" text="Item Name"
+						prefWidth="250.0" />
+					<TableColumn fx:id="priceColumn" text="Price"
+						prefWidth="100.0" />
+					<TableColumn fx:id="categoryColumn" text="Category"
+						prefWidth="120.0" />
+					<TableColumn fx:id="sellerColumn" text="Seller"
+						prefWidth="150.0" />
+					<TableColumn fx:id="statusColumn" text="Status"
+						prefWidth="100.0" />
+					<TableColumn fx:id="imageColumn" text="Image"
+						prefWidth="150.0" />
+					<TableColumn fx:id="createdAtColumn" text="Added At"
+						prefWidth="160.0" />
+				</columns>
+			</TableView>
+		</VBox>
+	</center>
 </BorderPane>

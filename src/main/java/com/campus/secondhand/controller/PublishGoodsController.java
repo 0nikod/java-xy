@@ -95,8 +95,8 @@ public class PublishGoodsController {
 			return;
 		}
 		String description = descriptionArea.getText();
-		startAiSuggestion("描述优化失败", optimizeButton,
-				() -> goodsService.optimizeDescriptionStreaming(description, delta -> Platform.runLater(() -> appendSuggestion(delta))));
+		startAiSuggestion("描述优化失败", optimizeButton, () -> goodsService.optimizeDescriptionStreaming(description,
+				delta -> Platform.runLater(() -> appendSuggestion(delta))));
 	}
 
 	@FXML

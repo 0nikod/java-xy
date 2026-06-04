@@ -222,10 +222,14 @@ public class UserHomeController {
 	}
 
 	private void setActiveNav(Button activeBtn) {
-		if (navMarketplace != null) navMarketplace.getStyleClass().remove("active");
-		if (navPublished != null) navPublished.getStyleClass().remove("active");
-		if (navCart != null) navCart.getStyleClass().remove("active");
-		if (navUserCenter != null) navUserCenter.getStyleClass().remove("active");
+		if (navMarketplace != null)
+			navMarketplace.getStyleClass().remove("active");
+		if (navPublished != null)
+			navPublished.getStyleClass().remove("active");
+		if (navCart != null)
+			navCart.getStyleClass().remove("active");
+		if (navUserCenter != null)
+			navUserCenter.getStyleClass().remove("active");
 		if (activeBtn != null) {
 			if (!activeBtn.getStyleClass().contains("active")) {
 				activeBtn.getStyleClass().add("active");
@@ -287,11 +291,21 @@ public class UserHomeController {
 					} else {
 						Label badge = new Label(item);
 						switch (item) {
-							case "在售": badge.getStyleClass().add("badge-active"); break;
-							case "已售出": badge.getStyleClass().add("badge-sold"); break;
-							case "待审核": badge.getStyleClass().add("badge-pending"); break;
-							case "已下架": badge.getStyleClass().add("badge-offline"); break;
-							default: badge.getStyleClass().add("badge-sold"); break;
+							case "在售" :
+								badge.getStyleClass().add("badge-active");
+								break;
+							case "已售出" :
+								badge.getStyleClass().add("badge-sold");
+								break;
+							case "待审核" :
+								badge.getStyleClass().add("badge-pending");
+								break;
+							case "已下架" :
+								badge.getStyleClass().add("badge-offline");
+								break;
+							default :
+								badge.getStyleClass().add("badge-sold");
+								break;
 						}
 						setText(null);
 						setGraphic(badge);

@@ -196,16 +196,16 @@ public class CartController {
 						Label label = new Label(status);
 						label.getStyleClass().add("badge");
 						switch (status) {
-							case "在售":
+							case "在售" :
 								label.getStyleClass().add("badge-active");
 								break;
-							case "已售出":
+							case "已售出" :
 								label.getStyleClass().add("badge-sold");
 								break;
-							case "待审核":
+							case "待审核" :
 								label.getStyleClass().add("badge-pending");
 								break;
-							case "已下架":
+							case "已下架" :
 								label.getStyleClass().add("badge-offline");
 								break;
 						}

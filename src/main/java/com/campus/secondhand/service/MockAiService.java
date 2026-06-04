@@ -20,7 +20,8 @@ public class MockAiService implements AiService {
 
 	@Override
 	public String buildPurchaseAdviceStreaming(String goodsContext, java.util.function.Consumer<String> onDelta) {
-		return emitResult("Mock 购买建议：建议重点确认商品成色、配件完整度、图片是否与描述一致，并优先选择线下当面验货交易。" + normalizeContext(goodsContext), onDelta);
+		return emitResult("Mock 购买建议：建议重点确认商品成色、配件完整度、图片是否与描述一致，并优先选择线下当面验货交易。" + normalizeContext(goodsContext),
+				onDelta);
 	}
 
 	@Override
@@ -47,7 +48,8 @@ public class MockAiService implements AiService {
 
 	@Override
 	public String interpretStatisticsStreaming(String statsContext, java.util.function.Consumer<String> onDelta) {
-		return emitResult("Mock 图表解读：当前统计图可用于观察分类供给、商品状态和近期成交变化；建议优先处理待审核商品并关注成交低迷分类。" + normalizeContext(statsContext), onDelta);
+		return emitResult("Mock 图表解读：当前统计图可用于观察分类供给、商品状态和近期成交变化；建议优先处理待审核商品并关注成交低迷分类。" + normalizeContext(statsContext),
+				onDelta);
 	}
 
 	private String normalizeContext(String context) {

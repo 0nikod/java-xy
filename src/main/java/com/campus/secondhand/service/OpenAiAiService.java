@@ -33,14 +33,14 @@ public class OpenAiAiService implements AiService {
 
 	@Override
 	public String buildPurchaseAdviceStreaming(String goodsContext, Consumer<String> onDelta) {
-		return requestTextStreaming("你是校园二手平台购买顾问。请根据商品信息给出简短购买建议、风险点和验货提醒。",
-				goodsContext == null ? "" : goodsContext, onDelta);
+		return requestTextStreaming("你是校园二手平台购买顾问。请根据商品信息给出简短购买建议、风险点和验货提醒。", goodsContext == null ? "" : goodsContext,
+				onDelta);
 	}
 
 	@Override
 	public String assistSearchStreaming(String userInput, Consumer<String> onDelta) {
-		return requestTextStreaming("你是校园二手平台搜索助手。请把用户自然语言需求改写为搜索关键词、推荐分类和排序建议。",
-				userInput == null ? "" : userInput, onDelta);
+		return requestTextStreaming("你是校园二手平台搜索助手。请把用户自然语言需求改写为搜索关键词、推荐分类和排序建议。", userInput == null ? "" : userInput,
+				onDelta);
 	}
 
 	@Override
@@ -78,8 +78,8 @@ public class OpenAiAiService implements AiService {
 				} else if (event.isError()) {
 					throw new IllegalStateException("AI 流式响应错误：" + event.asError().message());
 				} else if (event.isFailed()) {
-					throw new IllegalStateException("AI 流式响应失败：" + event.asFailed().response().error()
-							.map(error -> error.message()).orElse("未知错误"));
+					throw new IllegalStateException("AI 流式响应失败："
+							+ event.asFailed().response().error().map(error -> error.message()).orElse("未知错误"));
 				} else if (event.isIncomplete()) {
 					throw new IllegalStateException("AI 流式响应未完整结束");
 				}

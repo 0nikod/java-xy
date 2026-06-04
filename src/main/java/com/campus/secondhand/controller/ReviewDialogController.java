@@ -46,7 +46,8 @@ public class ReviewDialogController {
 			if (rating == null) {
 				throw new BusinessException("请选择评分");
 			}
-			reviewService.createReview(user, order.getId(), rating.intValue(), contentArea == null ? null : contentArea.getText());
+			reviewService.createReview(user, order.getId(), rating.intValue(),
+					contentArea == null ? null : contentArea.getText());
 			AlertUtil.showInfo("评价成功", "评价已发布。关闭窗口后请刷新个人中心。");
 			closeWindow();
 		} catch (BusinessException ex) {

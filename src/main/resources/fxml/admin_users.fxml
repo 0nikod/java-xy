@@ -12,52 +12,65 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.AdminUserController">
-    
-    <top>
-        <VBox spacing="16.0">
-            <padding>
-                <Insets bottom="24.0" />
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Button text="← Dashboard" onAction="#handleBack" styleClass="secondary-button" />
-                <VBox>
-                    <Label text="User Management" styleClass="page-title" />
-                    <Label fx:id="currentUserLabel" styleClass="muted-text" />
-                </VBox>
-            </HBox>
-            
-            <HBox alignment="BOTTOM_LEFT" spacing="12.0" styleClass="toolbar-panel">
-                <VBox spacing="6.0" HBox.hgrow="ALWAYS">
-                    <Label text="Search User" styleClass="field-label" />
-                    <TextField fx:id="keywordField" promptText="Search by username..." prefWidth="300.0" />
-                </VBox>
-                <Button text="Search" onAction="#handleSearch" styleClass="primary-button" />
-                <Button text="Reset" onAction="#handleReset" styleClass="secondary-button" />
-                
-                <Region HBox.hgrow="ALWAYS" />
-                
-                <Button text="Ban User" onAction="#handleBan" styleClass="danger-button" />
-                <Button text="Unban User" onAction="#handleUnban" styleClass="secondary-button" />
-            </HBox>
-            <Label fx:id="summaryLabel" styleClass="status-text" />
-        </VBox>
-    </top>
-    
-    <center>
-        <VBox spacing="16.0" styleClass="plain-panel">
-            <Label text="All Users" styleClass="section-label" />
-            <TableView fx:id="userTable" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="usernameColumn" text="Username" prefWidth="180.0" />
-                    <TableColumn fx:id="phoneColumn" text="Contact Info" prefWidth="180.0" />
-                    <TableColumn fx:id="roleColumn" text="Role" prefWidth="120.0" />
-                    <TableColumn fx:id="statusColumn" text="Status" prefWidth="120.0" />
-                    <TableColumn fx:id="goodsCountColumn" text="Items Listed" prefWidth="140.0" />
-                    <TableColumn fx:id="soldCountColumn" text="Items Sold" prefWidth="140.0" />
-                </columns>
-            </TableView>
-        </VBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.AdminUserController">
+
+	<top>
+		<VBox spacing="16.0">
+			<padding>
+				<Insets bottom="24.0" />
+			</padding>
+			<HBox alignment="CENTER_LEFT" spacing="20.0">
+				<Button text="← Dashboard" onAction="#handleBack"
+					styleClass="secondary-button" />
+				<VBox>
+					<Label text="User Management" styleClass="page-title" />
+					<Label fx:id="currentUserLabel" styleClass="muted-text" />
+				</VBox>
+			</HBox>
+
+			<HBox alignment="BOTTOM_LEFT" spacing="12.0"
+				styleClass="toolbar-panel">
+				<VBox spacing="6.0" HBox.hgrow="ALWAYS">
+					<Label text="Search User" styleClass="field-label" />
+					<TextField fx:id="keywordField"
+						promptText="Search by username..." prefWidth="300.0" />
+				</VBox>
+				<Button text="Search" onAction="#handleSearch"
+					styleClass="primary-button" />
+				<Button text="Reset" onAction="#handleReset"
+					styleClass="secondary-button" />
+
+				<Region HBox.hgrow="ALWAYS" />
+
+				<Button text="Ban User" onAction="#handleBan"
+					styleClass="danger-button" />
+				<Button text="Unban User" onAction="#handleUnban"
+					styleClass="secondary-button" />
+			</HBox>
+			<Label fx:id="summaryLabel" styleClass="status-text" />
+		</VBox>
+	</top>
+
+	<center>
+		<VBox spacing="16.0" styleClass="plain-panel">
+			<Label text="All Users" styleClass="section-label" />
+			<TableView fx:id="userTable" VBox.vgrow="ALWAYS">
+				<columns>
+					<TableColumn fx:id="usernameColumn" text="Username"
+						prefWidth="180.0" />
+					<TableColumn fx:id="phoneColumn" text="Contact Info"
+						prefWidth="180.0" />
+					<TableColumn fx:id="roleColumn" text="Role"
+						prefWidth="120.0" />
+					<TableColumn fx:id="statusColumn" text="Status"
+						prefWidth="120.0" />
+					<TableColumn fx:id="goodsCountColumn"
+						text="Items Listed" prefWidth="140.0" />
+					<TableColumn fx:id="soldCountColumn" text="Items Sold"
+						prefWidth="140.0" />
+				</columns>
+			</TableView>
+		</VBox>
+	</center>
 </BorderPane>

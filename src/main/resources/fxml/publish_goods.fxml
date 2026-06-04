@@ -16,90 +16,122 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 
 <BorderPane styleClass="page-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.PublishGoodsController">
-    
-    <top>
-        <VBox spacing="16.0">
-            <padding>
-                <Insets bottom="24.0" />
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Button text="← Cancel" onAction="#handleBack" styleClass="secondary-button" />
-                <Label text="Sell an Item" styleClass="page-title" />
-                <Region HBox.hgrow="ALWAYS" />
-                <Label fx:id="currentUserLabel" styleClass="muted-text" />
-            </HBox>
-        </VBox>
-    </top>
-    
-    <center>
-        <HBox spacing="30.0">
-            
-            <!-- Left Column: Product Details Form -->
-            <VBox spacing="20.0" styleClass="plain-panel" HBox.hgrow="ALWAYS" maxWidth="600.0">
-                <Label text="Item Details" styleClass="section-label" />
-                
-                <GridPane hgap="16.0" vgap="16.0">
-                    <columnConstraints>
-                        <ColumnConstraints minWidth="120.0" prefWidth="140.0" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                    </columnConstraints>
-                    
-                    <Label text="Title *" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <TextField fx:id="titleField" promptText="What are you selling?" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                    
-                    <Label text="Category *" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                    <ChoiceBox fx:id="categoryBox" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                    
-                    <Label text="Original Price" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-                    <TextField fx:id="originalPriceField" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="2" maxWidth="200.0" />
-                    
-                    <Label text="Selling Price *" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-                    <TextField fx:id="currentPriceField" promptText="0.00" GridPane.columnIndex="1" GridPane.rowIndex="3" maxWidth="200.0" />
-                    
-                    <Label text="Condition *" styleClass="field-label" GridPane.columnIndex="0" GridPane.rowIndex="4" />
-                    <TextField fx:id="conditionField" promptText="e.g. 9/10, New, Used" GridPane.columnIndex="1" GridPane.rowIndex="4" maxWidth="200.0" />
-                </GridPane>
-                
-                <VBox spacing="8.0">
-                    <Label text="Description *" styleClass="field-label" />
-                    <TextArea fx:id="descriptionArea" prefRowCount="6" wrapText="true" promptText="Describe the item's condition, any flaws, and pickup instructions." />
-                </VBox>
-                
-                <HBox spacing="12.0" alignment="CENTER_LEFT">
-                    <Button fx:id="optimizeButton" text="✨ AI Optimize Description" onAction="#handleOptimize" styleClass="secondary-button" />
-                    <Region HBox.hgrow="ALWAYS" />
-                    <Button text="Submit for Review" onAction="#handleSubmit" styleClass="primary-button" prefWidth="200.0" prefHeight="44.0" />
-                </HBox>
-                
-                <TextArea fx:id="aiSuggestionArea" prefRowCount="3" wrapText="true" editable="false" promptText="AI suggestions will appear here..." styleClass="text-area" />
-            </VBox>
-            
-            <!-- Right Column: Images -->
-            <VBox spacing="16.0" prefWidth="340.0" styleClass="plain-panel">
-                <VBox spacing="4.0">
-                    <Label text="Photos" styleClass="section-label" />
-                    <Label text="Add up to 3 photos. First photo is the cover." styleClass="subtitle-text" wrapText="true" />
-                </VBox>
-                
-                <Label fx:id="imageSummaryLabel" text="0 photos selected." styleClass="status-text" />
-                
-                <VBox alignment="CENTER" style="-fx-background-color: #F9FAFB; -fx-background-radius: 12; -fx-padding: 10;">
-                    <ImageView fx:id="imagePreviewView" fitWidth="280.0" fitHeight="200.0" preserveRatio="true" styleClass="image-preview" />
-                </VBox>
-                
-                <ListView fx:id="imageListView" prefHeight="120.0" />
-                
-                <VBox spacing="10.0">
-                    <Button text="Add Photos" onAction="#handleAddImages" styleClass="secondary-button" maxWidth="Infinity" />
-                    <HBox spacing="10" alignment="CENTER_LEFT">
-                        <Button text="Set as Cover" onAction="#handleSetPrimaryImage" styleClass="secondary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                        <Button text="Remove" onAction="#handleRemoveImage" styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                    </HBox>
-                </VBox>
-            </VBox>
-            
-        </HBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.PublishGoodsController">
+
+	<top>
+		<VBox spacing="16.0">
+			<padding>
+				<Insets bottom="24.0" />
+			</padding>
+			<HBox alignment="CENTER_LEFT" spacing="20.0">
+				<Button text="← Cancel" onAction="#handleBack"
+					styleClass="secondary-button" />
+				<Label text="Sell an Item" styleClass="page-title" />
+				<Region HBox.hgrow="ALWAYS" />
+				<Label fx:id="currentUserLabel" styleClass="muted-text" />
+			</HBox>
+		</VBox>
+	</top>
+
+	<center>
+		<HBox spacing="30.0">
+
+			<!-- Left Column: Product Details Form -->
+			<VBox spacing="20.0" styleClass="plain-panel"
+				HBox.hgrow="ALWAYS" maxWidth="600.0">
+				<Label text="Item Details" styleClass="section-label" />
+
+				<GridPane hgap="16.0" vgap="16.0">
+					<columnConstraints>
+						<ColumnConstraints minWidth="120.0"
+							prefWidth="140.0" />
+						<ColumnConstraints hgrow="ALWAYS" />
+					</columnConstraints>
+
+					<Label text="Title *" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="0" />
+					<TextField fx:id="titleField"
+						promptText="What are you selling?" GridPane.columnIndex="1"
+						GridPane.rowIndex="0" />
+
+					<Label text="Category *" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="1" />
+					<ChoiceBox fx:id="categoryBox" prefWidth="200.0"
+						GridPane.columnIndex="1" GridPane.rowIndex="1" />
+
+					<Label text="Original Price" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="2" />
+					<TextField fx:id="originalPriceField" promptText="0.00"
+						GridPane.columnIndex="1" GridPane.rowIndex="2" maxWidth="200.0" />
+
+					<Label text="Selling Price *" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="3" />
+					<TextField fx:id="currentPriceField" promptText="0.00"
+						GridPane.columnIndex="1" GridPane.rowIndex="3" maxWidth="200.0" />
+
+					<Label text="Condition *" styleClass="field-label"
+						GridPane.columnIndex="0" GridPane.rowIndex="4" />
+					<TextField fx:id="conditionField"
+						promptText="e.g. 9/10, New, Used" GridPane.columnIndex="1"
+						GridPane.rowIndex="4" maxWidth="200.0" />
+				</GridPane>
+
+				<VBox spacing="8.0">
+					<Label text="Description *" styleClass="field-label" />
+					<TextArea fx:id="descriptionArea" prefRowCount="6"
+						wrapText="true"
+						promptText="Describe the item's condition, any flaws, and pickup instructions." />
+				</VBox>
+
+				<HBox spacing="12.0" alignment="CENTER_LEFT">
+					<Button fx:id="optimizeButton"
+						text="✨ AI Optimize Description" onAction="#handleOptimize"
+						styleClass="secondary-button" />
+					<Region HBox.hgrow="ALWAYS" />
+					<Button text="Submit for Review" onAction="#handleSubmit"
+						styleClass="primary-button" prefWidth="200.0" prefHeight="44.0" />
+				</HBox>
+
+				<TextArea fx:id="aiSuggestionArea" prefRowCount="3"
+					wrapText="true" editable="false"
+					promptText="AI suggestions will appear here..."
+					styleClass="text-area" />
+			</VBox>
+
+			<!-- Right Column: Images -->
+			<VBox spacing="16.0" prefWidth="340.0" styleClass="plain-panel">
+				<VBox spacing="4.0">
+					<Label text="Photos" styleClass="section-label" />
+					<Label text="Add up to 3 photos. First photo is the cover."
+						styleClass="subtitle-text" wrapText="true" />
+				</VBox>
+
+				<Label fx:id="imageSummaryLabel" text="0 photos selected."
+					styleClass="status-text" />
+
+				<VBox alignment="CENTER"
+					style="-fx-background-color: #F9FAFB; -fx-background-radius: 12; -fx-padding: 10;">
+					<ImageView fx:id="imagePreviewView" fitWidth="280.0"
+						fitHeight="200.0" preserveRatio="true" styleClass="image-preview" />
+				</VBox>
+
+				<ListView fx:id="imageListView" prefHeight="120.0" />
+
+				<VBox spacing="10.0">
+					<Button text="Add Photos" onAction="#handleAddImages"
+						styleClass="secondary-button" maxWidth="Infinity" />
+					<HBox spacing="10" alignment="CENTER_LEFT">
+						<Button text="Set as Cover"
+							onAction="#handleSetPrimaryImage" styleClass="secondary-button"
+							HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+						<Button text="Remove" onAction="#handleRemoveImage"
+							styleClass="danger-button" HBox.hgrow="ALWAYS"
+							maxWidth="Infinity" />
+					</HBox>
+				</VBox>
+			</VBox>
+
+		</HBox>
+	</center>
 </BorderPane>

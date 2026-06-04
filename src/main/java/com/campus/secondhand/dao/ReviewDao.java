@@ -13,8 +13,8 @@ public class ReviewDao {
 
 	public int insert(Review review) {
 		String sql = "INSERT INTO reviews (order_id, goods_id, reviewer_id, seller_id, rating, content, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
-		try (Connection connection = DBUtil.getConnection(); PreparedStatement ps = connection.prepareStatement(sql,
-				PreparedStatement.RETURN_GENERATED_KEYS)) {
+		try (Connection connection = DBUtil.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 			ps.setLong(1, review.getOrderId());
 			ps.setLong(2, review.getGoodsId());
 			ps.setLong(3, review.getReviewerId());
@@ -51,7 +51,8 @@ public class ReviewDao {
 	}
 
 	public List<Review> listByReviewerId(Long reviewerId) {
-		return queryReviews(baseSelectSql() + " WHERE r.reviewer_id = ? ORDER BY r.created_at DESC, r.id DESC", reviewerId);
+		return queryReviews(baseSelectSql() + " WHERE r.reviewer_id = ? ORDER BY r.created_at DESC, r.id DESC",
+				reviewerId);
 	}
 
 	public List<Review> listBySellerId(Long sellerId) {

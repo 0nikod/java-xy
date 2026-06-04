@@ -11,39 +11,47 @@
 <?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.campus.secondhand.controller.AdminLogController">
-    
-    <top>
-        <VBox spacing="16.0">
-            <padding>
-                <Insets bottom="24.0" />
-            </padding>
-            <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Button text="← Dashboard" onAction="#handleBack" styleClass="secondary-button" />
-                <VBox>
-                    <Label text="System Operations Log" styleClass="page-title" />
-                    <Label fx:id="currentUserLabel" styleClass="muted-text" />
-                </VBox>
-                <Region HBox.hgrow="ALWAYS" />
-                <Button text="Refresh Logs" onAction="#handleRefresh" styleClass="primary-button" />
-            </HBox>
-        </VBox>
-    </top>
-    
-    <center>
-        <VBox spacing="16.0" styleClass="plain-panel">
-            <Label text="Audit Trail" styleClass="section-label" />
-            <TableView fx:id="logTable" VBox.vgrow="ALWAYS">
-                <columns>
-                    <TableColumn fx:id="adminColumn" text="Admin" prefWidth="160.0" />
-                    <TableColumn fx:id="actionColumn" text="Action Type" prefWidth="150.0" />
-                    <TableColumn fx:id="targetTypeColumn" text="Target Object" prefWidth="140.0" />
-                    <TableColumn fx:id="targetIdColumn" text="Target ID" prefWidth="100.0" />
-                    <TableColumn fx:id="detailColumn" text="Details" prefWidth="380.0" />
-                    <TableColumn fx:id="createdAtColumn" text="Timestamp" prefWidth="180.0" />
-                </columns>
-            </TableView>
-        </VBox>
-    </center>
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="com.campus.secondhand.controller.AdminLogController">
+
+	<top>
+		<VBox spacing="16.0">
+			<padding>
+				<Insets bottom="24.0" />
+			</padding>
+			<HBox alignment="CENTER_LEFT" spacing="20.0">
+				<Button text="← Dashboard" onAction="#handleBack"
+					styleClass="secondary-button" />
+				<VBox>
+					<Label text="System Operations Log" styleClass="page-title" />
+					<Label fx:id="currentUserLabel" styleClass="muted-text" />
+				</VBox>
+				<Region HBox.hgrow="ALWAYS" />
+				<Button text="Refresh Logs" onAction="#handleRefresh"
+					styleClass="primary-button" />
+			</HBox>
+		</VBox>
+	</top>
+
+	<center>
+		<VBox spacing="16.0" styleClass="plain-panel">
+			<Label text="Audit Trail" styleClass="section-label" />
+			<TableView fx:id="logTable" VBox.vgrow="ALWAYS">
+				<columns>
+					<TableColumn fx:id="adminColumn" text="Admin"
+						prefWidth="160.0" />
+					<TableColumn fx:id="actionColumn" text="Action Type"
+						prefWidth="150.0" />
+					<TableColumn fx:id="targetTypeColumn"
+						text="Target Object" prefWidth="140.0" />
+					<TableColumn fx:id="targetIdColumn" text="Target ID"
+						prefWidth="100.0" />
+					<TableColumn fx:id="detailColumn" text="Details"
+						prefWidth="380.0" />
+					<TableColumn fx:id="createdAtColumn" text="Timestamp"
+						prefWidth="180.0" />
+				</columns>
+			</TableView>
+		</VBox>
+	</center>
 </BorderPane>
