@@ -9,132 +9,122 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.campus.secondhand.controller.UserCenterController">
-	<top>
-		<VBox spacing="12.0" styleClass="toolbar-panel">
-			<VBox spacing="4.0">
-				<Label text="个人中心" styleClass="page-title" />
-				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
-			</VBox>
-			<Label fx:id="summaryLabel" styleClass="status-text"
-				wrapText="true" />
-			<HBox spacing="10.0">
-				<Button text="刷新数据" onAction="#handleRefresh"
-					styleClass="primary-button" />
-				<Button text="下架所选商品" onAction="#handleOffShelf"
-					styleClass="danger-button" />
-				<Button text="评价所选订单" onAction="#handleCreateReview"
-					styleClass="secondary-button" />
-				<Button text="返回首页" onAction="#handleBack"
-					styleClass="secondary-button" />
-			</HBox>
-		</VBox>
-	</top>
-	<center>
-		<VBox spacing="10.0">
-			<padding>
-				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
-			</padding>
-			<TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
-				<tabs>
-					<Tab text="我的商品">
-						<VBox spacing="8.0">
-							<padding>
-								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
-							</padding>
-							<TableView fx:id="publishedGoodsTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
-								<columns>
-									<TableColumn fx:id="publishedTitleColumn" text="商品名称"
-										prefWidth="260.0" />
-									<TableColumn fx:id="publishedCategoryColumn" text="分类"
-										prefWidth="130.0" />
-									<TableColumn fx:id="publishedPriceColumn" text="现价"
-										prefWidth="110.0" />
-									<TableColumn fx:id="publishedStatusColumn" text="状态"
-										prefWidth="130.0" />
-								</columns>
-							</TableView>
-						</VBox>
-					</Tab>
-					<Tab text="购买订单">
-						<VBox spacing="8.0">
-							<padding>
-								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
-							</padding>
-							<TableView fx:id="purchasedOrdersTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
-								<columns>
-									<TableColumn fx:id="purchasedOrderNoColumn"
-										text="订单号" prefWidth="220.0" />
-									<TableColumn fx:id="purchasedGoodsColumn" text="商品名称"
-										prefWidth="180.0" />
-									<TableColumn fx:id="purchasedPriceColumn" text="成交价"
-										prefWidth="100.0" />
-									<TableColumn fx:id="purchasedSellerColumn" text="卖家"
-										prefWidth="120.0" />
-								</columns>
-							</TableView>
-						</VBox>
-					</Tab>
-					<Tab text="卖出订单">
-						<VBox spacing="8.0">
-							<padding>
-								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
-							</padding>
-							<TableView fx:id="soldOrdersTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
-								<columns>
-									<TableColumn fx:id="soldOrderNoColumn" text="订单号"
-										prefWidth="220.0" />
-									<TableColumn fx:id="soldGoodsColumn" text="商品名称"
-										prefWidth="180.0" />
-									<TableColumn fx:id="soldPriceColumn" text="成交价"
-										prefWidth="100.0" />
-									<TableColumn fx:id="soldBuyerColumn" text="买家"
-										prefWidth="120.0" />
-								</columns>
-							</TableView>
-						</VBox>
-					</Tab>
-					<Tab text="我的评价">
-						<VBox spacing="8.0">
-							<padding>
-								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
-							</padding>
-							<TableView fx:id="publishedReviewsTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
-								<columns>
-									<TableColumn fx:id="publishedReviewGoodsColumn" text="商品"
-										prefWidth="180.0" />
-									<TableColumn fx:id="publishedReviewRatingColumn" text="评分"
-										prefWidth="80.0" />
-									<TableColumn fx:id="publishedReviewContentColumn" text="内容"
-										prefWidth="260.0" />
-								</columns>
-							</TableView>
-						</VBox>
-					</Tab>
-					<Tab text="收到的评价">
-						<VBox spacing="8.0">
-							<padding>
-								<Insets top="10.0" right="0.0" bottom="0.0" left="0.0" />
-							</padding>
-							<TableView fx:id="receivedReviewsTable" VBox.vgrow="ALWAYS" prefHeight="400.0">
-								<columns>
-									<TableColumn fx:id="receivedReviewGoodsColumn" text="商品"
-										prefWidth="180.0" />
-									<TableColumn fx:id="receivedReviewRatingColumn" text="评分"
-										prefWidth="80.0" />
-									<TableColumn fx:id="receivedReviewContentColumn" text="内容"
-										prefWidth="260.0" />
-								</columns>
-							</TableView>
-						</VBox>
-					</Tab>
-				</tabs>
-			</TabPane>
-		</VBox>
-	</center>
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.campus.secondhand.controller.UserCenterController">
+    
+    <top>
+        <VBox spacing="20.0">
+            <padding>
+                <Insets bottom="24.0" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="20.0">
+                <Button text="← Back" onAction="#handleBack" styleClass="secondary-button" />
+                <VBox>
+                    <Label text="User Center" styleClass="page-title" />
+                    <Label fx:id="currentUserLabel" styleClass="muted-text" />
+                </VBox>
+                <Region HBox.hgrow="ALWAYS" />
+                <Button text="Refresh Data" onAction="#handleRefresh" styleClass="secondary-button" />
+            </HBox>
+            
+            <HBox styleClass="hero-panel" alignment="CENTER_LEFT">
+                <padding>
+                    <Insets top="20.0" right="24.0" bottom="20.0" left="24.0"/>
+                </padding>
+                <Label fx:id="summaryLabel" styleClass="section-label" wrapText="true" />
+            </HBox>
+        </VBox>
+    </top>
+    
+    <center>
+        <VBox spacing="16.0" styleClass="plain-panel">
+            <TabPane VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE" styleClass="tab-pane">
+                <tabs>
+                    <Tab text="My Items">
+                        <VBox spacing="12.0">
+                            <padding>
+                                <Insets top="16.0" />
+                            </padding>
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button text="Take Offline" onAction="#handleOffShelf" styleClass="danger-button" />
+                            </HBox>
+                            <TableView fx:id="publishedGoodsTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="publishedTitleColumn" text="Item Name" prefWidth="260.0" />
+                                    <TableColumn fx:id="publishedCategoryColumn" text="Category" prefWidth="130.0" />
+                                    <TableColumn fx:id="publishedPriceColumn" text="Price" prefWidth="110.0" />
+                                    <TableColumn fx:id="publishedStatusColumn" text="Status" prefWidth="130.0" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </Tab>
+                    <Tab text="My Purchases">
+                        <VBox spacing="12.0">
+                            <padding>
+                                <Insets top="16.0" />
+                            </padding>
+                            <HBox alignment="CENTER_RIGHT">
+                                <Button text="Write Review" onAction="#handleCreateReview" styleClass="primary-button" />
+                            </HBox>
+                            <TableView fx:id="purchasedOrdersTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="purchasedOrderNoColumn" text="Order No." prefWidth="240.0" />
+                                    <TableColumn fx:id="purchasedGoodsColumn" text="Item Name" prefWidth="220.0" />
+                                    <TableColumn fx:id="purchasedPriceColumn" text="Price" prefWidth="100.0" />
+                                    <TableColumn fx:id="purchasedSellerColumn" text="Seller" prefWidth="140.0" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </Tab>
+                    <Tab text="My Sales">
+                        <VBox spacing="12.0">
+                            <padding>
+                                <Insets top="16.0" />
+                            </padding>
+                            <TableView fx:id="soldOrdersTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="soldOrderNoColumn" text="Order No." prefWidth="240.0" />
+                                    <TableColumn fx:id="soldGoodsColumn" text="Item Name" prefWidth="220.0" />
+                                    <TableColumn fx:id="soldPriceColumn" text="Price" prefWidth="100.0" />
+                                    <TableColumn fx:id="soldBuyerColumn" text="Buyer" prefWidth="140.0" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </Tab>
+                    <Tab text="Reviews I Wrote">
+                        <VBox spacing="12.0">
+                            <padding>
+                                <Insets top="16.0" />
+                            </padding>
+                            <TableView fx:id="publishedReviewsTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="publishedReviewGoodsColumn" text="Item" prefWidth="200.0" />
+                                    <TableColumn fx:id="publishedReviewRatingColumn" text="Rating" prefWidth="100.0" />
+                                    <TableColumn fx:id="publishedReviewContentColumn" text="Content" prefWidth="400.0" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </Tab>
+                    <Tab text="Reviews Received">
+                        <VBox spacing="12.0">
+                            <padding>
+                                <Insets top="16.0" />
+                            </padding>
+                            <TableView fx:id="receivedReviewsTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="receivedReviewGoodsColumn" text="Item" prefWidth="200.0" />
+                                    <TableColumn fx:id="receivedReviewRatingColumn" text="Rating" prefWidth="100.0" />
+                                    <TableColumn fx:id="receivedReviewContentColumn" text="Content" prefWidth="400.0" />
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </Tab>
+                </tabs>
+            </TabPane>
+        </VBox>
+    </center>
 </BorderPane>

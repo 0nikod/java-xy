@@ -7,24 +7,33 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
-<VBox spacing="12.0" prefWidth="460.0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.campus.secondhand.controller.ReviewDialogController">
-	<padding>
-		<Insets top="16.0" right="16.0" bottom="16.0" left="16.0" />
-	</padding>
-	<Label text="发布评价" styleClass="page-title" />
-	<Label fx:id="orderLabel" wrapText="true" styleClass="subtitle-text" />
-	<Label text="评分" styleClass="field-label" />
-	<ChoiceBox fx:id="ratingBox" prefWidth="120.0" />
-	<Label text="评价内容" styleClass="field-label" />
-	<TextArea fx:id="contentArea" prefRowCount="6" wrapText="true"
-		promptText="请输入对商品和卖家的评价" />
-	<HBox spacing="10.0">
-		<Button text="提交评价" onAction="#handleSubmit"
-			styleClass="primary-button" />
-		<Button text="取消" onAction="#handleCancel"
-			styleClass="secondary-button" />
-	</HBox>
+<VBox spacing="20.0" prefWidth="480.0" styleClass="plain-panel"
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.campus.secondhand.controller.ReviewDialogController">
+    <padding>
+        <Insets top="30.0" right="30.0" bottom="30.0" left="30.0" />
+    </padding>
+    
+    <VBox spacing="8.0">
+        <Label text="Write a Review" styleClass="page-title" />
+        <Label fx:id="orderLabel" wrapText="true" styleClass="subtitle-text" />
+    </VBox>
+    
+    <VBox spacing="8.0">
+        <Label text="Rating" styleClass="field-label" />
+        <ChoiceBox fx:id="ratingBox" prefWidth="140.0" />
+    </VBox>
+    
+    <VBox spacing="8.0">
+        <Label text="Your Review" styleClass="field-label" />
+        <TextArea fx:id="contentArea" prefRowCount="5" wrapText="true"
+            promptText="Tell others about your experience..." styleClass="text-area" />
+    </VBox>
+    
+    <HBox spacing="12.0" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#handleCancel" styleClass="secondary-button" />
+        <Button text="Submit Review" onAction="#handleSubmit" styleClass="primary-button" prefWidth="140.0" />
+    </HBox>
 </VBox>

@@ -6,46 +6,61 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="com.campus.secondhand.controller.AdminHomeController">
-	<center>
-		<VBox spacing="18.0" styleClass="hero-panel">
-			<padding>
-				<Insets top="34.0" right="42.0" bottom="34.0" left="42.0" />
-			</padding>
-			<VBox spacing="6.0">
-				<Label text="管理员后台" styleClass="title-text" />
-				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
-			</VBox>
-			<Label fx:id="summaryLabel" wrapText="true"
-				styleClass="status-text" />
-			<Button text="AI 管理分析" onAction="#handleAiManagementAnalysis"
-				styleClass="primary-button" maxWidth="220.0" />
-			<HBox spacing="14.0">
-				<VBox spacing="10.0" styleClass="plain-panel">
-					<Label text="审核与治理" styleClass="section-label" />
-					<Button text="待审核商品" onAction="#handleReviewGoods"
-						styleClass="primary-button" maxWidth="220.0" />
-					<Button text="用户管理" onAction="#handleManageUsers"
-						styleClass="secondary-button" maxWidth="220.0" />
-				</VBox>
-				<VBox spacing="10.0" styleClass="plain-panel">
-					<Label text="运营观察" styleClass="section-label" />
-					<Button text="平台统计" onAction="#handleViewStats"
-						styleClass="secondary-button" maxWidth="220.0" />
-					<Button text="操作日志" onAction="#handleViewLogs"
-						styleClass="secondary-button" maxWidth="220.0" />
-					<Button text="全部评价" onAction="#handleViewReviews"
-						styleClass="secondary-button" maxWidth="220.0" />
-				</VBox>
-				<VBox spacing="10.0" styleClass="plain-panel">
-					<Label text="账号" styleClass="section-label" />
-					<Button text="退出登录" onAction="#handleLogout"
-						styleClass="danger-button" maxWidth="220.0" />
-				</VBox>
-			</HBox>
-		</VBox>
-	</center>
+    xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+    fx:controller="com.campus.secondhand.controller.AdminHomeController">
+    
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20.0">
+            <padding>
+                <Insets bottom="32.0" />
+            </padding>
+            <VBox spacing="4.0">
+                <Label text="Admin Dashboard" styleClass="page-title" />
+                <Label fx:id="currentUserLabel" styleClass="muted-text" />
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Sign Out" onAction="#handleLogout" styleClass="danger-button" />
+        </HBox>
+    </top>
+    
+    <center>
+        <VBox spacing="24.0" maxWidth="800.0" alignment="TOP_CENTER">
+            
+            <HBox styleClass="hero-panel" alignment="CENTER_LEFT" spacing="20.0">
+                <padding>
+                    <Insets top="24.0" right="30.0" bottom="24.0" left="30.0" />
+                </padding>
+                <VBox spacing="8.0" HBox.hgrow="ALWAYS">
+                    <Label text="System Overview" styleClass="section-label" />
+                    <Label fx:id="summaryLabel" wrapText="true" styleClass="subtitle-text" />
+                </VBox>
+                <Button text="✨ AI Management Analysis" onAction="#handleAiManagementAnalysis" styleClass="primary-button" prefHeight="44.0" />
+            </HBox>
+            
+            <HBox spacing="20.0">
+                <!-- Moderation -->
+                <VBox spacing="16.0" styleClass="plain-panel" HBox.hgrow="ALWAYS">
+                    <Label text="Moderation &amp; Review" styleClass="section-label" />
+                    <VBox spacing="10.0">
+                        <Button text="Review Pending Items" onAction="#handleReviewGoods" styleClass="primary-button" maxWidth="Double.MAX_VALUE" />
+                        <Button text="Manage Users" onAction="#handleManageUsers" styleClass="secondary-button" maxWidth="Double.MAX_VALUE" />
+                    </VBox>
+                </VBox>
+                
+                <!-- Operations -->
+                <VBox spacing="16.0" styleClass="plain-panel" HBox.hgrow="ALWAYS">
+                    <Label text="Platform Operations" styleClass="section-label" />
+                    <VBox spacing="10.0">
+                        <Button text="Platform Statistics" onAction="#handleViewStats" styleClass="secondary-button" maxWidth="Double.MAX_VALUE" />
+                        <Button text="System Logs" onAction="#handleViewLogs" styleClass="secondary-button" maxWidth="Double.MAX_VALUE" />
+                        <Button text="All Reviews" onAction="#handleViewReviews" styleClass="secondary-button" maxWidth="Double.MAX_VALUE" />
+                    </VBox>
+                </VBox>
+            </HBox>
+            
+        </VBox>
+    </center>
 </BorderPane>
