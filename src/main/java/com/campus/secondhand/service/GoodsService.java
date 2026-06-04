@@ -51,8 +51,8 @@ public class GoodsService {
 		if (currentPrice <= 0) {
 			throw new BusinessException("现价必须大于 0");
 		}
-		if (conditionLevel < 1 || conditionLevel > 10) {
-			throw new BusinessException("新旧程度必须在 1 到 10 之间");
+		if (conditionLevel < 1 || conditionLevel > 5) {
+			throw new BusinessException("新旧程度必须在 1 到 5 之间");
 		}
 
 		Goods goods = new Goods();
