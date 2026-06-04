@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public final class SceneManager {
 
-	private static final double DEFAULT_WIDTH = 1120.0;
+	private static final double DEFAULT_WIDTH = 1280.0;
 	private static final double DEFAULT_HEIGHT = 720.0;
 	private static final double MIN_WIDTH = 960.0;
 	private static final double MIN_HEIGHT = 640.0;
@@ -35,13 +35,18 @@ public final class SceneManager {
 				throw new IllegalStateException("找不到页面资源: " + fxmlName);
 			}
 			Parent root = FXMLLoader.load(resource);
-			Scene scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-			URL stylesheet = SceneManager.class.getResource(STYLE_PATH);
-			if (stylesheet != null) {
-				scene.getStylesheets().add(stylesheet.toExternalForm());
+			Scene scene = primaryStage.getScene();
+			if (scene == null) {
+				scene = new Scene(root, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+				URL stylesheet = SceneManager.class.getResource(STYLE_PATH);
+				if (stylesheet != null) {
+					scene.getStylesheets().add(stylesheet.toExternalForm());
+				}
+				primaryStage.setScene(scene);
+			} else {
+				scene.setRoot(root);
 			}
 			primaryStage.setTitle(title);
-			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch (IOException e) {
 			AlertUtil.showError("页面加载失败", e.getMessage());
