@@ -9,130 +9,94 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Region?>
 
-<BorderPane fx:id="rootPane" styleClass="page-shell"
+<BorderPane styleClass="page-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.UserHomeController">
-
-	<!-- Sidebar Navigation -->
-	<left>
-		<VBox styleClass="sidebar" prefWidth="240.0" spacing="10.0">
-			<padding>
-				<Insets top="24.0" right="0.0" bottom="24.0" left="0.0" />
-			</padding>
-			<VBox spacing="4.0">
-				<padding>
-					<Insets right="24.0" left="24.0" bottom="24.0" />
-				</padding>
-				<Label text="校园"
-					style="-fx-text-fill: white; -fx-font-size: 24px; -fx-font-weight: 800;" />
-				<Label text="二手交易"
-					style="-fx-text-fill: #6366F1; -fx-font-size: 24px; -fx-font-weight: 800;" />
-			</VBox>
-
-			<VBox spacing="8.0">
-				<padding>
-					<Insets right="24.0" left="24.0" bottom="16.0" />
-				</padding>
-				<Label fx:id="currentUserLabel" styleClass="muted-text"
-					text="欢迎，用户" wrapText="true" />
-			</VBox>
-
-			<!-- Navigation Links -->
-			<Button fx:id="navMarketplace" text="商品广场"
-				onAction="#handleMarketplace" styleClass="sidebar-button, active"
-				prefWidth="240.0" />
-			<Button fx:id="navPublished" text="我发布的"
-				onAction="#handleMyPublished" styleClass="sidebar-button"
-				prefWidth="240.0" />
-			<Button fx:id="navCart" text="我的购物车" onAction="#handleCart"
-				styleClass="sidebar-button" prefWidth="240.0" />
-			<Button fx:id="navUserCenter" text="个人中心"
-				onAction="#handleUserCenter" styleClass="sidebar-button"
-				prefWidth="240.0" />
-
-			<Region VBox.vgrow="ALWAYS" />
-
-			<Button text="退出登录" onAction="#handleLogout"
-				styleClass="sidebar-button" prefWidth="240.0" />
+	<top>
+		<VBox spacing="14.0" styleClass="toolbar-panel">
+			<HBox alignment="CENTER_LEFT" spacing="16.0">
+				<VBox spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="商品市场" styleClass="page-title" />
+					<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+				</VBox>
+				<Button text="发布商品" onAction="#handlePublish"
+					styleClass="primary-button" />
+				<Button text="个人中心" onAction="#handleUserCenter"
+					styleClass="secondary-button" />
+				<Button text="购物车" onAction="#handleCart"
+					styleClass="secondary-button" />
+				<Button text="退出登录" onAction="#handleLogout"
+					styleClass="secondary-button" />
+			</HBox>
+			<HBox spacing="14.0">
+				<VBox styleClass="stat-card-accent" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statTotalLabel" styleClass="stat-card-number" />
+					<Label text="平台商品" styleClass="stat-card-label" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statOnSaleLabel" styleClass="stat-card-number" />
+					<Label text="正在出售" styleClass="stat-card-label" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statTodayLabel" styleClass="stat-card-number" />
+					<Label text="今日新增" styleClass="stat-card-label" />
+				</VBox>
+				<VBox styleClass="stat-card" spacing="4.0" HBox.hgrow="ALWAYS">
+					<Label text="--" fx:id="statCartLabel" styleClass="stat-card-number" />
+					<Label text="购物车" styleClass="stat-card-label" />
+				</VBox>
+			</HBox>
+			<HBox alignment="CENTER_LEFT" spacing="12.0">
+				<TextField fx:id="keywordField" promptText="输入商品名称、分类或描述关键字"
+					HBox.hgrow="ALWAYS" />
+				<ChoiceBox fx:id="categoryBox" prefWidth="130.0" />
+				<ChoiceBox fx:id="sortBox" prefWidth="150.0" />
+				<Button text="搜索" onAction="#handleSearch"
+					styleClass="primary-button" />
+				<Button fx:id="aiSearchAssistButton" text="AI 搜索辅助" onAction="#handleAiSearchAssist"
+					styleClass="secondary-button" />
+				<Button text="重置" onAction="#handleReset"
+					styleClass="secondary-button" />
+			</HBox>
+			<HBox alignment="CENTER_LEFT" spacing="10.0">
+				<Button text="查看所选详情" onAction="#handleDetail"
+					styleClass="secondary-button" />
+				<Button text="我的发布" onAction="#handleMyPublished"
+					styleClass="secondary-button" />
+			</HBox>
+			<Label fx:id="messageLabel" wrapText="true"
+				styleClass="status-text" />
 		</VBox>
-	</left>
-
-	<!-- Main Content Area -->
+	</top>
 	<center>
-		<VBox fx:id="marketplaceView" spacing="20.0"
-			styleClass="plain-panel">
-			<BorderPane.margin>
-				<Insets left="24.0" />
-			</BorderPane.margin>
-
-			<!-- Header & Search -->
-			<VBox spacing="16.0">
-				<HBox alignment="CENTER_LEFT" spacing="16.0">
-					<Label text="商品广场" styleClass="page-title" />
-					<Region HBox.hgrow="ALWAYS" />
-					<Button text="发布商品" onAction="#handlePublish"
-						styleClass="primary-button" />
-				</HBox>
-
-				<HBox alignment="BOTTOM_LEFT" spacing="12.0">
-					<VBox spacing="6.0" HBox.hgrow="ALWAYS">
-						<Label text="搜索" styleClass="field-label" />
-						<TextField fx:id="keywordField"
-							promptText="搜索商品、描述、卖家..." prefWidth="300.0" />
-					</VBox>
-					<VBox spacing="6.0">
-						<Label text="类别" styleClass="field-label" />
-						<ChoiceBox fx:id="categoryBox" prefWidth="140.0" />
-					</VBox>
-					<VBox spacing="6.0">
-						<Label text="排序方式" styleClass="field-label" />
-						<ChoiceBox fx:id="sortBox" prefWidth="140.0" />
-					</VBox>
-					<Button text="筛选" onAction="#handleSearch"
-						styleClass="secondary-button" />
-					<Button fx:id="aiSearchAssistButton" text="AI 助手"
-						onAction="#handleAiSearchAssist" styleClass="secondary-button" />
-					<Button text="清除" onAction="#handleReset"
-						styleClass="secondary-button" />
-				</HBox>
-
-				<Label fx:id="messageLabel" wrapText="true"
-					styleClass="status-text" />
-			</VBox>
-
-			<!-- Table Area -->
-			<VBox spacing="12.0" VBox.vgrow="ALWAYS">
-				<HBox alignment="CENTER_LEFT">
-					<Label text="商品列表" styleClass="section-label" />
-					<Region HBox.hgrow="ALWAYS" />
-					<Button text="查看详情" onAction="#handleDetail"
-						styleClass="secondary-button" />
-				</HBox>
-
-				<TableView fx:id="goodsTable" VBox.vgrow="ALWAYS">
-					<columns>
-						<TableColumn fx:id="titleColumn" text="标题"
-							prefWidth="200.0" />
-						<TableColumn fx:id="priceColumn" text="价格"
-							prefWidth="90.0" />
-						<TableColumn fx:id="categoryColumn" text="类别"
-							prefWidth="110.0" />
-						<TableColumn fx:id="conditionColumn" text="成色"
-							prefWidth="90.0" />
-						<TableColumn fx:id="imageColumn" text="图片"
-							prefWidth="120.0" />
-						<TableColumn fx:id="sellerColumn" text="卖家"
-							prefWidth="120.0" />
-						<TableColumn fx:id="createdAtColumn" text="发布时间"
-							prefWidth="140.0" />
-						<TableColumn fx:id="statusColumn" text="状态"
-							prefWidth="90.0" />
-					</columns>
-				</TableView>
-			</VBox>
+		<VBox spacing="10.0">
+			<padding>
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
+			</padding>
+			<Label text="可购买商品" styleClass="section-label" />
+			<TableView fx:id="goodsTable" VBox.vgrow="ALWAYS">
+				<columns>
+					<TableColumn fx:id="titleColumn" text="商品名称"
+						prefWidth="160.0" />
+					<TableColumn fx:id="categoryColumn" text="分类"
+						prefWidth="90.0" />
+					<TableColumn fx:id="priceColumn" text="现价"
+						prefWidth="80.0" />
+					<TableColumn fx:id="conditionColumn" text="成色"
+						prefWidth="70.0" />
+					<TableColumn fx:id="imageColumn" text="主图"
+						prefWidth="120.0" />
+					<TableColumn fx:id="sellerColumn" text="卖家"
+						prefWidth="100.0" />
+					<TableColumn fx:id="createdAtColumn" text="发布时间"
+						prefWidth="140.0" />
+					<TableColumn fx:id="statusColumn" text="状态"
+						prefWidth="90.0" />
+				</columns>
+			</TableView>
 		</VBox>
 	</center>
 </BorderPane>

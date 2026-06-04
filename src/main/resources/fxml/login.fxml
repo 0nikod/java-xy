@@ -6,47 +6,42 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.VBox?>
 
-<BorderPane styleClass="auth-shell"
+<BorderPane styleClass="auth-split"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.LoginController">
 	<center>
-		<VBox alignment="CENTER" maxWidth="480.0" spacing="24.0"
-			styleClass="hero-panel">
+		<HBox spacing="0" styleClass="hero-panel">
 			<padding>
-				<Insets top="48.0" right="48.0" bottom="48.0" left="48.0" />
+				<Insets top="0" right="0" bottom="0" left="0" />
 			</padding>
-
-			<VBox alignment="CENTER" spacing="8.0">
-				<Label text="欢迎回来" styleClass="title-text" />
-				<Label text="登录校园二手交易平台" styleClass="subtitle-text" />
+			<VBox styleClass="auth-brand" spacing="20.0" alignment="CENTER_LEFT"
+				HBox.hgrow="ALWAYS" minWidth="260">
+				<Label text="校园二手交易平台" styleClass="brand-title" wrapText="true" />
+				<Label text="教材 / 数码 / 服饰 / 生活用品"
+					styleClass="brand-desc" wrapText="true" maxWidth="340" />
 			</VBox>
-
-			<VBox spacing="16.0" prefWidth="380.0">
-				<VBox spacing="8.0">
+			<VBox styleClass="auth-form-card" spacing="16.0"
+				HBox.hgrow="ALWAYS" alignment="CENTER_LEFT" minWidth="300">
+				<Label text="用户登录" styleClass="title-text" />
+				<VBox spacing="6.0">
 					<Label text="用户名" styleClass="field-label" />
-					<TextField fx:id="usernameField" promptText="请输入用户名"
-						prefHeight="42.0" />
+					<TextField fx:id="usernameField" promptText="请输入用户名" />
 				</VBox>
-				<VBox spacing="8.0">
+				<VBox spacing="6.0">
 					<Label text="密码" styleClass="field-label" />
-					<PasswordField fx:id="passwordField"
-						promptText="请输入密码" prefHeight="42.0" />
+					<PasswordField fx:id="passwordField" promptText="请输入密码" />
 				</VBox>
+				<Button text="进入系统" onAction="#handleLogin"
+					styleClass="primary-button" maxWidth="1.7976931348623157E308" />
+				<Button text="注册普通用户" onAction="#handleRegister"
+					styleClass="secondary-button" maxWidth="1.7976931348623157E308" />
+				<Label fx:id="hintLabel" wrapText="true"
+					styleClass="status-text" />
 			</VBox>
-
-			<VBox spacing="12.0" prefWidth="380.0">
-				<Button text="登录" onAction="#handleLogin"
-					styleClass="primary-button" prefWidth="380.0" prefHeight="46.0" />
-				<Button text="创建账号" onAction="#handleRegister"
-					styleClass="secondary-button" prefWidth="380.0" prefHeight="46.0" />
-			</VBox>
-
-			<Label fx:id="hintLabel" wrapText="true" maxWidth="380.0"
-				alignment="CENTER" />
-		</VBox>
+		</HBox>
 	</center>
 </BorderPane>

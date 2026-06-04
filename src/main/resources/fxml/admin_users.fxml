@@ -9,66 +9,55 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.layout.Region?>
 
 <BorderPane styleClass="page-shell"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="com.campus.secondhand.controller.AdminUserController">
-
 	<top>
-		<VBox spacing="16.0">
-			<padding>
-				<Insets bottom="24.0" />
-			</padding>
-			<HBox alignment="CENTER_LEFT" spacing="20.0">
-				<Button text="← 控制台" onAction="#handleBack"
-					styleClass="secondary-button" />
-				<VBox>
-					<Label text="用户管理" styleClass="page-title" />
-					<Label fx:id="currentUserLabel" styleClass="muted-text" />
-				</VBox>
-			</HBox>
-
-			<HBox alignment="BOTTOM_LEFT" spacing="12.0"
-				styleClass="toolbar-panel">
+		<VBox spacing="12.0" styleClass="toolbar-panel">
+			<VBox spacing="4.0">
+				<Label text="用户管理" styleClass="page-title" />
+				<Label fx:id="currentUserLabel" styleClass="subtitle-text" />
+			</VBox>
+			<HBox alignment="CENTER_LEFT" spacing="10.0">
 				<VBox spacing="6.0" HBox.hgrow="ALWAYS">
-					<Label text="搜索用户" styleClass="field-label" />
-					<TextField fx:id="keywordField" promptText="按用户名搜索..."
-						prefWidth="300.0" />
+					<Label text="用户名" styleClass="field-label" />
+					<TextField fx:id="keywordField" promptText="按用户名搜索" />
 				</VBox>
 				<Button text="搜索" onAction="#handleSearch"
 					styleClass="primary-button" />
 				<Button text="重置" onAction="#handleReset"
 					styleClass="secondary-button" />
-
-				<Region HBox.hgrow="ALWAYS" />
-
-				<Button text="封禁用户" onAction="#handleBan"
+				<Button text="封禁所选" onAction="#handleBan"
 					styleClass="danger-button" />
-				<Button text="解封用户" onAction="#handleUnban"
+				<Button text="解封所选" onAction="#handleUnban"
+					styleClass="secondary-button" />
+				<Button text="返回后台" onAction="#handleBack"
 					styleClass="secondary-button" />
 			</HBox>
 			<Label fx:id="summaryLabel" styleClass="status-text" />
 		</VBox>
 	</top>
-
 	<center>
-		<VBox spacing="16.0" styleClass="plain-panel">
-			<Label text="所有用户" styleClass="section-label" />
+		<VBox spacing="10.0">
+			<padding>
+				<Insets top="16.0" right="0.0" bottom="0.0" left="0.0" />
+			</padding>
+			<Label text="用户列表" styleClass="section-label" />
 			<TableView fx:id="userTable" VBox.vgrow="ALWAYS">
 				<columns>
 					<TableColumn fx:id="usernameColumn" text="用户名"
-						prefWidth="180.0" />
+						prefWidth="160.0" />
 					<TableColumn fx:id="phoneColumn" text="联系方式"
-						prefWidth="180.0" />
+						prefWidth="170.0" />
 					<TableColumn fx:id="roleColumn" text="角色"
-						prefWidth="120.0" />
+						prefWidth="100.0" />
 					<TableColumn fx:id="statusColumn" text="状态"
+						prefWidth="100.0" />
+					<TableColumn fx:id="goodsCountColumn" text="发布商品数"
+						prefWidth="130.0" />
+					<TableColumn fx:id="soldCountColumn" text="成交数"
 						prefWidth="120.0" />
-					<TableColumn fx:id="goodsCountColumn" text="上架商品数"
-						prefWidth="140.0" />
-					<TableColumn fx:id="soldCountColumn" text="售出商品数"
-						prefWidth="140.0" />
 				</columns>
 			</TableView>
 		</VBox>
