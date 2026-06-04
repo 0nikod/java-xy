@@ -1,12 +1,33 @@
 /* 
  * app.css - Premium Modern Design System for Campus Secondhand Platform
- * This file replaces the legacy stylesheet with a vibrant, modern UI language.
+ * Modified with DaisyUI "paperair" theme and fixed list row heights.
  */
 
 .root {
+    base-100: #ffffff;
+    base-200: #eff3fa;
+    base-300: #e2e6ed;
+    base-content: #1e2126;
+    primary-color: #636971;
+    primary-content: #f6f8fb;
+    secondary-color: #a8aeb7;
+    secondary-content: #1e2126;
+    accent-color: #353a42;
+    accent-content: #eceef1;
+    neutral-color: #13161a;
+    neutral-content: #dbdee1;
+    info-color: #aad3f1;
+    info-content: #051822;
+    success-color: #9dd1be;
+    success-content: #031a13;
+    warning-color: #ecd3ab;
+    warning-content: #1c1400;
+    error-color: #e69493;
+    error-content: #1d0000;
+
     -fx-font-family: "Inter", "Segoe UI", "Helvetica Neue", "Microsoft YaHei", sans-serif;
-    -fx-background-color: linear-gradient(to bottom right, #F3F4F6, #E5E7EB);
-    -fx-text-fill: #111827;
+    -fx-background-color: base-200;
+    -fx-text-fill: base-content;
 }
 
 /* ========================================================================
@@ -18,7 +39,7 @@
 }
 
 .auth-shell {
-    -fx-background-color: linear-gradient(to bottom right, #EEF2FF, #E0E7FF);
+    -fx-background-color: base-300;
     -fx-padding: 0;
 }
 
@@ -31,7 +52,7 @@
 }
 
 .plain-panel {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: base-100;
     -fx-background-radius: 16;
     -fx-border-radius: 16;
     -fx-padding: 24;
@@ -39,14 +60,14 @@
 }
 
 .toolbar-panel {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: base-100;
     -fx-background-radius: 12;
     -fx-padding: 12 20;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.03), 10, 0, 0, 2);
 }
 
 .sidebar {
-    -fx-background-color: #111827;
+    -fx-background-color: neutral-color;
     -fx-padding: 20 0;
 }
 
@@ -57,41 +78,41 @@
 .title-text {
     -fx-font-size: 32px;
     -fx-font-weight: 800;
-    -fx-text-fill: #111827;
+    -fx-text-fill: base-content;
 }
 
 .page-title {
     -fx-font-size: 24px;
     -fx-font-weight: 700;
-    -fx-text-fill: #111827;
+    -fx-text-fill: base-content;
 }
 
 .section-label {
     -fx-font-size: 18px;
     -fx-font-weight: 600;
-    -fx-text-fill: #374151;
+    -fx-text-fill: base-content;
 }
 
 .subtitle-text {
     -fx-font-size: 14px;
-    -fx-text-fill: #6B7280;
+    -fx-text-fill: secondary-color;
 }
 
 .muted-text {
     -fx-font-size: 13px;
-    -fx-text-fill: #9CA3AF;
+    -fx-text-fill: secondary-color;
 }
 
 .field-label {
     -fx-font-size: 13px;
     -fx-font-weight: 600;
-    -fx-text-fill: #374151;
+    -fx-text-fill: base-content;
 }
 
 .price-text {
     -fx-font-size: 20px;
     -fx-font-weight: 800;
-    -fx-text-fill: #EF4444; /* Red for price */
+    -fx-text-fill: error-color; 
 }
 
 /* ========================================================================
@@ -106,20 +127,20 @@
 }
 
 .status-text {
-    -fx-text-fill: #3B82F6;
-    -fx-background-color: rgba(59, 130, 246, 0.1);
+    -fx-text-fill: info-content;
+    -fx-background-color: info-color;
 }
 .status-text-success {
-    -fx-text-fill: #059669;
-    -fx-background-color: rgba(16, 185, 129, 0.1);
+    -fx-text-fill: success-content;
+    -fx-background-color: success-color;
 }
 .status-text-error {
-    -fx-text-fill: #DC2626;
-    -fx-background-color: rgba(239, 68, 68, 0.1);
+    -fx-text-fill: error-content;
+    -fx-background-color: error-color;
 }
 .status-text-warning {
-    -fx-text-fill: #D97706;
-    -fx-background-color: rgba(245, 158, 11, 0.1);
+    -fx-text-fill: warning-content;
+    -fx-background-color: warning-color;
 }
 
 /* ========================================================================
@@ -127,22 +148,22 @@
    ======================================================================== */
 
 .text-field, .password-field, .text-area {
-    -fx-background-color: #F9FAFB;
+    -fx-background-color: base-100;
     -fx-background-radius: 10;
-    -fx-border-color: #D1D5DB;
+    -fx-border-color: base-300;
     -fx-border-radius: 10;
     -fx-border-width: 1;
     -fx-padding: 10 14;
     -fx-font-size: 14px;
-    -fx-text-fill: #111827;
-    -fx-prompt-text-fill: #9CA3AF;
+    -fx-text-fill: base-content;
+    -fx-prompt-text-fill: secondary-color;
 }
 
 .text-field:focused, .password-field:focused, .text-area:focused {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #6366F1;
+    -fx-background-color: base-100;
+    -fx-border-color: primary-color;
     -fx-border-width: 2;
-    -fx-padding: 9 13; /* compensate for border width */
+    -fx-padding: 9 13; 
     -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.2), 8, 0, 0, 0);
 }
 
@@ -160,61 +181,50 @@
 }
 
 .primary-button {
-    -fx-background-color: linear-gradient(to right, #6366F1, #4F46E5);
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.4), 10, 0, 0, 4);
+    -fx-background-color: primary-color;
+    -fx-text-fill: primary-content;
 }
 
 .primary-button:hover {
-    -fx-background-color: linear-gradient(to right, #4F46E5, #4338CA);
-    -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.6), 14, 0, 0, 6);
+    -fx-background-color: derive(primary-color, -10%);
 }
 
 .primary-button:pressed {
-    -fx-background-color: #3730A3;
-    -fx-effect: none;
+    -fx-background-color: derive(primary-color, -20%);
     -fx-translate-y: 1;
 }
 
 .secondary-button {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #D1D5DB;
-    -fx-border-width: 1;
-    -fx-text-fill: #374151;
-    -fx-padding: 11 23; /* compensate for border */
+    -fx-background-color: secondary-color;
+    -fx-text-fill: secondary-content;
 }
 
 .secondary-button:hover {
-    -fx-background-color: #F3F4F6;
-    -fx-text-fill: #111827;
+    -fx-background-color: derive(secondary-color, -10%);
 }
 
 .secondary-button:pressed {
-    -fx-background-color: #E5E7EB;
+    -fx-background-color: derive(secondary-color, -20%);
     -fx-translate-y: 1;
 }
 
 .danger-button {
-    -fx-background-color: rgba(239, 68, 68, 0.1);
-    -fx-text-fill: #DC2626;
-    -fx-border-color: rgba(239, 68, 68, 0.3);
-    -fx-padding: 11 23;
+    -fx-background-color: error-color;
+    -fx-text-fill: error-content;
 }
 
 .danger-button:hover {
-    -fx-background-color: #EF4444;
-    -fx-text-fill: white;
-    -fx-effect: dropshadow(gaussian, rgba(239, 68, 68, 0.4), 10, 0, 0, 4);
+    -fx-background-color: derive(error-color, -10%);
 }
 
 .danger-button:pressed {
-    -fx-background-color: #B91C1C;
+    -fx-background-color: derive(error-color, -20%);
     -fx-translate-y: 1;
 }
 
 .sidebar-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #9CA3AF;
+    -fx-text-fill: neutral-content;
     -fx-alignment: CENTER_LEFT;
     -fx-padding: 12 24;
     -fx-background-radius: 0;
@@ -222,14 +232,14 @@
 }
 
 .sidebar-button:hover {
-    -fx-background-color: #1F2937;
-    -fx-text-fill: #FFFFFF;
+    -fx-background-color: derive(neutral-color, 20%);
+    -fx-text-fill: base-100;
 }
 
 .sidebar-button.active {
-    -fx-background-color: #374151;
-    -fx-text-fill: #FFFFFF;
-    -fx-border-color: #6366F1;
+    -fx-background-color: derive(neutral-color, 30%);
+    -fx-text-fill: base-100;
+    -fx-border-color: primary-color;
     -fx-border-width: 0 0 0 4;
 }
 
@@ -237,10 +247,10 @@
    CARDS (For items/goods)
    ======================================================================== */
 .goods-card {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: base-100;
     -fx-background-radius: 16;
     -fx-border-radius: 16;
-    -fx-border-color: #E5E7EB;
+    -fx-border-color: base-300;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.03), 10, 0, 0, 4);
 }
 
@@ -250,7 +260,7 @@
 }
 
 .image-preview {
-    -fx-background-color: #F3F4F6;
+    -fx-background-color: base-200;
     -fx-background-radius: 16 16 0 0;
 }
 
@@ -264,23 +274,34 @@
     -fx-font-weight: 700;
 }
 
-.badge-active { -fx-background-color: rgba(16, 185, 129, 0.1); -fx-text-fill: #059669; }
-.badge-sold { -fx-background-color: rgba(107, 114, 128, 0.1); -fx-text-fill: #4B5563; }
-.badge-pending { -fx-background-color: rgba(245, 158, 11, 0.1); -fx-text-fill: #D97706; }
-.badge-offline { -fx-background-color: rgba(239, 68, 68, 0.1); -fx-text-fill: #DC2626; }
+.badge-active { -fx-background-color: success-color; -fx-text-fill: success-content; }
+.badge-sold { -fx-background-color: secondary-color; -fx-text-fill: secondary-content; }
+.badge-pending { -fx-background-color: warning-color; -fx-text-fill: warning-content; }
+.badge-offline { -fx-background-color: error-color; -fx-text-fill: error-content; }
 
 /* ========================================================================
    COMPONENTS (TableView, ComboBox, Tabs, etc)
    ======================================================================== */
+   
+.list-cell {
+    -fx-padding: 8 12;
+    -fx-min-height: 56px; /* FIX: Increases minimum row height so UI is not cut off, allows expanding for images */
+}
+
+.list-cell:empty {
+    -fx-background-color: transparent;
+    -fx-min-height: 0;
+}
+
 .table-view {
     -fx-background-color: transparent;
-    -fx-border-color: #E5E7EB;
+    -fx-border-color: base-300;
     -fx-border-radius: 12;
     -fx-background-radius: 12;
 }
 
 .table-view .column-header-background {
-    -fx-background-color: #F9FAFB;
+    -fx-background-color: base-100;
     -fx-background-radius: 12 12 0 0;
     -fx-padding: 0 0 2 0;
 }
@@ -288,54 +309,64 @@
 .table-view .column-header {
     -fx-background-color: transparent;
     -fx-size: 40px;
-    -fx-border-color: transparent transparent #E5E7EB transparent;
+    -fx-border-color: transparent transparent base-300 transparent;
 }
 
 .table-view .column-header .label {
-    -fx-text-fill: #6B7280;
+    -fx-text-fill: secondary-color;
     -fx-font-weight: 700;
     -fx-font-size: 12px;
 }
 
 .table-row-cell {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: transparent transparent #F3F4F6 transparent;
+    -fx-background-color: base-100;
+    -fx-border-color: transparent transparent base-200 transparent;
     -fx-padding: 4 0;
+    -fx-cell-size: 56px; /* FIX: Increases default row height for TableView */
+}
+
+.table-row-cell:empty {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
 }
 
 .table-row-cell:hover {
-    -fx-background-color: #F9FAFB;
+    -fx-background-color: base-200;
 }
 
 .table-row-cell:selected {
-    -fx-background-color: #EEF2FF;
+    -fx-background-color: primary-color;
+    -fx-text-fill: primary-content;
 }
 
 .table-cell {
-    -fx-text-fill: #374151;
+    -fx-text-fill: base-content;
     -fx-font-size: 14px;
+}
+.table-row-cell:selected .table-cell {
+    -fx-text-fill: primary-content;
 }
 
 .choice-box, .combo-box {
-    -fx-background-color: #FFFFFF;
-    -fx-border-color: #D1D5DB;
+    -fx-background-color: base-100;
+    -fx-border-color: base-300;
     -fx-border-radius: 8;
     -fx-background-radius: 8;
     -fx-padding: 6 12;
 }
 
 .choice-box:hover, .combo-box:hover {
-    -fx-border-color: #9CA3AF;
+    -fx-border-color: secondary-color;
 }
 
 .choice-box:focused, .combo-box:focused {
-    -fx-border-color: #6366F1;
+    -fx-border-color: primary-color;
     -fx-effect: dropshadow(gaussian, rgba(99, 102, 241, 0.2), 6, 0, 0, 0);
 }
 
 .tab-pane .tab-header-background {
     -fx-background-color: transparent;
-    -fx-border-color: transparent transparent #E5E7EB transparent;
+    -fx-border-color: transparent transparent base-300 transparent;
 }
 
 .tab-pane .tab {
@@ -344,17 +375,17 @@
 }
 
 .tab-pane .tab:selected {
-    -fx-border-color: transparent transparent #6366F1 transparent;
+    -fx-border-color: transparent transparent primary-color transparent;
     -fx-border-width: 0 0 3 0;
 }
 
 .tab-pane .tab .tab-label {
-    -fx-text-fill: #6B7280;
+    -fx-text-fill: secondary-color;
     -fx-font-size: 14px;
     -fx-font-weight: 600;
 }
 
 .tab-pane .tab:selected .tab-label {
-    -fx-text-fill: #6366F1;
+    -fx-text-fill: primary-color;
     -fx-font-weight: 700;
 }

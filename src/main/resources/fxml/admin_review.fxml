@@ -68,8 +68,8 @@
                 </VBox>
                 
                 <HBox spacing="12.0">
-                    <Button text="Delete Violation" onAction="#handleDelete" styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Double.MAX_VALUE" />
-                    <Button text="Approve Item" onAction="#handleApprove" styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Double.MAX_VALUE" />
+                    <Button text="Delete Violation" onAction="#handleDelete" styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                    <Button text="Approve Item" onAction="#handleApprove" styleClass="primary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
                 </HBox>
             </VBox>
         </HBox>

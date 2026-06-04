@@ -92,10 +92,10 @@
                 <ListView fx:id="imageListView" prefHeight="120.0" />
                 
                 <VBox spacing="10.0">
-                    <Button text="Add Photos" onAction="#handleAddImages" styleClass="secondary-button" maxWidth="Double.MAX_VALUE" />
-                    <HBox spacing="10.0">
-                        <Button text="Set as Cover" onAction="#handleSetPrimaryImage" styleClass="secondary-button" HBox.hgrow="ALWAYS" maxWidth="Double.MAX_VALUE" />
-                        <Button text="Remove" onAction="#handleRemoveImage" styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Double.MAX_VALUE" />
+                    <Button text="Add Photos" onAction="#handleAddImages" styleClass="secondary-button" maxWidth="Infinity" />
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Button text="Set as Cover" onAction="#handleSetPrimaryImage" styleClass="secondary-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                        <Button text="Remove" onAction="#handleRemoveImage" styleClass="danger-button" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
                     </HBox>
                 </VBox>
             </VBox>
