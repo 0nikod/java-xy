@@ -22,7 +22,6 @@
                 <Insets bottom="24.0" />
             </padding>
             <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Button text="← Back" onAction="#handleBack" styleClass="secondary-button" />
                 <VBox>
                     <Label text="User Center" styleClass="page-title" />
                     <Label fx:id="currentUserLabel" styleClass="muted-text" />

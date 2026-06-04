@@ -20,7 +20,6 @@
                 <Insets bottom="24.0" />
             </padding>
             <HBox alignment="CENTER_LEFT" spacing="20.0">
-                <Button text="← Back" onAction="#handleBack" styleClass="secondary-button" />
                 <Label text="Shopping Cart" styleClass="page-title" />
                 <Region HBox.hgrow="ALWAYS" />
                 <VBox alignment="CENTER_RIGHT">

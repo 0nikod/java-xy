@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.Region?>
 
-<BorderPane styleClass="page-shell"
+<BorderPane fx:id="rootPane" styleClass="page-shell"
     xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.campus.secondhand.controller.UserHomeController">
     
@@ -38,10 +38,10 @@
             </VBox>
             
             <!-- Navigation Links -->
-            <Button text="Marketplace" styleClass="sidebar-button, active" prefWidth="240.0" />
-            <Button text="My Published" onAction="#handleMyPublished" styleClass="sidebar-button" prefWidth="240.0" />
-            <Button text="My Cart" onAction="#handleCart" styleClass="sidebar-button" prefWidth="240.0" />
-            <Button text="User Center" onAction="#handleUserCenter" styleClass="sidebar-button" prefWidth="240.0" />
+            <Button fx:id="navMarketplace" text="Marketplace" onAction="#handleMarketplace" styleClass="sidebar-button, active" prefWidth="240.0" />
+            <Button fx:id="navPublished" text="My Published" onAction="#handleMyPublished" styleClass="sidebar-button" prefWidth="240.0" />
+            <Button fx:id="navCart" text="My Cart" onAction="#handleCart" styleClass="sidebar-button" prefWidth="240.0" />
+            <Button fx:id="navUserCenter" text="User Center" onAction="#handleUserCenter" styleClass="sidebar-button" prefWidth="240.0" />
             
             <Region VBox.vgrow="ALWAYS" />
             
@@ -51,7 +51,7 @@
     
     <!-- Main Content Area -->
     <center>
-        <VBox spacing="20.0" styleClass="plain-panel">
+        <VBox fx:id="marketplaceView" spacing="20.0" styleClass="plain-panel">
             <BorderPane.margin>
                 <Insets left="24.0" />
             </BorderPane.margin>

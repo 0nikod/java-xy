@@ -23,8 +23,27 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.scene.Node;
+import javafx.fxml.FXMLLoader;
+import java.io.IOException;
 public class UserHomeController {
+
+	@FXML
+	private BorderPane rootPane;
+
+	@FXML
+	private VBox marketplaceView;
+
+	@FXML
+	private Button navMarketplace;
+	@FXML
+	private Button navPublished;
+	@FXML
+	private Button navCart;
+	@FXML
+	private Button navUserCenter;
 
 	@FXML
 	private Label currentUserLabel;
@@ -139,8 +158,26 @@ public class UserHomeController {
 	}
 
 	@FXML
+	private void handleMarketplace() {
+		rootPane.setCenter(marketplaceView);
+		setActiveNav(navMarketplace);
+		refreshGoods();
+	}
+
+	@FXML
 	private void handleUserCenter() {
-		SceneManager.show("user_center.fxml", AppConfig.getAppTitle());
+		User currentUser = Session.getCurrentUser();
+		if (currentUser == null) {
+			SceneManager.show("login.fxml", AppConfig.getAppTitle());
+			return;
+		}
+		try {
+			Node view = FXMLLoader.load(getClass().getResource("/fxml/user_center.fxml"));
+			rootPane.setCenter(view);
+			setActiveNav(navUserCenter);
+		} catch (IOException e) {
+			setMessage("无法加载页面");
+		}
 	}
 
 	@FXML
@@ -150,7 +187,13 @@ public class UserHomeController {
 			SceneManager.show("login.fxml", AppConfig.getAppTitle());
 			return;
 		}
-		SceneManager.show("cart.fxml", AppConfig.getAppTitle());
+		try {
+			Node view = FXMLLoader.load(getClass().getResource("/fxml/cart.fxml"));
+			rootPane.setCenter(view);
+			setActiveNav(navCart);
+		} catch (IOException e) {
+			setMessage("无法加载页面");
+		}
 	}
 
 	@FXML
@@ -171,9 +214,23 @@ public class UserHomeController {
 			SceneManager.show("login.fxml", AppConfig.getAppTitle());
 			return;
 		}
+		rootPane.setCenter(marketplaceView);
+		setActiveNav(navPublished);
 		List<Goods> goods = goodsService.listUserPublishedGoods(currentUser);
 		goodsTable.setItems(FXCollections.observableArrayList(goods));
 		setMessage("已切换到我发布的商品列表。");
+	}
+
+	private void setActiveNav(Button activeBtn) {
+		if (navMarketplace != null) navMarketplace.getStyleClass().remove("active");
+		if (navPublished != null) navPublished.getStyleClass().remove("active");
+		if (navCart != null) navCart.getStyleClass().remove("active");
+		if (navUserCenter != null) navUserCenter.getStyleClass().remove("active");
+		if (activeBtn != null) {
+			if (!activeBtn.getStyleClass().contains("active")) {
+				activeBtn.getStyleClass().add("active");
+			}
+		}
 	}
 
 	@FXML
