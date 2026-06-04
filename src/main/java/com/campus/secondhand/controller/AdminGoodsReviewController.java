@@ -174,7 +174,7 @@ public class AdminGoodsReviewController {
 		builder.append("分类：").append(goods.getCategory()).append('\n');
 		builder.append("卖家：").append(goods.getSellerUsername()).append('\n');
 		builder.append("现价：").append(goods.getCurrentPrice()).append('\n');
-		builder.append("成色：").append(goods.getConditionLevel()).append('\n');
+		builder.append("成色：").append(goods.getConditionText()).append('\n');
 		builder.append("描述：").append(goods.getDescription()).append('\n');
 		builder.append("主图：").append(goods.getPrimaryImagePath() == null ? "无" : goods.getPrimaryImagePath());
 		if (detailLabel != null) {

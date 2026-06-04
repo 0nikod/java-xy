@@ -42,6 +42,18 @@ public class AdminStatsController {
 	private Button refreshButton;
 
 	@FXML
+	private Label statTotalGoodsLabel;
+
+	@FXML
+	private Label statTotalUsersLabel;
+
+	@FXML
+	private Label statTodayOrdersLabel;
+
+	@FXML
+	private Label statTotalRevenueLabel;
+
+	@FXML
 	private PieChart categoryPieChart;
 
 	@FXML
@@ -118,12 +130,24 @@ public class AdminStatsController {
 	private void refreshStats() {
 		// 汇总卡片、AI 文案和三类图表共用同一批统计数据，确保口径一致。
 		StatsSummary summary = statisticsService.loadSummary();
+		if (statTotalGoodsLabel != null) {
+			statTotalGoodsLabel.setText(String.valueOf(summary.getTotalGoods()));
+		}
+		if (statTotalUsersLabel != null) {
+			statTotalUsersLabel.setText(String.valueOf(summary.getTotalUsers()));
+		}
+		if (statTodayOrdersLabel != null) {
+			statTodayOrdersLabel.setText(String.valueOf(summary.getTodayOrders()));
+		}
+		if (statTotalRevenueLabel != null) {
+			statTotalRevenueLabel.setText(String.format("%.0f", summary.getTotalRevenue()));
+		}
 		if (statsCardLabel != null) {
-			statsCardLabel.setText(String.format(
-					"用户总数：%d | 正常：%d | 封禁：%d | 商品总数：%d | 在售：%d | 待审核：%d | 已成交订单：%d | 今日成交量：%d | 成交额：%.2f 元",
-					summary.getTotalUsers(), summary.getNormalUsers(), summary.getBannedUsers(),
-					summary.getTotalGoods(), summary.getOnSaleGoods(), summary.getPendingGoods(),
-					summary.getTotalOrders(), summary.getTodayOrders(), summary.getTotalRevenue()));
+			statsCardLabel
+					.setText(String.format("用户总数：%d | 正常：%d | 封禁：%d | 商品总数：%d | 在售：%d | 待审核：%d | 已成交订单：%d | 今日成交量：%d | 成交额：%.2f 元",
+							summary.getTotalUsers(), summary.getNormalUsers(), summary.getBannedUsers(),
+							summary.getTotalGoods(), summary.getOnSaleGoods(), summary.getPendingGoods(),
+							summary.getTotalOrders(), summary.getTodayOrders(), summary.getTotalRevenue()));
 		}
 		if (aiSummaryLabel != null) {
 			aiSummaryLabel.setText("");
