@@ -84,7 +84,7 @@ public class Stage2FlowTest {
 		User buyer = userService.register("buyer", "buyer123", "13800138002");
 		User admin = userService.login("admin", "admin123");
 
-		Goods published = goodsService.publishGoods(seller, "Java 课程教材", "教材", 89.0, 45.0, 9, "课堂配套教材，少量笔记");
+		Goods published = goodsService.publishGoods(seller, "Java 课程教材", "教材", 89.0, 45.0, 5, "课堂配套教材，少量笔记");
 		Assert.assertEquals(GoodsStatus.PENDING, goodsService.getGoodsDetail(published.getId()).getStatus());
 
 		goodsService.approveGoods(admin, published.getId());

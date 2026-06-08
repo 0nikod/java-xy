@@ -130,11 +130,36 @@ public class Goods {
 	}
 
 	public String getStatusText() {
-		return status == null ? "" : status.name();
+		if (status == null) {
+			return "";
+		}
+		switch (status) {
+			case ON_SALE:
+				return "在售";
+			case PENDING:
+				return "待审核";
+			case SOLD:
+				return "已售出";
+			case OFF_SHELF:
+				return "已下架";
+			default:
+				return status.name();
+		}
 	}
 
 	public String getConditionText() {
-		return conditionLevel == null ? "" : String.valueOf(conditionLevel);
+		if (conditionLevel == null) {
+			return "";
+		}
+		int level = Math.max(1, Math.min(5, conditionLevel));
+		StringBuilder stars = new StringBuilder();
+		for (int i = 0; i < level; i++) {
+			stars.append('★');
+		}
+		for (int i = level; i < 5; i++) {
+			stars.append('☆');
+		}
+		return stars.toString();
 	}
 
 	public String getPrimaryImageName() {

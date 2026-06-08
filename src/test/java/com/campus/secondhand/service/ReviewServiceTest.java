@@ -38,7 +38,7 @@ public class ReviewServiceTest {
 		User seller = userService.login("demo_user", "user123");
 		User buyer = userService.login("demo_buyer", "buyer123");
 		User admin = userService.login("admin", "admin123");
-		Goods goods = goodsService.publishGoods(seller, "评价测试教材", "教材", 80.0, 40.0, 9, "用于评价测试");
+		Goods goods = goodsService.publishGoods(seller, "评价测试教材", "教材", 80.0, 40.0, 5, "用于评价测试");
 		goodsService.approveGoods(admin, goods.getId());
 		Order order = orderService.purchaseGoods(buyer, goods.getId());
 

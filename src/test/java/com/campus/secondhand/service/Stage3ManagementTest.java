@@ -51,7 +51,7 @@ public class Stage3ManagementTest {
 		int soldBefore = orderService.listSoldOrders(seller).size();
 		int purchasedBefore = orderService.listPurchasedOrders(buyer).size();
 
-		Goods goods = goodsService.publishGoods(seller, "离散数学教材", "教材", 68.0, 36.0, 8, "适合期末复习");
+		Goods goods = goodsService.publishGoods(seller, "离散数学教材", "教材", 68.0, 36.0, 4, "适合期末复习");
 		goodsService.approveGoods(admin, goods.getId());
 		Order order = orderService.purchaseGoods(buyer, goods.getId());
 
@@ -72,11 +72,11 @@ public class Stage3ManagementTest {
 
 		userService.banUser(admin, target.getId());
 		User banned = userService.getById(target.getId());
-		Assert.assertEquals("BANNED", banned.getStatusText());
+		Assert.assertEquals("已封禁", banned.getStatusText());
 
 		userService.unbanUser(admin, target.getId());
 		User recovered = userService.getById(target.getId());
-		Assert.assertEquals("NORMAL", recovered.getStatusText());
+		Assert.assertEquals("正常", recovered.getStatusText());
 
 		List<AdminLog> logs = adminLogService.listRecent();
 		Assert.assertTrue(logs.stream()
@@ -97,11 +97,11 @@ public class Stage3ManagementTest {
 		User seller = userService.login("demo_user", "user123");
 		User buyer = userService.register("stats_buyer", "buyer123", "13800138005");
 
-		Goods approvedGoods = goodsService.publishGoods(seller, "高数辅导书", "教材", 48.0, 25.0, 7, "刷题用书");
+		Goods approvedGoods = goodsService.publishGoods(seller, "高数辅导书", "教材", 48.0, 25.0, 4, "刷题用书");
 		goodsService.approveGoods(admin, approvedGoods.getId());
 		orderService.purchaseGoods(buyer, approvedGoods.getId());
 
-		Goods pendingGoods = goodsService.publishGoods(seller, "宿舍收纳箱", "生活用品", 30.0, 18.0, 8, "九成新");
+		Goods pendingGoods = goodsService.publishGoods(seller, "宿舍收纳箱", "生活用品", 30.0, 18.0, 4, "成色良好");
 		Assert.assertEquals(GoodsStatus.PENDING, goodsService.getGoodsDetail(pendingGoods.getId()).getStatus());
 
 		StatsSummary summary = statisticsService.loadSummary();
@@ -132,7 +132,7 @@ public class Stage3ManagementTest {
 		User admin = userService.login("admin", "admin123");
 		User seller = userService.login("demo_user", "user123");
 
-		Goods goods = goodsService.publishGoods(seller, "图像测试教材", "教材", 66.0, 32.0, 7, "包含图片测试");
+		Goods goods = goodsService.publishGoods(seller, "图像测试教材", "教材", 66.0, 32.0, 4, "包含图片测试");
 
 		Path imageA = tempDatabase.resolve("image-a.jpg");
 		Path imageB = tempDatabase.resolve("image-b.jpg");

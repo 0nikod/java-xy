@@ -187,7 +187,7 @@ public class GoodsDetailController {
 			priceLabel.setStyle("-fx-text-fill: red;");
 		}
 		if (conditionLabel != null) {
-			conditionLabel.setText("新旧程度：" + latest.getConditionLevel());
+			conditionLabel.setText("新旧程度：" + latest.getConditionText());
 		}
 		if (sellerLabel != null) {
 			sellerLabel.setText("卖家：" + latest.getSellerUsername());

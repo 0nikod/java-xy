@@ -75,7 +75,7 @@ public class PublishGoodsController {
 			categoryBox.getSelectionModel().selectFirst();
 		}
 		if (conditionField != null) {
-			conditionField.setText("8");
+			conditionField.setText("5");
 		}
 		if (imageListView != null) {
 			imageListView.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {

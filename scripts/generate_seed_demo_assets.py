@@ -246,7 +246,7 @@ def build_goods_records(
         category = CATEGORIES[ordinal % len(CATEGORIES)]
         status = STATUS_SEQUENCE[ordinal % len(STATUS_SEQUENCE)]
         title = build_title(category, ordinal)
-        condition_level = 6 + (ordinal % 5)
+        condition_level = (ordinal % 5) + 1
         current_price = build_current_price(category, ordinal)
         original_price = round(current_price * (1.25 + 0.08 * (ordinal % 4)), 2)
         created_at = BASE_CREATED_AT + timedelta(hours=ordinal * 3)

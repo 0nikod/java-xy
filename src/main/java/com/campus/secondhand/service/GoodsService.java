@@ -51,8 +51,8 @@ public class GoodsService {
 		if (currentPrice <= 0) {
 			throw new BusinessException("现价必须大于 0");
 		}
-		if (conditionLevel < 1 || conditionLevel > 10) {
-			throw new BusinessException("新旧程度必须在 1 到 10 之间");
+		if (conditionLevel < 1 || conditionLevel > 5) {
+			throw new BusinessException("新旧程度必须在 1 到 5 之间");
 		}
 
 		Goods goods = new Goods();
@@ -298,8 +298,8 @@ public class GoodsService {
 	}
 
 	private String buildGoodsContext(Goods goods) {
-		return String.format("商品：%s；分类：%s；原价：%.2f；现价：%.2f；成色：%d/10；卖家：%s；状态：%s；描述：%s", goods.getTitle(),
-				goods.getCategory(), goods.getOriginalPrice(), goods.getCurrentPrice(), goods.getConditionLevel(),
+		return String.format("商品：%s；分类：%s；原价：%.2f；现价：%.2f；成色：%s；卖家：%s；状态：%s；描述：%s", goods.getTitle(),
+				goods.getCategory(), goods.getOriginalPrice(), goods.getCurrentPrice(), goods.getConditionText(),
 				goods.getSellerUsername(), goods.getStatusText(), goods.getDescription());
 	}
 

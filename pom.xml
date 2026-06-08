@@ -20,7 +20,6 @@
         <sqlite.jdbc.version>3.49.1.0</sqlite.jdbc.version>
         <openai.java.version>4.35.0</openai.java.version>
         <javafx.version>20.0.2</javafx.version>
-        <javafx.platform>linux</javafx.platform>
         <junit.version>4.13.2</junit.version>
     </properties>
 
@@ -35,13 +34,11 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-controls</artifactId>
             <version>${javafx.version}</version>
-            <classifier>${javafx.platform}</classifier>
         </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-fxml</artifactId>
             <version>${javafx.version}</version>
-            <classifier>${javafx.platform}</classifier>
         </dependency>
 
         <dependency>

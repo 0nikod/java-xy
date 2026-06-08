@@ -103,7 +103,15 @@ public class Order {
 	}
 
 	public String getStatusText() {
-		return status == null ? "" : status.name();
+		if (status == null) {
+			return "";
+		}
+		switch (status) {
+			case FINISHED:
+				return "已完成";
+			default:
+				return status.name();
+		}
 	}
 
 	public String getDealPriceText() {

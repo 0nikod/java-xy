@@ -40,8 +40,8 @@ public class CartServiceTest {
 		User buyer = userService.login("demo_buyer", "buyer123");
 		User admin = userService.login("admin", "admin123");
 
-		Goods first = goodsService.publishGoods(seller, "购物车教材 A", "教材", 60.0, 30.0, 8, "适合批量结算测试");
-		Goods second = goodsService.publishGoods(seller, "购物车教材 B", "教材", 70.0, 35.0, 9, "适合批量结算测试");
+		Goods first = goodsService.publishGoods(seller, "购物车教材 A", "教材", 60.0, 30.0, 4, "适合批量结算测试");
+		Goods second = goodsService.publishGoods(seller, "购物车教材 B", "教材", 70.0, 35.0, 5, "适合批量结算测试");
 		goodsService.approveGoods(admin, first.getId());
 		goodsService.approveGoods(admin, second.getId());
 

@@ -76,7 +76,7 @@ public class UserHomeController {
 	private TableColumn<Goods, Double> priceColumn;
 
 	@FXML
-	private TableColumn<Goods, Integer> conditionColumn;
+	private TableColumn<Goods, String> conditionColumn;
 
 	@FXML
 	private TableColumn<Goods, String> imageColumn;
@@ -268,7 +268,7 @@ public class UserHomeController {
 			});
 		}
 		if (conditionColumn != null) {
-			conditionColumn.setCellValueFactory(new PropertyValueFactory<Goods, Integer>("conditionLevel"));
+			conditionColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("conditionText"));
 		}
 		if (imageColumn != null) {
 			imageColumn.setCellValueFactory(new PropertyValueFactory<Goods, String>("primaryImageName"));
