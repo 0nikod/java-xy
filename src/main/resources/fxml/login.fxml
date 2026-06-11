@@ -6,53 +6,62 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <BorderPane styleClass="auth-shell"
     xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
     fx:controller="com.campus.secondhand.controller.LoginController"
-    prefWidth="820.0" prefHeight="520.0">
+    prefWidth="1000.0" prefHeight="640.0">
     <center>
-        <HBox alignment="CENTER" spacing="0.0">
-            <!-- 左侧：标题区域，宽度从 300 增加到 360 -->
-            <VBox alignment="CENTER" spacing="8.0"
-                  prefWidth="360.0" styleClass="hero-panel">
+        <VBox alignment="CENTER">
+            <HBox styleClass="login-card" alignment="CENTER">
+            <padding>
+                <Insets top="0" right="0" bottom="0" left="0" />
+            </padding>
+
+            <!-- 左侧：品牌装饰区域 -->
+            <VBox styleClass="login-brand" alignment="CENTER" spacing="12.0"
+                  prefWidth="320.0">
                 <padding>
-                    <Insets top="48.0" right="48.0" bottom="48.0" left="48.0" />
+                    <Insets top="48.0" right="32.0" bottom="48.0" left="32.0" />
                 </padding>
-                <Label text="欢迎回来" styleClass="title-text" />
-                <Label text="登录校园二手交易平台" styleClass="subtitle-text" />
+                <Label styleClass="brand-icon" />
+                <Label text="欢迎回来" styleClass="brand-title" />
+                <Label text="登录校园二手交易平台" styleClass="brand-subtitle" />
+                <VBox spacing="10.0" alignment="CENTER_LEFT">
+                    <padding>
+                        <Insets top="24.0" right="0" bottom="0" left="0" />
+                    </padding>
+                </VBox>
             </VBox>
 
-            <!-- 右侧：表单区域，宽度从 380 增加到 440 -->
-            <VBox alignment="CENTER" spacing="16.0"
-                  prefWidth="440.0" styleClass="hero-panel">
+            <!-- 右侧：登录表单区域 -->
+            <VBox styleClass="login-form" alignment="CENTER" spacing="20.0"
+                  prefWidth="420.0">
                 <padding>
                     <Insets top="48.0" right="48.0" bottom="48.0" left="48.0" />
                 </padding>
 
-                <GridPane hgap="12.0" vgap="12.0">
-                    <columnConstraints>
-                        <ColumnConstraints halignment="RIGHT" minWidth="50.0" />
-                        <ColumnConstraints hgrow="ALWAYS" />
-                    </columnConstraints>
-                    <Label text="用户名" styleClass="field-label"
-                           GridPane.rowIndex="0" GridPane.columnIndex="0" />
-                    <TextField fx:id="usernameField" promptText="请输入用户名"
-                               prefHeight="42.0"
-                               GridPane.rowIndex="0" GridPane.columnIndex="1" />
-                    <Label text="密码" styleClass="field-label"
-                           GridPane.rowIndex="1" GridPane.columnIndex="0" />
-                    <PasswordField fx:id="passwordField" promptText="请输入密码"
-                                   prefHeight="42.0"
-                                   GridPane.rowIndex="1" GridPane.columnIndex="1" />
-                </GridPane>
+                <VBox spacing="4.0">
+                    <Label text="登录" styleClass="login-form-title" />
+                    <Label text="请输入账号和密码以继续" styleClass="login-form-desc" />
+                </VBox>
 
-                <!-- 按钮组跟随右侧区域自动伸展 -->
-                <VBox spacing="12.0" maxWidth="Infinity">
+                <VBox spacing="16.0">
+                    <VBox spacing="6.0">
+                        <Label text="用户名" styleClass="field-label" />
+                        <TextField fx:id="usernameField" promptText="请输入用户名"
+                                   prefHeight="44.0" styleClass="login-input" />
+                    </VBox>
+                    <VBox spacing="6.0">
+                        <Label text="密码" styleClass="field-label" />
+                        <PasswordField fx:id="passwordField" promptText="请输入密码"
+                                       prefHeight="44.0" styleClass="login-input" />
+                    </VBox>
+                </VBox>
+
+                <VBox spacing="12.0">
                     <Button text="登录" onAction="#handleLogin"
                             styleClass="primary-button" prefHeight="46.0"
                             maxWidth="Infinity" />
@@ -62,8 +71,9 @@
                 </VBox>
 
                 <Label fx:id="hintLabel" wrapText="true"
-                       alignment="CENTER" />
+                       alignment="CENTER" styleClass="hint-text" />
             </VBox>
         </HBox>
+        </VBox>
     </center>
 </BorderPane>

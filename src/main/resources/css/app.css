@@ -389,3 +389,87 @@
     -fx-text-fill: primary-color;
     -fx-font-weight: 700;
 }
+
+/* ========================================================================
+   LOGIN PAGE - Centered Card Layout
+   ======================================================================== */
+
+.login-card {
+    -fx-background-color: base-100;
+    -fx-background-radius: 20;
+    -fx-border-radius: 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 40, 0, 0, 10);
+    -fx-max-width: 760px;
+}
+
+.login-brand {
+    -fx-background-color: linear-gradient(to bottom right, derive(primary-color, 30%), derive(primary-color, -10%));
+    -fx-background-radius: 20 0 0 20;
+}
+
+.brand-icon {
+    -fx-min-width: 56px;
+    -fx-min-height: 56px;
+    -fx-max-width: 56px;
+    -fx-max-height: 56px;
+    -fx-background-color: derive(primary-content, -75%);
+    -fx-background-radius: 28;
+}
+
+.brand-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: 800;
+    -fx-text-fill: primary-content;
+}
+
+.brand-subtitle {
+    -fx-font-size: 14px;
+    -fx-text-fill: derive(primary-content, -25%);
+}
+
+.brand-feature {
+    -fx-font-size: 13px;
+    -fx-text-fill: derive(primary-content, -15%);
+    -fx-font-weight: 500;
+}
+
+.login-form {
+    -fx-background-color: base-100;
+    -fx-background-radius: 0 20 20 0;
+}
+
+.login-form-title {
+    -fx-font-size: 24px;
+    -fx-font-weight: 700;
+    -fx-text-fill: base-content;
+}
+
+.login-form-desc {
+    -fx-font-size: 13px;
+    -fx-text-fill: secondary-color;
+}
+
+.login-input {
+    -fx-background-color: base-200;
+    -fx-background-radius: 10;
+    -fx-border-color: base-300;
+    -fx-border-radius: 10;
+    -fx-border-width: 1;
+    -fx-padding: 10 14;
+    -fx-font-size: 14px;
+}
+
+.login-input:focused {
+    -fx-background-color: base-100;
+    -fx-border-color: primary-color;
+    -fx-border-width: 2;
+    -fx-padding: 9 13;
+    -fx-effect: dropshadow(gaussian, derive(primary-color, -20%), 8, 0, 0, 0);
+}
+
+.hint-text {
+    -fx-font-size: 12px;
+    -fx-text-fill: base-content;
+    -fx-padding: 4 0;
+    -fx-wrap-text: true;
+}
