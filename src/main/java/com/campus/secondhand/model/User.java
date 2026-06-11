@@ -97,11 +97,11 @@ public class User {
 			return "";
 		}
 		switch (role) {
-			case ADMIN:
+			case ADMIN :
 				return "管理员";
-			case USER:
+			case USER :
 				return "普通用户";
-			default:
+			default :
 				return role.name();
 		}
 	}
@@ -114,11 +114,11 @@ public class User {
 			return "";
 		}
 		switch (status) {
-			case NORMAL:
+			case NORMAL :
 				return "正常";
-			case BANNED:
+			case BANNED :
 				return "已封禁";
-			default:
+			default :
 				return status.name();
 		}
 	}

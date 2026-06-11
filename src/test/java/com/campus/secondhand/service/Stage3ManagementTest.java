@@ -123,6 +123,25 @@ public class Stage3ManagementTest {
 	}
 
 	@Test
+	public void adminAiAnalysisShouldWriteOperationLogs() {
+		// 管理员触发 AI 运营分析和统计图解读时，应按需求写入操作日志。
+		UserService userService = new UserService();
+		StatisticsService statisticsService = new StatisticsService();
+		AdminLogService adminLogService = new AdminLogService();
+
+		User admin = userService.login("admin", "admin123");
+
+		String summary = statisticsService.buildSummaryTextStreaming(admin, null);
+		String interpretation = statisticsService.buildInterpretationTextStreaming(admin, null);
+
+		Assert.assertNotNull(summary);
+		Assert.assertNotNull(interpretation);
+		List<AdminLog> logs = adminLogService.listRecent();
+		Assert.assertTrue(logs.stream().anyMatch(log -> "AI_OPERATIONS_SUMMARY".equals(log.getAction())));
+		Assert.assertTrue(logs.stream().anyMatch(log -> "AI_STATS_INTERPRETATION".equals(log.getAction())));
+	}
+
+	@Test
 	public void imageStorageAndViolationDeleteShouldWork() throws Exception {
 		// 验证图片保存成功后，违规删除仍能正确记录日志。
 		UserService userService = new UserService();

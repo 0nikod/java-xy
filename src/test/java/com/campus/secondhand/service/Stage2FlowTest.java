@@ -105,6 +105,28 @@ public class Stage2FlowTest {
 	}
 
 	@Test
+	public void publicGoodsShouldHidePendingGoodsAndBannedSellerGoods() {
+		UserService userService = new UserService();
+		GoodsService goodsService = new GoodsService();
+
+		User seller = userService.register("visible_seller", "user123", "13800138007");
+		User admin = userService.login("admin", "admin123");
+		Goods pending = goodsService.publishGoods(seller, "可见性待审核教材", "教材", 50.0, 25.0, 4, "未审核时不可见");
+		Goods approved = goodsService.publishGoods(seller, "可见性封禁卖家教材", "教材", 60.0, 30.0, 4, "卖家封禁后不可见");
+		goodsService.approveGoods(admin, approved.getId());
+
+		Assert.assertFalse(goodsService.listPublicGoods("可见性待审核教材", null, GoodsSortOption.LATEST).stream()
+				.anyMatch(goods -> goods.getId().equals(pending.getId())));
+		Assert.assertTrue(goodsService.listPublicGoods("可见性封禁卖家教材", null, GoodsSortOption.LATEST).stream()
+				.anyMatch(goods -> goods.getId().equals(approved.getId())));
+
+		userService.banUser(admin, seller.getId());
+
+		Assert.assertFalse(goodsService.listPublicGoods("可见性封禁卖家教材", null, GoodsSortOption.LATEST).stream()
+				.anyMatch(goods -> goods.getId().equals(approved.getId())));
+	}
+
+	@Test
 	public void aiSearchAssistShouldProduceSafeSearchCriteria() {
 		GoodsService goodsService = new GoodsService();
 

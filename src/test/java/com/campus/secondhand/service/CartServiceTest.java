@@ -63,6 +63,51 @@ public class CartServiceTest {
 		Assert.assertTrue(cartService.listCartItems(buyer).isEmpty());
 	}
 
+	@Test
+	public void checkoutShouldRemoveStaleCartItemsForSameGoodsInOtherCarts() {
+		UserService userService = new UserService();
+		GoodsService goodsService = new GoodsService();
+		CartService cartService = new CartService();
+
+		User seller = userService.login("demo_user", "user123");
+		User checkoutBuyer = userService.login("demo_buyer", "buyer123");
+		User otherBuyer = userService.register("other_cart_buyer", "buyer123", "13800138008");
+		User admin = userService.login("admin", "admin123");
+
+		Goods goods = goodsService.publishGoods(seller, "购物车结算陈旧项教材", "教材", 82.0, 41.0, 4, "用于购物车结算后清理其他购物车");
+		goodsService.approveGoods(admin, goods.getId());
+		CartItem checkoutItem = cartService.addToCart(checkoutBuyer, goods.getId());
+		cartService.addToCart(otherBuyer, goods.getId());
+
+		List<Order> orders = cartService.checkout(checkoutBuyer, Arrays.asList(checkoutItem.getId()));
+
+		Assert.assertEquals(1, orders.size());
+		Assert.assertTrue(cartService.listCartItems(otherBuyer).stream()
+				.noneMatch(item -> goods.getId().equals(item.getGoodsId())));
+	}
+
+	@Test
+	public void directPurchaseShouldRemoveStaleCartItemsForSameGoods() {
+		UserService userService = new UserService();
+		GoodsService goodsService = new GoodsService();
+		CartService cartService = new CartService();
+		OrderService orderService = new OrderService();
+
+		User seller = userService.login("demo_user", "user123");
+		User cartBuyer = userService.login("demo_buyer", "buyer123");
+		User directBuyer = userService.register("direct_buyer", "buyer123", "13800138006");
+		User admin = userService.login("admin", "admin123");
+
+		Goods goods = goodsService.publishGoods(seller, "购物车陈旧项教材", "教材", 80.0, 40.0, 4, "用于直接购买后清理购物车");
+		goodsService.approveGoods(admin, goods.getId());
+		cartService.addToCart(cartBuyer, goods.getId());
+
+		orderService.purchaseGoods(directBuyer, goods.getId());
+
+		Assert.assertTrue(cartService.listCartItems(cartBuyer).stream()
+				.noneMatch(item -> goods.getId().equals(item.getGoodsId())));
+	}
+
 	@Test(expected = BusinessException.class)
 	public void duplicateCartItemShouldFail() {
 		UserService userService = new UserService();

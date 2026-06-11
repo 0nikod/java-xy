@@ -3,7 +3,9 @@ package com.campus.secondhand.service;
 import com.campus.secondhand.dao.StatisticsDao;
 import com.campus.secondhand.model.ChartPoint;
 import com.campus.secondhand.model.StatsSummary;
+import com.campus.secondhand.model.User;
 import com.campus.secondhand.model.UserOverview;
+import com.campus.secondhand.model.UserRole;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -14,6 +16,7 @@ public class StatisticsService {
 
 	private final StatisticsDao statisticsDao;
 	private final AiService aiService;
+	private final AdminLogService adminLogService;
 
 	/**
 	 * 创建统计业务服务。
@@ -21,6 +24,7 @@ public class StatisticsService {
 	public StatisticsService() {
 		this.statisticsDao = new StatisticsDao();
 		this.aiService = AiServiceFactory.create();
+		this.adminLogService = new AdminLogService();
 	}
 
 	/**
@@ -81,8 +85,39 @@ public class StatisticsService {
 		return aiService.buildOperationsSummaryStreaming(buildStatsContext(), onDelta);
 	}
 
+	/**
+	 * 记录管理员触发的 AI 运营分析，并返回生成结果。
+	 */
+	public String buildSummaryTextStreaming(User admin, Consumer<String> onDelta) {
+		ensureAdmin(admin);
+		String result = buildSummaryTextStreaming(onDelta);
+		recordAiLog(admin, "AI_OPERATIONS_SUMMARY", "调用 AI 运营分析");
+		return result;
+	}
+
 	public String buildInterpretationTextStreaming(Consumer<String> onDelta) {
 		return aiService.interpretStatisticsStreaming(buildStatsContext(), onDelta);
+	}
+
+	/**
+	 * 记录管理员触发的 AI 统计图解读，并返回生成结果。
+	 */
+	public String buildInterpretationTextStreaming(User admin, Consumer<String> onDelta) {
+		ensureAdmin(admin);
+		String result = buildInterpretationTextStreaming(onDelta);
+		recordAiLog(admin, "AI_STATS_INTERPRETATION", "调用 AI 统计图解读");
+		return result;
+	}
+
+	private void ensureAdmin(User user) {
+		if (user == null || user.getRole() != UserRole.ADMIN) {
+			throw new BusinessException("只有管理员可以执行该操作");
+		}
+	}
+
+	private void recordAiLog(User admin, String action, String detail) {
+		// goal.md 要求管理员调用 AI 分析也要留下审计记录，便于操作日志页追踪。
+		adminLogService.record(admin, action, "AI", null, detail);
 	}
 
 	private String buildStatsContext() {

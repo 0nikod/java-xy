@@ -134,15 +134,15 @@ public class Goods {
 			return "";
 		}
 		switch (status) {
-			case ON_SALE:
+			case ON_SALE :
 				return "在售";
-			case PENDING:
+			case PENDING :
 				return "待审核";
-			case SOLD:
+			case SOLD :
 				return "已售出";
-			case OFF_SHELF:
+			case OFF_SHELF :
 				return "已下架";
-			default:
+			default :
 				return status.name();
 		}
 	}

@@ -107,9 +107,9 @@ public class Order {
 			return "";
 		}
 		switch (status) {
-			case FINISHED:
+			case FINISHED :
 				return "已完成";
-			default:
+			default :
 				return status.name();
 		}
 	}

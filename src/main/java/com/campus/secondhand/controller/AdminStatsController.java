@@ -150,8 +150,10 @@ public class AdminStatsController {
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() {
-				statisticsService.buildSummaryTextStreaming(labelAppender(aiSummaryLabel, version));
-				statisticsService.buildInterpretationTextStreaming(labelAppender(chartInterpretationLabel, version));
+				User admin = Session.getCurrentUser();
+				statisticsService.buildSummaryTextStreaming(admin, labelAppender(aiSummaryLabel, version));
+				statisticsService.buildInterpretationTextStreaming(admin,
+						labelAppender(chartInterpretationLabel, version));
 				return null;
 			}
 		};

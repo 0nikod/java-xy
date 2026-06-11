@@ -1,5 +1,6 @@
 package com.campus.secondhand.service;
 
+import com.campus.secondhand.dao.CartDao;
 import com.campus.secondhand.dao.GoodsDao;
 import com.campus.secondhand.dao.OrderDao;
 import com.campus.secondhand.model.Goods;
@@ -16,10 +17,12 @@ import java.util.UUID;
 
 public class OrderService {
 
+	private final CartDao cartDao;
 	private final GoodsDao goodsDao;
 	private final OrderDao orderDao;
 
 	public OrderService() {
+		this.cartDao = new CartDao();
 		this.goodsDao = new GoodsDao();
 		this.orderDao = new OrderDao();
 	}
@@ -49,6 +52,8 @@ public class OrderService {
 			}
 
 			goodsDao.markSold(connection, goodsId);
+			// 直接购买成交后要清除所有用户购物车中的同一商品，避免后续结算已售商品。
+			cartDao.deleteByGoodsId(connection, goodsId);
 
 			// 订单号由时间戳+随机片段组成，兼顾可读性和基本唯一性。
 			Order order = new Order();

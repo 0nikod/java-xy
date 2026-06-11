@@ -3,6 +3,7 @@ package com.campus.secondhand.service;
 import com.campus.secondhand.dao.AdminLogDao;
 import com.campus.secondhand.model.AdminLog;
 import com.campus.secondhand.model.User;
+import com.campus.secondhand.util.DBUtil;
 import com.campus.secondhand.util.DateUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -50,6 +51,29 @@ public class AdminLogService {
 		log.setDetail(detail);
 		log.setCreatedAt(DateUtil.nowText());
 		adminLogDao.insert(connection, log);
+	}
+
+	/**
+	 * 使用独立连接记录一条管理员操作日志。
+	 *
+	 * @param admin
+	 *            执行操作的管理员
+	 * @param action
+	 *            操作标识
+	 * @param targetType
+	 *            目标类型
+	 * @param targetId
+	 *            目标主键
+	 * @param detail
+	 *            操作详情
+	 */
+	public void record(User admin, String action, String targetType, Long targetId, String detail) {
+		// AI 分析这类非事务性操作也需要审计，因此提供独立连接写日志的入口。
+		try (Connection connection = DBUtil.getConnection()) {
+			record(connection, admin, action, targetType, targetId, detail);
+		} catch (SQLException e) {
+			throw new IllegalStateException("记录管理员操作日志失败", e);
+		}
 	}
 
 	/**

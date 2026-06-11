@@ -45,7 +45,8 @@ public class AdminHomeController {
 		Task<Void> task = new Task<Void>() {
 			@Override
 			protected Void call() {
-				statisticsService.buildSummaryTextStreaming(delta -> Platform.runLater(() -> {
+				User admin = Session.getCurrentUser();
+				statisticsService.buildSummaryTextStreaming(admin, delta -> Platform.runLater(() -> {
 					builder.append(delta);
 					summaryLabel.setText(builder.toString());
 				}));

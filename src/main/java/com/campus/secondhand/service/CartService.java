@@ -76,6 +76,8 @@ public class CartService {
 				goodsDao.markSold(connection, goods.getId());
 				Order order = buildOrder(user, goods);
 				orderDao.insert(connection, order);
+				// 购物车结算成交后同步清除所有用户购物车中的同一商品，避免留下已售商品。
+				cartDao.deleteByGoodsId(connection, goods.getId());
 				orders.add(order);
 			}
 			cartDao.deleteByIds(connection, user.getId(), cartItemIds);
