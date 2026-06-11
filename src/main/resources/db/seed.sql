@@ -3,7 +3,8 @@ INSERT OR IGNORE INTO users (id, username, password_hash, phone, role, status, c
 VALUES
     (1, 'admin', '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9', '13800000000', 'ADMIN', 'NORMAL', '2026-05-17 00:00:00'),
     (2, 'demo_user', 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', '13900000000', 'USER', 'NORMAL', '2026-05-17 00:00:00'),
-    (3, 'demo_buyer', 'e547bd13228250dfb4c7df1d1ebb78cfd9f2ada56ebb0c425d35829dd3ac4ae8', '13700000000', 'USER', 'NORMAL', '2026-05-17 00:00:00');
+    (3, 'demo_buyer', 'e547bd13228250dfb4c7df1d1ebb78cfd9f2ada56ebb0c425d35829dd3ac4ae8', '13700000000', 'USER', 'NORMAL', '2026-05-17 00:00:00'),
+    (4, 'banned_user', 'a8662f93e8dcff287429340d72539679c07c76c1b120ca710351d6ae1cbcf32e', '13700000000', 'USER', 'BANNED', '2026-05-17 00:00:00');
 
 -- 演示商品：覆盖在售、待审核、已售和有图/无图两种场景。
 INSERT OR IGNORE INTO goods (id, seller_id, title, category, original_price, current_price, condition_level, description, status, created_at, updated_at)

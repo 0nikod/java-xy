@@ -29,7 +29,8 @@ public class LoginController {
 	private void initialize() {
 		if (hintLabel != null) {
 			hintLabel
-					.setText("使用 admin/admin123 登录管理员后台，使用 demo_user/user123 登录普通用户首页，使用 demo_buyer/buyer123 登录买家订单页。");
+					.setText(
+							"使用 admin/admin123 登录管理员后台，使用 demo_user/user123 登录普通用户首页，使用 demo_buyer/buyer123 登录买家订单页，使用 banned_user/banned123 登录被封禁用户提示页");
 		}
 		if (usernameField != null) {
 			usernameField.setOnAction(event -> handleLogin());
