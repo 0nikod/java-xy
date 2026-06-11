@@ -34,7 +34,7 @@ public class DatabaseInitializerTest {
 					Statement statement = connection.createStatement();
 					ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) AS total FROM users")) {
 				Assert.assertTrue(resultSet.next());
-				Assert.assertEquals(3, resultSet.getInt("total"));
+				Assert.assertEquals(4, resultSet.getInt("total"));
 			}
 
 			// goods 表应包含预期数量的初始商品，并覆盖待审核演示数据。
